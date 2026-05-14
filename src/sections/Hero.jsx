@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Environment, Sparkles } from '@react-three/drei';
+import SplitText from '../components/SplitText';
 import { ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
@@ -29,9 +30,32 @@ const Hero = () => {
           <h2 style={{ fontSize: '1.5rem', color: '#808080', marginBottom: '1rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase' }}>
             Hello, I am
           </h2>
-          <h1 style={{ fontSize: 'clamp(3rem, 8vw, 5.5rem)', lineHeight: 1.1, marginBottom: '1rem' }}>
-            Bharathi <span className="text-gradient">Senthilkumar</span>
-          </h1>
+          <SplitText
+            text="Bharathi Senthilkumar"
+            className="hero-title"
+            tag="h1"
+            delay={50}
+            duration={0.8}
+            ease="power3.out"
+            splitType="chars"
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+            textAlign="center"
+          />
+          <style>{`
+            .hero-title {
+              font-size: clamp(3rem, 8vw, 5.5rem) !important;
+              line-height: 1.1 !important;
+              margin-bottom: 1rem !important;
+              display: inline-block;
+            }
+            .hero-title, .hero-title div {
+              background: linear-gradient(to right, #ffffff, #808080);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+            }
+          `}</style>
           <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', color: 'var(--text-secondary)', marginBottom: '2rem', fontWeight: 400 }}>
             Backend Engineer | Cloud & AI Enthusiast
           </h3>
