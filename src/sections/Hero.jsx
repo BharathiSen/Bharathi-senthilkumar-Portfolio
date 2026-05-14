@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Environment, Sparkles } from '@react-three/drei';
-import Scene from '../components/Scene';
 import { ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
@@ -16,7 +15,6 @@ const Hero = () => {
           <Suspense fallback={null}>
             <Environment preset="city" />
             <Sparkles count={200} scale={10} size={2} speed={0.4} color="#ffffff" />
-            <Scene />
           </Suspense>
         </Canvas>
       </div>
