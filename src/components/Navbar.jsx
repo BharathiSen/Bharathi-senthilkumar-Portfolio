@@ -15,6 +15,7 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
+    { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
@@ -53,9 +54,7 @@ const Navbar = () => {
               <li key={link.name}>
                 <a 
                   href={link.href} 
-                  style={{ color: 'var(--text-secondary)', transition: 'color 0.3s ease', fontSize: '0.9rem', fontWeight: 500 }}
-                  onMouseOver={(e) => e.target.style.color = '#fff'}
-                  onMouseOut={(e) => e.target.style.color = 'var(--text-secondary)'}
+                  className="nav-link"
                 >
                   {link.name}
                 </a>

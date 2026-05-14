@@ -51,7 +51,7 @@ const Experience = () => {
 
         <div style={{ maxWidth: '800px', margin: '0 auto', position: 'relative' }}>
           {/* Vertical Line */}
-          <div style={{ position: 'absolute', left: '20px', top: 0, bottom: 0, width: '2px', background: 'linear-gradient(to bottom, #ffffff, #808080, transparent)', zIndex: 0 }}></div>
+          <div style={{ position: 'absolute', left: '20px', top: 0, bottom: 0, width: '2px', background: 'linear-gradient(to bottom, #00d2ff, #3a7bd5, transparent)', zIndex: 0 }}></div>
 
           {timeline.map((item, index) => (
             <motion.div
@@ -63,10 +63,10 @@ const Experience = () => {
               style={{ position: 'relative', paddingLeft: '60px', marginBottom: '3rem', zIndex: 1 }}
             >
               {/* Timeline Dot */}
-              <div style={{ position: 'absolute', left: '12px', top: '5px', width: '18px', height: '18px', borderRadius: '50%', background: 'var(--bg-dark)', border: '4px solid #808080', boxShadow: '0 0 10px rgba(255, 255, 255, 0.2)' }}></div>
+              <div style={{ position: 'absolute', left: '12px', top: '5px', width: '18px', height: '18px', borderRadius: '50%', background: 'var(--bg-dark)', border: '4px solid #00d2ff', boxShadow: '0 0 10px rgba(0, 210, 255, 0.5)' }}></div>
               
               <div className="glass-panel" style={{ padding: '1.5rem 2rem' }}>
-                <span style={{ display: 'inline-block', padding: '0.25rem 0.75rem', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '20px', fontSize: '0.8rem', color: '#ffffff', marginBottom: '1rem', fontWeight: 600 }}>
+                <span style={{ display: 'inline-block', padding: '0.25rem 0.75rem', background: 'rgba(0, 210, 255, 0.1)', borderRadius: '20px', fontSize: '0.8rem', color: '#00d2ff', marginBottom: '1rem', fontWeight: 600 }}>
                   {item.year}
                 </span>
                 <h3 style={{ fontSize: '1.3rem', marginBottom: '0.5rem', color: '#fff' }}>{item.title}</h3>
