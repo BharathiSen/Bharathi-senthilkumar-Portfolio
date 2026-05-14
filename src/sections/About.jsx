@@ -13,7 +13,7 @@ const About = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="section-title">
-            About <span className="text-gradient">Me</span>
+            About <span style={{ background: 'linear-gradient(to right, #00d2ff, #3a7bd5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Me</span>
           </h2>
         </motion.div>
 
@@ -25,9 +25,9 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="glass-panel" style={{ padding: '2rem', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: '#ffffff', filter: 'blur(100px)', opacity: 0.1, zIndex: 0 }}></div>
+              <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: '#00d2ff', filter: 'blur(100px)', opacity: 0.2, zIndex: 0 }}></div>
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#ffffff' }}>My Background</h3>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#00d2ff' }}>My Background</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
                   I am a 5th Semester Computer Science student focused on Backend Engineering, Cloud, DSA, and AI systems.
                 </p>
@@ -49,8 +49,8 @@ const About = () => {
             style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
           >
             <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ padding: '1rem', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '12px' }}>
-                <Server size={32} color="#ffffff" />
+              <div style={{ padding: '1rem', background: 'rgba(0, 210, 255, 0.1)', borderRadius: '12px' }}>
+                <Server size={32} color="#00d2ff" />
               </div>
               <div>
                 <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>Backend Systems</h4>
@@ -59,8 +59,8 @@ const About = () => {
             </div>
 
             <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ padding: '1rem', background: 'rgba(128, 128, 128, 0.1)', borderRadius: '12px' }}>
-                <Database size={32} color="#808080" />
+              <div style={{ padding: '1rem', background: 'rgba(58, 123, 213, 0.1)', borderRadius: '12px' }}>
+                <Database size={32} color="#3a7bd5" />
               </div>
               <div>
                 <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>Cloud Infrastructure</h4>
@@ -69,8 +69,8 @@ const About = () => {
             </div>
 
             <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ padding: '1rem', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '12px' }}>
-                <Cpu size={32} color="#ffffff" />
+              <div style={{ padding: '1rem', background: 'rgba(0, 210, 255, 0.1)', borderRadius: '12px' }}>
+                <Cpu size={32} color="#00d2ff" />
               </div>
               <div>
                 <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>AI Workflows</h4>
