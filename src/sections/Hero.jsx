@@ -81,13 +81,18 @@ const Hero = () => {
           <a href="#projects" className="btn btn-primary">
             View Projects <ArrowRight size={18} />
           </a>
-          <a href="mailto:bharathisenthilkumar28@gmail.com" className="btn btn-outline" aria-label="Email Bharathi" title="Email Bharathi">
+          <a
+            href="#contact"
+            className="btn btn-outline"
+            aria-label="Go to Contact section"
+            title="Get In Touch"
+          >
             Contact Me <Mail size={18} />
           </a>
-          <a href="https://github.com/BharathiSen/" className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%' }} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
+          <a href="https://github.com/BharathiSen/" className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
             <FaGithub size={20} />
           </a>
-          <a href="https://www.linkedin.com/in/bharathisenthilkumar28/" className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%' }} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+          <a href="https://www.linkedin.com/in/bharathisenthilkumar28/" className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
             <FaLinkedin size={20} />
           </a>
         </motion.div>
