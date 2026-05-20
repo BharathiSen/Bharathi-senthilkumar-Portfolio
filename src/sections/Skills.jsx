@@ -1,9 +1,30 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { SiDocker, SiFastapi, SiGithub, SiJavascript, SiPostgresql, SiPython, SiReact } from 'react-icons/si';
+
+import LogoLoop from '../components/LogoLoop';
 
 const skills = [
   'Python', 'FastAPI', 'PostgreSQL', 'React', 'JavaScript', 
   'Docker', 'AWS', 'Git/GitHub', 'REST APIs', 'Data Structures & Algorithms'
+];
+
+const skillLogos = [
+  { node: <SiPython />, title: 'Python', href: 'https://www.python.org/' },
+  { node: <SiFastapi />, title: 'FastAPI', href: 'https://fastapi.tiangolo.com/' },
+  { node: <SiPostgresql />, title: 'PostgreSQL', href: 'https://www.postgresql.org/' },
+  { node: <SiReact />, title: 'React', href: 'https://react.dev/' },
+  { node: <SiJavascript />, title: 'JavaScript', href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+  { node: <SiDocker />, title: 'Docker', href: 'https://www.docker.com/' },
+  {
+    node: (
+      <span style={{ fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.12em' }}>
+        AWS
+      </span>
+    ),
+    title: 'AWS',
+    href: 'https://aws.amazon.com/',
+  },
+  { node: <SiGithub />, title: 'GitHub', href: 'https://github.com/' },
 ];
 
 const Skills = () => {
@@ -37,6 +58,28 @@ const Skills = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          style={{ marginTop: '3rem' }}
+        >
+          <LogoLoop
+            logos={skillLogos}
+            speed={70}
+            direction="left"
+            logoHeight={42}
+            gap={40}
+            hoverSpeed={0}
+            scaleOnHover
+            fadeOut
+            fadeOutColor="rgba(0, 0, 0, 0.9)"
+            ariaLabel="Core skill logos"
+            style={{ width: '100%' }}
+          />
+        </motion.div>
       </div>
     </section>
   );
