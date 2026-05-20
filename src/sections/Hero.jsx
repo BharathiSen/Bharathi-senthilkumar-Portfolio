@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Environment, Sparkles } from '@react-three/drei';
@@ -68,7 +68,7 @@ const Hero = () => {
           style={{ maxWidth: '600px', marginBottom: '3rem' }}
         >
           <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)' }}>
-            “Building scalable backend systems, intelligent applications, and modern web experiences.”
+            I build backend systems, cloud-based applications, and practical software projects while mastering DSA and CS fundamentals.
           </p>
         </motion.div>
 
