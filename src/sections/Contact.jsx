@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
-import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const Contact = () => {
   return (
@@ -36,17 +36,14 @@ const Contact = () => {
             transition={{ delay: 0.4 }}
             style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '4rem' }}
           >
-            <a href="mailto:contact@example.com" className="contact-icon">
+            <a href="mailto:bharathisenthilkumar28@gmail.com" className="contact-icon" aria-label="Email Bharathi" title="Email Bharathi">
               <Mail size={24} />
             </a>
-            <a href="#" className="contact-icon">
+            <a href="https://www.linkedin.com/in/bharathisenthilkumar28/" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
               <FaLinkedin size={24} />
             </a>
-            <a href="#" className="contact-icon">
+            <a href="https://github.com/BharathiSen/" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
               <FaGithub size={24} />
-            </a>
-            <a href="#" className="contact-icon">
-              <FaTwitter size={24} />
             </a>
           </motion.div>
 
@@ -62,21 +59,27 @@ const Contact = () => {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px;
-            height: 60px;
+            width: clamp(44px, 12vw, 64px);
+            height: clamp(44px, 12vw, 64px);
             background: var(--bg-card);
             border: 1px solid var(--glass-border);
             border-radius: 50%;
             color: var(--text-primary);
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
+            text-decoration: none;
+          }
+
+          .contact-icon:focus-visible {
+            outline: 2px solid var(--accent-grey);
+            outline-offset: 4px;
           }
           
           .contact-icon:hover {
             color: #ffffff;
-            border-color: #808080;
+            border-color: var(--accent-grey);
             background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 18px rgba(255, 255, 255, 0.06);
           }
         `}</style>
       </div>

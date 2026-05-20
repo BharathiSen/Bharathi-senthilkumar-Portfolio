@@ -42,7 +42,7 @@ const Navbar = () => {
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, fontSize: '1.25rem' }}>
+        <a href="#hero" aria-label="Go to top" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, fontSize: '1.25rem' }}>
           <Terminal size={24} color="#ffffff" />
           <span>Bharathi<span className="text-gradient">.dev</span></span>
         </a>
