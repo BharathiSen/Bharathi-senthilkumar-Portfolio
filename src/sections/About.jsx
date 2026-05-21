@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Database, Server, Cpu } from 'lucide-react';
 
 const About = () => {
   return (
@@ -17,26 +16,22 @@ const About = () => {
           </h2>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(220px, 1fr))', gap: '1.25rem', alignItems: 'stretch', maxWidth: '900px', margin: '0 auto', width: '100%' }}>
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ minHeight: '220px' }}
           >
-            <div className="glass-panel" style={{ padding: '2rem', position: 'relative', overflow: 'hidden' }}>
+            <div className="glass-panel" style={{ padding: '0', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'stretch', justifyContent: 'stretch', maxWidth: '360px', margin: '0 auto' }}>
               <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>B.E. Electronics and Communication Engineering</h3>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                  Chennai Institute of Technology (2023–2027)
-                </p>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                  CGPA: 8.9
-                </p>
-                <p style={{ color: 'var(--text-secondary)' }}>
-                  I am a B.E. student focusing on backend engineering, cloud technologies, and applied machine learning. I work on scalable systems, API design, and data-driven workflows.
-                </p>
+              <div style={{ position: 'relative', zIndex: 1, height: '100%', width: '100%' }}>
+                <img
+                  src="/Profpic.jpeg"
+                  alt="Profile"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', borderRadius: '16px', display: 'block' }}
+                />
               </div>
             </div>
           </motion.div>
@@ -46,35 +41,21 @@ const About = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+            style={{ minHeight: '220px', display: 'flex' }}
           >
-            <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ padding: '1rem', background: 'rgba(0, 210, 255, 0.1)', borderRadius: '12px' }}>
-                <Server size={32} color="#00d2ff" />
-              </div>
-              <div>
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>Backend Systems</h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Scalable architectures, API design</p>
-              </div>
-            </div>
-
-            <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ padding: '1rem', background: 'rgba(58, 123, 213, 0.1)', borderRadius: '12px' }}>
-                <Database size={32} color="#3a7bd5" />
-              </div>
-              <div>
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>Cloud Infrastructure</h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Docker, AWS, CI/CD</p>
-              </div>
-            </div>
-
-            <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-              <div style={{ padding: '1rem', background: 'rgba(0, 210, 255, 0.1)', borderRadius: '12px' }}>
-                <Cpu size={32} color="#00d2ff" />
-              </div>
-              <div>
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>AI Workflows</h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Integration, optimization, data</p>
+            <div className="glass-panel" style={{ padding: '0.9rem', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'center', maxWidth: '420px', margin: '0 auto' }}>
+              <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
+              <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.75rem', lineHeight: 1.6 }}>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.35rem', color: 'var(--text-primary)' }}>BHARATHI S</h3>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: 0 }}>
+                  I am a final year B.E. Electronics and Communication Engineering student at Chennai Institute of Technology (2023–2027) with a CGPA: 8.9
+                </p>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: 0 }}>
+                  I am a software engineer with strong interest in backend systems, cloud computing, and AI applications.
+                </p>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: 0 }}>
+                  My work focuses on building scalable APIs, multi-tenant backend systems, and cloud-native solutions using technologies such as FastAPI, PostgreSQL, Docker, and modern web frameworks.
+                </p>
               </div>
             </div>
           </motion.div>
