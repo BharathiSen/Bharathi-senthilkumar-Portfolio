@@ -25,17 +25,17 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="glass-panel" style={{ padding: '2rem', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: '#00d2ff', filter: 'blur(100px)', opacity: 0.2, zIndex: 0 }}></div>
+              <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#00d2ff' }}>My Background</h3>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                  I am a 5th Semester Computer Science student focused on Backend Engineering, Cloud, DSA, and AI systems.
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>B.E. Electronics and Communication Engineering</h3>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+                  Chennai Institute of Technology (2023–2027)
                 </p>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                  Currently, I am diving deep into FastAPI, PostgreSQL, Docker, AWS, and scalable architectures to build robust applications.
+                  CGPA: 8.9
                 </p>
                 <p style={{ color: 'var(--text-secondary)' }}>
-                  I'm passionate about building impactful products and actively preparing for top product companies.
+                  I am a B.E. student focusing on backend engineering, cloud technologies, and applied machine learning. I work on scalable systems, API design, and data-driven workflows.
                 </p>
               </div>
             </div>

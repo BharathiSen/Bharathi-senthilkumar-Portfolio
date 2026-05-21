@@ -34,9 +34,14 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '4rem' }}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem' }}
           >
-            <a href="mailto:bharathisenthilkumar28@gmail.com" className="contact-icon" aria-label="Email Bharathi" title="Email Bharathi">
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.25rem', marginRight: '0.75rem' }}>
+              <a href="mailto:bharathis.ece2023@citchennai.net" style={{ color: 'var(--text-primary)', fontSize: '0.95rem' }} aria-label="Email">bharathis.ece2023@citchennai.net</a>
+              <a href="tel:+917010687647" style={{ color: 'var(--text-primary)', fontSize: '0.95rem' }} aria-label="Phone">+91 70106 87647</a>
+            </div>
+
+            <a href="mailto:bharathis.ece2023@citchennai.net" className="contact-icon" aria-label="Email Bharathi" title="Email Bharathi">
               <Mail size={24} />
             </a>
             <a href="https://www.linkedin.com/in/bharathisenthilkumar28/" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
@@ -50,7 +55,7 @@ const Contact = () => {
           <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, transparent, var(--glass-border), transparent)', marginBottom: '2rem' }}></div>
           
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Designed & Built by Bharathi Senthilkumar &copy; {new Date().getFullYear()}
+            Designed & Built by BHARATHI S &copy; {new Date().getFullYear()}
           </p>
         </div>
 

@@ -5,39 +5,28 @@ import { FaGithub } from 'react-icons/fa';
 
 const projects = [
   {
-    title: 'AI Interview Preparation Assistant',
-    description: 'An intelligent system that simulates technical interviews, analyzes responses, and provides real-time feedback using NLP models.',
-    tech: ['Python', 'FastAPI', 'React', 'OpenAI API'],
+    title: 'API Reliability Lab (Production SaaS Platform)',
+    description: 'Built a full-stack SaaS platform to simulate API failures (latency, rate limits, timeouts) and analyze backend reliability. Implemented real-time streaming using SSE to deliver live latency metrics and simulation logs. Optimized performance with Redis caching and PostgreSQL indexing, and designed secure multi-tenant architecture.',
+    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Redis', 'Docker', 'CI/CD'],
     github: '#',
-    demo: '#'
+    demo: '#',
+    date: 'Feb 2026'
   },
   {
-    title: 'FastAPI Backend Core',
-    description: 'A scalable, robust backend boilerplate with JWT authentication, role-based access control, and PostgreSQL integration.',
-    tech: ['FastAPI', 'PostgreSQL', 'Docker', 'SQLAlchemy'],
+    title: 'Carbon Aware Serverless Scheduler',
+    description: 'Built a multi-cloud scheduler using ElectricityMap API to optimize workloads based on real-time carbon intensity, significantly reducing estimated carbon emissions. Designed serverless architecture on Google Cloud with automated CI/CD and monitoring.',
+    tech: ['Google Cloud', 'Cloud Run', 'Cloud Functions', 'Firestore', 'Python', 'Docker', 'CI/CD'],
     github: '#',
-    demo: '#'
+    demo: '#',
+    date: 'Oct 2025'
   },
   {
-    title: 'Cloud-Based Web Application',
-    description: 'A serverless web application deployed on AWS, utilizing Lambda functions and S3 for storage with a reactive frontend.',
-    tech: ['AWS', 'React', 'Node.js', 'DynamoDB'],
+    title: 'TaskFlow: Multi-Tenant Backend',
+    description: 'Designed a multi-tenant backend with secure JWT-based authentication, RBAC, and data isolation. Built scalable REST APIs using FastAPI and PostgreSQL and optimized read performance with Redis caching.',
+    tech: ['FastAPI', 'PostgreSQL', 'Redis', 'JWT'],
     github: '#',
-    demo: '#'
-  },
-  {
-    title: 'Full Stack Portfolio Website',
-    description: 'Modern 3D portfolio featuring React Three Fiber, Framer Motion, and responsive glassmorphism UI.',
-    tech: ['React', 'Three.js', 'Framer Motion'],
-    github: '#',
-    demo: '#'
-  },
-  {
-    title: 'AI Productivity Tool',
-    description: 'A workflow automation tool leveraging AI to categorize tasks, summarize emails, and optimize daily schedules.',
-    tech: ['Python', 'React', 'LangChain'],
-    github: '#',
-    demo: '#'
+    demo: '#',
+    date: 'Mar 2025'
   }
 ];
 

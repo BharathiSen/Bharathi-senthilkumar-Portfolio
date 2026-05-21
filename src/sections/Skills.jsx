@@ -4,8 +4,9 @@ import { SiDocker, SiFastapi, SiGithub, SiJavascript, SiPostgresql, SiPython, Si
 import LogoLoop from '../components/LogoLoop';
 
 const skills = [
-  'Python', 'FastAPI', 'PostgreSQL', 'React', 'JavaScript', 
-  'Docker', 'AWS', 'Git/GitHub', 'REST APIs', 'Data Structures & Algorithms'
+  'Python', 'Java', 'C', 'SQL', 'React.js', 'Next.js', 'TypeScript', 'JavaScript', 'HTML', 'CSS',
+  'FastAPI', 'REST APIs', 'Authentication (JWT, OAuth)', 'RBAC', 'PostgreSQL', 'Redis', 'Firebase',
+  'GCP', 'Docker', 'CI/CD (GitHub Actions)', 'Serverless Architecture', 'scikit-learn', 'MLOps', 'LLM Integration'
 ];
 
 const skillLogos = [
@@ -15,15 +16,6 @@ const skillLogos = [
   { node: <SiReact />, title: 'React', href: 'https://react.dev/' },
   { node: <SiJavascript />, title: 'JavaScript', href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
   { node: <SiDocker />, title: 'Docker', href: 'https://www.docker.com/' },
-  {
-    node: (
-      <span style={{ fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.12em' }}>
-        AWS
-      </span>
-    ),
-    title: 'AWS',
-    href: 'https://aws.amazon.com/',
-  },
   { node: <SiGithub />, title: 'GitHub', href: 'https://github.com/' },
 ];
 
