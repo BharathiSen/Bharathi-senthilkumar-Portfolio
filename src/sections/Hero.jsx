@@ -1,7 +1,4 @@
-import { Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { Environment, Sparkles } from '@react-three/drei';
 import SplitText from '../components/SplitText';
 import { ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
@@ -9,17 +6,6 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 const Hero = () => {
   return (
     <section id="hero" style={{ height: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-      
-      {/* 3D Background */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-        <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-          <Suspense fallback={null}>
-            <Environment preset="city" />
-            <Sparkles count={200} scale={10} size={2} speed={0.4} color="#ffffff" />
-          </Suspense>
-        </Canvas>
-      </div>
-
       {/* Content */}
       <div className="container" style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', pointerEvents: 'none' }}>
         <motion.div
