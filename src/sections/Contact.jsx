@@ -36,7 +36,7 @@ const Contact = () => {
             transition={{ delay: 0.4 }}
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem' }}
           >
-            <a href="mailto:bharathis.ece2023@citchennai.net" className="contact-icon" aria-label="Email Bharathi" title="Email Bharathi">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=bharathisenthilkumar28@gmail.com" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Email Bharathi" title="Email Bharathi">
               <Mail size={24} />
             </a>
             <a href="https://www.linkedin.com/in/bharathisenthilkumar28/" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
