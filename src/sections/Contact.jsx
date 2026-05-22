@@ -36,11 +36,6 @@ const Contact = () => {
             transition={{ delay: 0.4 }}
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem' }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.25rem', marginRight: '0.75rem' }}>
-              <a href="mailto:bharathis.ece2023@citchennai.net" style={{ color: 'var(--text-primary)', fontSize: '0.95rem' }} aria-label="Email">bharathis.ece2023@citchennai.net</a>
-              <a href="tel:+917010687647" style={{ color: 'var(--text-primary)', fontSize: '0.95rem' }} aria-label="Phone">+91 70106 87647</a>
-            </div>
-
             <a href="mailto:bharathis.ece2023@citchennai.net" className="contact-icon" aria-label="Email Bharathi" title="Email Bharathi">
               <Mail size={24} />
             </a>
