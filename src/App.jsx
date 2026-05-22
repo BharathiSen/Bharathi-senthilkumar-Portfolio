@@ -1,5 +1,5 @@
 import Navbar from './components/Navbar';
-import GridScan from './components/GridScan';
+import LiquidEther from './components/LiquidEther';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Skills from './sections/Skills';
@@ -13,28 +13,24 @@ function App() {
   return (
     <div className="App">
       <ClickSpark sparkColor="#ffffff" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
-        <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-          <GridScan
-            sensitivity={0.55}
-            lineThickness={1}
-            linesColor="#2f2f2f"
-            gridScale={0.11}
-            lineStyle="solid"
-            lineJitter={0.08}
-            scanColor="#ffffff"
-            scanOpacity={0.22}
-            enablePost
-            bloomIntensity={0.15}
-            bloomThreshold={0.1}
-            bloomSmoothing={0.15}
-            chromaticAberration={0.0015}
-            noiseIntensity={0.008}
-            scanDirection="pingpong"
-            scanSoftness={2.2}
-            scanGlow={0.45}
-            scanDuration={2.2}
-            scanDelay={1.8}
-            style={{ width: '100%', height: '100%' }}
+        <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'auto', touchAction: 'pan-y' }}>
+          <LiquidEther
+            colors={['#ffffff', '#bdbdbd', '#7a7a7a']}
+            mouseForce={20}
+            cursorSize={100}
+            isViscous={false}
+            viscous={30}
+            iterationsViscous={32}
+            iterationsPoisson={32}
+            resolution={0.5}
+            isBounce={false}
+            autoDemo={true}
+            autoSpeed={0.5}
+            autoIntensity={2.2}
+            takeoverDuration={0.25}
+            autoResumeDelay={3000}
+            autoRampDuration={0.6}
+            style={{ position: 'absolute', inset: 0 }}
           />
         </div>
 
