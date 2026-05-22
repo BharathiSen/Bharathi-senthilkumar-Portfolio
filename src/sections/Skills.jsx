@@ -2,12 +2,7 @@ import { motion } from 'framer-motion';
 import { SiDocker, SiFastapi, SiGithub, SiJavascript, SiPostgresql, SiPython, SiReact } from 'react-icons/si';
 
 import LogoLoop from '../components/LogoLoop';
-
-const skills = [
-  'Python', 'Java', 'C', 'SQL', 'React.js', 'Next.js', 'TypeScript', 'JavaScript', 'HTML', 'CSS',
-  'FastAPI', 'REST APIs', 'Authentication (JWT, OAuth)', 'RBAC', 'PostgreSQL', 'Redis', 'Firebase',
-  'GCP', 'Docker', 'CI/CD (GitHub Actions)', 'Serverless Architecture', 'scikit-learn', 'MLOps', 'LLM Integration'
-];
+import MagicSkills from '../components/MagicSkills';
 
 const skillLogos = [
   { node: <SiPython />, title: 'Python', href: 'https://www.python.org/' },
@@ -34,22 +29,19 @@ const Skills = () => {
           </h2>
         </motion.div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'center', maxWidth: '900px', margin: '0 auto' }}>
-          {skills.map((skill, index) => (
-            <motion.div
-              key={skill}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(255, 255, 255, 0.2)' }}
-              className="glass-panel"
-              style={{ padding: '1rem 2rem', cursor: 'default', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
-              <span style={{ fontSize: '1.1rem', fontWeight: 500, color: '#fff' }}>{skill}</span>
-            </motion.div>
-          ))}
-        </div>
+        <MagicSkills
+          textAutoHide={true}
+          enableStars={true}
+          enableSpotlight={true}
+          enableBorderGlow={true}
+          disableAnimations={false}
+          spotlightRadius={250}
+          particleCount={8}
+          enableTilt={true}
+          glowColor="220,220,220"
+          clickEffect={true}
+          enableMagnetism={true}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
