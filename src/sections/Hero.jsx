@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import SplitText from '../components/SplitText';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import resumePdf from '../assets/Bharathi_Resume.pdf';
 
 const Hero = () => {
   return (
@@ -66,6 +67,9 @@ const Hero = () => {
         >
           <a href="#projects" className="btn btn-primary">
             View Projects <ArrowRight size={18} />
+          </a>
+          <a href={resumePdf} className="btn btn-outline" download="Bharathi_Resume.pdf" aria-label="Download resume" title="Download resume">
+            Download Resume <ArrowDown size={18} />
           </a>
           <a
             href="#contact"
