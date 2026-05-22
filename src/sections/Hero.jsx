@@ -43,6 +43,36 @@ const Hero = () => {
               background-clip: text;
             }
           `}</style>
+          <style>{`
+            .hero-contact-button {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: clamp(44px, 12vw, 64px);
+              height: clamp(44px, 12vw, 64px);
+              background: var(--bg-card);
+              border: 1px solid var(--glass-border);
+              border-radius: 50%;
+              color: var(--text-primary);
+              transition: all 0.25s ease;
+              text-decoration: none;
+              -webkit-tap-highlight-color: transparent;
+              touch-action: manipulation;
+            }
+
+            .hero-contact-button:focus-visible {
+              outline: 2px solid var(--accent-grey);
+              outline-offset: 4px;
+            }
+
+            .hero-contact-button:hover {
+              color: #ffffff;
+              border-color: var(--accent-grey);
+              background: rgba(255, 255, 255, 0.05);
+              transform: translateY(-6px);
+              box-shadow: 0 8px 18px rgba(255, 255, 255, 0.06);
+            }
+          `}</style>
           <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', color: 'var(--text-secondary)', marginBottom: '2rem', fontWeight: 400 }}>
             Backend Engineer | Cloud & AI Enthusiast
           </h3>
@@ -63,7 +93,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1 }}
-          style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', pointerEvents: 'auto' }}
+          style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', pointerEvents: 'auto' }}
         >
           <a href="#projects" className="btn btn-primary">
             View Projects <ArrowRight size={18} />
@@ -72,12 +102,14 @@ const Hero = () => {
             Download Resume <ArrowDown size={18} />
           </a>
           <a
-            href="#contact"
-            className="btn btn-outline"
-            aria-label="Go to Contact section"
-            title="Get In Touch"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=bharathisenthilkumar28@gmail.com"
+            className="hero-contact-button"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Email Bharathi"
+            title="Email Bharathi"
           >
-            Contact Me <Mail size={18} />
+            <Mail size={22} />
           </a>
           <a href="https://github.com/BharathiSen/" className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
             <FaGithub size={20} />
