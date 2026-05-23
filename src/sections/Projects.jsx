@@ -8,15 +8,15 @@ const projects = [
     title: 'API Reliability Lab (Production SaaS Platform)',
     description: 'Built a full-stack SaaS platform to simulate API failures (latency, rate limits, timeouts) and analyze backend reliability. Implemented real-time streaming using SSE to deliver live latency metrics and simulation logs. Optimized performance with Redis caching and PostgreSQL indexing, and designed secure multi-tenant architecture.',
     tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Redis', 'Docker', 'CI/CD'],
-    github: '#',
-    demo: '#',
+    github: 'https://github.com/BharathiSen/ARP-cgpt',
+    demo: 'https://arp-cgpt.vercel.app/',
     date: 'Feb 2026'
   },
   {
     title: 'Carbon Aware Serverless Scheduler',
     description: 'Built a multi-cloud scheduler using ElectricityMap API to optimize workloads based on real-time carbon intensity, significantly reducing estimated carbon emissions. Designed serverless architecture on Google Cloud with automated CI/CD and monitoring.',
     tech: ['Google Cloud', 'Cloud Run', 'Cloud Functions', 'Firestore', 'Python', 'Docker', 'CI/CD'],
-    github: '#',
+    github: 'https://github.com/BharathiSen/cass',
     demo: '#',
     date: 'Oct 2025'
   },
@@ -24,7 +24,7 @@ const projects = [
     title: 'TaskFlow: Multi-Tenant Backend',
     description: 'Designed a multi-tenant backend with secure JWT-based authentication, RBAC, and data isolation. Built scalable REST APIs using FastAPI and PostgreSQL and optimized read performance with Redis caching.',
     tech: ['FastAPI', 'PostgreSQL', 'Redis', 'JWT'],
-    github: '#',
+    github: 'https://github.com/BharathiSen/Taskflow',
     demo: '#',
     date: 'Mar 2025'
   }
@@ -45,7 +45,7 @@ const Projects = () => {
           </h2>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.5rem' }}>
           {projects.map((project, index) => (
             <motion.div
               key={index}
@@ -54,7 +54,7 @@ const Projects = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="glass-panel" style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '2rem', position: 'relative', overflow: 'hidden' }}>
+              <div className="glass-panel project-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: 'clamp(1rem, 2.5vw, 2rem)', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: 'linear-gradient(to right, #00d2ff, #3a7bd5)', opacity: 0, transition: 'opacity 0.3s ease' }} className="card-highlight" />
                 
                 <h3 style={{ fontSize: '1.4rem', marginBottom: '1rem', color: '#fff' }}>{project.title}</h3>
@@ -68,17 +68,25 @@ const Projects = () => {
                   ))}
                 </div>
                 
-                <div style={{ display: 'flex', gap: '1rem', marginTop: 'auto' }}>
-                  <a href={project.github} className="btn btn-outline" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: 1 }}>
+                <div className="project-card-actions" style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto', flexWrap: 'wrap' }}>
+                  <a href={project.github} className="btn btn-outline" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
                     <FaGithub size={16} /> GitHub
                   </a>
-                  <a href={project.demo} className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: 1 }}>
+                  <a href={project.demo} className="btn btn-primary" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
                     <ExternalLink size={16} /> Live Demo
                   </a>
                 </div>
 
                 <style>{`
                   .glass-panel:hover { border-color: rgba(0, 210, 255, 0.3); box-shadow: 0 8px 32px rgba(0, 210, 255, 0.1); }
+                  @media (max-width: 560px) {
+                    .project-card-actions {
+                      flex-direction: column;
+                    }
+                    .project-card-actions .btn {
+                      width: 100%;
+                    }
+                  }
                 `}</style>
               </div>
             </motion.div>
