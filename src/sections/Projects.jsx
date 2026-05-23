@@ -13,12 +13,28 @@ const projects = [
     date: 'Feb 2026'
   },
   {
+    title: 'ACDOF: Adaptive Cloud DevOps Orchestration Framework',
+    description: 'Research prototype for carbon-aware, cost-aware multi-cloud decisioning with predictive workload forecasting, multi-objective region scoring, closed-loop adaptation, and cross-cloud failover simulation.',
+    tech: ['Python', 'Multi-Cloud', 'Carbon-Aware Scheduling', 'Control Loop', 'Kubernetes', 'KEDA'],
+    github: 'https://github.com/BharathiSen/ACDOF',
+    demo: '#',
+    date: 'Apr 2026'
+  },
+  {
     title: 'Carbon Aware Serverless Scheduler',
     description: 'Built a multi-cloud scheduler using ElectricityMap API to optimize workloads based on real-time carbon intensity, significantly reducing estimated carbon emissions. Designed serverless architecture on Google Cloud with automated CI/CD and monitoring.',
     tech: ['Google Cloud', 'Cloud Run', 'Cloud Functions', 'Firestore', 'Python', 'Docker', 'CI/CD'],
     github: 'https://github.com/BharathiSen/cass',
     demo: '#',
     date: 'Oct 2025'
+  },
+  {
+    title: 'VectorShift Studio',
+    description: 'High-fidelity pipeline editor using ReactFlow + FastAPI with DAG validation, custom nodes, and interactive canvas tooling for production-style workflow composition.',
+    tech: ['ReactFlow', 'React', 'FastAPI', 'Python', 'Zustand', 'DAG Validation'],
+    github: 'https://github.com/BharathiSen/vector-shift',
+    demo: 'https://vector-shift-frontend-theta.vercel.app/',
+    date: 'May 2026'
   },
   {
     title: 'TaskFlow: Multi-Tenant Backend',
@@ -45,10 +61,11 @@ const Projects = () => {
           </h2>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.5rem' }}>
+        <div className="projects-slider" role="region" aria-label="Projects slider">
           {projects.map((project, index) => (
             <motion.div
               key={index}
+              className="projects-slide"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -72,26 +89,57 @@ const Projects = () => {
                   <a href={project.github} className="btn btn-outline" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
                     <FaGithub size={16} /> GitHub
                   </a>
-                  <a href={project.demo} className="btn btn-primary" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
-                    <ExternalLink size={16} /> Live Demo
-                  </a>
+                  {project.demo !== '#' ? (
+                    <a href={project.demo} className="btn btn-primary" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
+                      <ExternalLink size={16} /> Live Demo
+                    </a>
+                  ) : (
+                    <a href={project.github} className="btn btn-primary" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
+                      <ExternalLink size={16} /> Research Repo
+                    </a>
+                  )}
                 </div>
-
-                <style>{`
-                  .glass-panel:hover { border-color: rgba(0, 210, 255, 0.3); box-shadow: 0 8px 32px rgba(0, 210, 255, 0.1); }
-                  @media (max-width: 560px) {
-                    .project-card-actions {
-                      flex-direction: column;
-                    }
-                    .project-card-actions .btn {
-                      width: 100%;
-                    }
-                  }
-                `}</style>
               </div>
             </motion.div>
           ))}
         </div>
+        <style>{`
+          .projects-slider {
+            display: flex;
+            gap: 1.25rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 0.25rem 0.25rem 0.75rem;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+          .projects-slider::-webkit-scrollbar {
+            display: none;
+          }
+          .projects-slide {
+            flex: 0 0 clamp(300px, 74vw, 420px);
+            scroll-snap-align: start;
+          }
+          .project-card {
+            min-height: 100%;
+          }
+          .glass-panel:hover {
+            border-color: rgba(0, 210, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 210, 255, 0.1);
+          }
+          @media (max-width: 560px) {
+            .projects-slide {
+              flex-basis: 88vw;
+            }
+            .project-card-actions {
+              flex-direction: column;
+            }
+            .project-card-actions .btn {
+              width: 100%;
+            }
+          }
+        `}</style>
       </div>
     </section>
   );
