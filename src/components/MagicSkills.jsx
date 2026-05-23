@@ -1,6 +1,25 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { gsap } from 'gsap';
+import {
+  SiDocker,
+  SiFirebase,
+  SiFastapi,
+  SiGithubactions,
+  SiGooglecloud,
+  SiJavascript,
+  SiKubernetes,
+  SiNextdotjs,
+  SiC,
+  SiJsonwebtokens,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiRedis,
+  SiScikitlearn,
+  SiTypescript,
+} from 'react-icons/si';
+import { FaDatabase, FaHtml5, FaCss3Alt, FaRobot, FaShieldAlt, FaLock } from 'react-icons/fa';
 import './MagicSkills.css';
 
 const DEFAULT_PARTICLE_COUNT = 8;
@@ -13,31 +32,37 @@ const cardData = [
     label: 'Languages',
     title: 'Programming',
     description: 'Python, Java, C, SQL',
+    icons: [SiPython, SiC, FaDatabase],
   },
   {
     label: 'Frontend',
     title: 'UI Engineering',
     description: 'React.js, Next.js, TypeScript, JavaScript, HTML, CSS',
+    icons: [SiReact, SiNextdotjs, SiTypescript, SiJavascript, FaHtml5, FaCss3Alt],
   },
   {
     label: 'Backend',
     title: 'API & Systems',
     description: 'FastAPI, REST APIs, JWT, OAuth, RBAC',
+    icons: [SiFastapi, SiJsonwebtokens, FaShieldAlt, FaLock],
   },
   {
     label: 'Database',
     title: 'Data Layer',
     description: 'PostgreSQL, Redis, Firebase',
+    icons: [SiPostgresql, SiRedis, SiFirebase],
   },
   {
     label: 'Cloud',
     title: 'Cloud & DevOps',
     description: 'GCP, Docker, CI/CD, GitHub Actions, Serverless Architecture',
+    icons: [SiGooglecloud, SiDocker, SiGithubactions, SiKubernetes],
   },
   {
     label: 'AI / ML',
     title: 'Intelligent Systems',
     description: 'scikit-learn, MLOps, LLM Integration',
+    icons: [SiScikitlearn, SiPython, FaRobot],
   },
 ];
 
@@ -90,7 +115,7 @@ const useMobileDetection = () => {
   return isMobile;
 };
 
-const MagicSkillsCard = ({
+const MagicSkillsCard = memo(({
   card,
   className = '',
   style,
@@ -109,6 +134,7 @@ const MagicSkillsCard = ({
   const memoizedParticles = useRef([]);
   const particlesInitialized = useRef(false);
   const magnetismAnimationRef = useRef(null);
+  const moveAnimationFrameRef = useRef(null);
 
   const initializeParticles = useCallback(() => {
     if (particlesInitialized.current || !cardRef.current) return;
@@ -179,6 +205,47 @@ const MagicSkillsCard = ({
     });
   }, [initializeParticles]);
 
+  const handlePointerMove = useCallback((element, e) => {
+    if (moveAnimationFrameRef.current) return;
+
+    moveAnimationFrameRef.current = window.requestAnimationFrame(() => {
+      moveAnimationFrameRef.current = null;
+
+      if (!enableTilt && !enableMagnetism) return;
+
+      const rect = element.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      if (enableTilt) {
+        const rotateX = ((y - centerY) / centerY) * -10;
+        const rotateY = ((x - centerX) / centerX) * 10;
+
+        gsap.to(element, {
+          rotateX,
+          rotateY,
+          duration: 0.12,
+          ease: 'power2.out',
+          transformPerspective: 1000,
+        });
+      }
+
+      if (enableMagnetism) {
+        const magnetX = (x - centerX) * 0.05;
+        const magnetY = (y - centerY) * 0.05;
+
+        magnetismAnimationRef.current = gsap.to(element, {
+          x: magnetX,
+          y: magnetY,
+          duration: 0.25,
+          ease: 'power2.out',
+        });
+      }
+    });
+  }, [enableMagnetism, enableTilt]);
+
   useEffect(() => {
     if (disableAnimations || !cardRef.current) return undefined;
 
@@ -222,40 +289,7 @@ const MagicSkillsCard = ({
       }
     };
 
-    const handleMouseMove = (e) => {
-      if (!enableTilt && !enableMagnetism) return;
-
-      const rect = element.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      if (enableTilt) {
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-
-        gsap.to(element, {
-          rotateX,
-          rotateY,
-          duration: 0.1,
-          ease: 'power2.out',
-          transformPerspective: 1000,
-        });
-      }
-
-      if (enableMagnetism) {
-        const magnetX = (x - centerX) * 0.05;
-        const magnetY = (y - centerY) * 0.05;
-
-        magnetismAnimationRef.current = gsap.to(element, {
-          x: magnetX,
-          y: magnetY,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-      }
-    };
+    const handleMouseMove = (e) => handlePointerMove(element, e);
 
     const handleClick = (e) => {
       if (!clickEffect) return;
@@ -306,13 +340,17 @@ const MagicSkillsCard = ({
 
     return () => {
       isHoveredRef.current = false;
+      if (moveAnimationFrameRef.current) {
+        window.cancelAnimationFrame(moveAnimationFrameRef.current);
+        moveAnimationFrameRef.current = null;
+      }
       element.removeEventListener('mouseenter', handleMouseEnter);
       element.removeEventListener('mouseleave', handleMouseLeave);
       element.removeEventListener('mousemove', handleMouseMove);
       element.removeEventListener('click', handleClick);
       clearAllParticles();
     };
-  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor]);
+  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, handlePointerMove]);
 
   return (
     <div
@@ -324,7 +362,16 @@ const MagicSkillsCard = ({
       {card.spotlight && <div className="magic-skills-card__spotlight" aria-hidden="true" />}
 
       <div className="magic-skills-card__header">
-        <div className="magic-skills-card__label">{card.label}</div>
+        <div className="magic-skills-card__meta">
+          <div className="magic-skills-card__label">{card.label}</div>
+          <div className="magic-skills-card__icons" aria-label={`${card.label} technologies`} role="list">
+            {card.icons?.map((Icon, index) => (
+              <span key={`${card.label}-${index}`} className="magic-skills-card__icon" role="listitem" aria-hidden="true">
+                <Icon size={14} />
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="magic-skills-card__content">
         <h3 className="magic-skills-card__title">{card.title}</h3>
@@ -332,7 +379,8 @@ const MagicSkillsCard = ({
       </div>
     </div>
   );
-};
+});
+MagicSkillsCard.displayName = 'MagicSkillsCard';
 
 const GlobalSpotlight = ({
   gridRef,
@@ -460,6 +508,9 @@ const GlobalSpotlight = ({
   return null;
 };
 
+const MemoizedGlobalSpotlight = memo(GlobalSpotlight);
+MemoizedGlobalSpotlight.displayName = 'GlobalSpotlight';
+
 const MagicSkills = ({
   textAutoHide = true,
   enableStars = true,
@@ -475,12 +526,14 @@ const MagicSkills = ({
 }) => {
   const gridRef = useRef(null);
   const isMobile = useMobileDetection();
-  const shouldDisableAnimations = disableAnimations || isMobile;
+  const prefersReducedMotion = useReducedMotion();
+  const shouldDisableAnimations = disableAnimations || isMobile || prefersReducedMotion;
+  const effectiveParticleCount = useMemo(() => (shouldDisableAnimations ? 0 : Math.min(particleCount, 6)), [particleCount, shouldDisableAnimations]);
 
   return (
     <>
       {enableSpotlight && (
-        <GlobalSpotlight
+        <MemoizedGlobalSpotlight
           gridRef={gridRef}
           disableAnimations={shouldDisableAnimations}
           enabled={enableSpotlight}
@@ -506,7 +559,7 @@ const MagicSkills = ({
                   enableBorderGlow ? 'magic-skills-card--border-glow' : '',
                 ].join(' ')}
                 disableAnimations={shouldDisableAnimations}
-                particleCount={enableStars ? particleCount : 0}
+                particleCount={enableStars ? effectiveParticleCount : 0}
                 glowColor={glowColor}
                 enableTilt={enableTilt}
                 clickEffect={clickEffect}

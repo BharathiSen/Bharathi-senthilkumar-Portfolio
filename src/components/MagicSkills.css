@@ -57,6 +57,9 @@
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, background 0.28s ease;
   transform-style: preserve-3d;
   will-change: transform;
+  contain: content;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 
   --glow-x: 50%;
   --glow-y: 50%;
@@ -88,11 +91,36 @@
   margin-bottom: 1rem;
 }
 
+.magic-skills-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
 .magic-skills-card__label {
   font-size: 0.82rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-secondary);
+}
+
+.magic-skills-card__icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.magic-skills-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text-secondary);
+  opacity: 0.82;
 }
 
 .magic-skills-card__content {
@@ -168,6 +196,7 @@
 
 .magic-skills-particle {
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .magic-skills-spotlight {
@@ -206,5 +235,20 @@
 
   .magic-skills-card {
     min-height: 190px;
+  }
+
+  .magic-skills-card__icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magic-skills-card,
+  .magic-skills-card__description,
+  .magic-skills-card--border-glow::after,
+  .magic-skills-spotlight {
+    transition: none !important;
+    animation: none !important;
   }
 }
