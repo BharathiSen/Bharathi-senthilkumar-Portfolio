@@ -5,7 +5,6 @@ import {
   buildRagContext,
   chatbotKnowledge,
   composeGroundedFallback,
-  resolveAssistantAction,
 } from '../data/chatbotKnowledge';
 
 const STORAGE_KEY = 'bharathi-gpt-cache-v1';
@@ -161,24 +160,6 @@ const useBharathiGpt = () => {
     writeCache(cacheRef.current);
   }, []);
 
-  const runAssistantActions = useCallback((request) => {
-    if (request.sectionId) {
-      document.getElementById(request.sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    if (request.highlightProjectTitles.length > 0) {
-      window.dispatchEvent(new CustomEvent('portfolio-assistant:highlight-projects', {
-        detail: { titles: request.highlightProjectTitles },
-      }));
-    }
-
-    if (request.openUrls.length > 0) {
-      request.openUrls.forEach((url) => {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      });
-    }
-  }, []);
-
   const generateResponse = useCallback(async (query) => {
     const ragContext = buildRagContext(query);
     const cacheKey = buildCacheKey(providerConfig.provider, providerConfig.openAiModel || providerConfig.geminiModel, query, ragContext.contextText);
@@ -229,8 +210,6 @@ const useBharathiGpt = () => {
       return;
     }
 
-    const action = resolveAssistantAction(trimmedQuery);
-
     setMessages((currentMessages) => [
       ...currentMessages,
       { role: 'user', content: trimmedQuery },
@@ -244,11 +223,10 @@ const useBharathiGpt = () => {
         ...currentMessages,
         { role: 'assistant', content: responseText },
       ]);
-      runAssistantActions(action);
     } finally {
       setIsThinking(false);
     }
-  }, [generateResponse, isThinking, runAssistantActions]);
+  }, [generateResponse, isThinking]);
 
   return {
     assistantPromptChips,

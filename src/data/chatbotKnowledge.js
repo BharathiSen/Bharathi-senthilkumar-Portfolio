@@ -256,63 +256,6 @@ If the user asks about a project, you may summarize matching projects from the c
 Portfolio context:
 ${ragContext.contextText || 'No matching context found.'}`;
 
-export const resolveAssistantAction = (query) => {
-  const normalizedQuery = normalizeText(query);
-  const queryTokens = tokenize(query);
-  const matchedProjects = portfolioData.projects.filter((project) => {
-    const searchText = projectSearchText(project);
-    return queryTokens.some((token) => token.length > 2 && searchText.includes(token));
-  });
-
-  const wantsGithubOpen = normalizedQuery.includes('open') && normalizedQuery.includes('github');
-  const wantsResume = normalizedQuery.includes('resume');
-
-  if (wantsResume) {
-    return {
-      sectionId: null,
-      highlightProjectTitles: [],
-      openUrls: [portfolioData.hero.buttons.resume.href],
-    };
-  }
-
-  if (normalizedQuery.includes('contact') || normalizedQuery.includes('email') || normalizedQuery.includes('linkedin') || normalizedQuery.includes('github')) {
-    return {
-      sectionId: 'contact',
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('experience') || normalizedQuery.includes('internship')) {
-    return {
-      sectionId: 'experience',
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('cloud') || normalizedQuery.includes('skills') || normalizedQuery.includes('backend') || normalizedQuery.includes('devops') || normalizedQuery.includes('fastapi') || normalizedQuery.includes('project')) {
-    const projectTitles = matchedProjects.length > 0
-      ? matchedProjects.slice(0, 3).map((project) => project.title)
-      : portfolioData.projects
-        .filter((project) => project.tech.some((tech) => /fastapi|python|postgresql|redis|jwt|cloud|docker|kubernetes/i.test(tech)))
-        .slice(0, 3)
-        .map((project) => project.title);
-
-    return {
-      sectionId: 'projects',
-      highlightProjectTitles: projectTitles,
-      openUrls: wantsGithubOpen ? matchedProjects.slice(0, 2).map((project) => project.github) : [],
-    };
-  }
-
-  return {
-    sectionId: null,
-    highlightProjectTitles: [],
-    openUrls: [],
-  };
-};
-
 export const composeGroundedFallback = (query, ragContext) => {
   const normalizedQuery = normalizeText(query);
   const snippets = ragContext.snippets;
