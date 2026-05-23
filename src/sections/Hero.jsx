@@ -1,59 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import SplitText from '../components/SplitText';
 import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { portfolioData } from '../data/portfolioData';
-import { assistantPromptChips, chatbotKnowledge, resolveAssistantRequest } from '../data/chatbotKnowledge';
+import useBharathiGpt from '../hooks/useBharathiGpt';
 
 const Hero = () => {
   const heroContent = portfolioData.hero;
   const contactLinks = portfolioData.socialLinks;
-  const [assistantMessages, setAssistantMessages] = useState([
-    { role: 'assistant', content: chatbotKnowledge.profileSummary },
-  ]);
-  const [assistantInput, setAssistantInput] = useState('');
+  const { assistantPromptChips, input: assistantInput, isThinking, messages: assistantMessages, sendMessage: submitAssistantQuery, setInput: setAssistantInput } = useBharathiGpt();
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [assistantMessages]);
-
-  const runAssistantActions = (request) => {
-    if (request.sectionId) {
-      document.getElementById(request.sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    if (request.highlightProjectTitles.length > 0) {
-      window.dispatchEvent(new CustomEvent('portfolio-assistant:highlight-projects', {
-        detail: { titles: request.highlightProjectTitles },
-      }));
-    }
-
-    if (request.openUrls.length > 0) {
-      request.openUrls.forEach((url) => {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      });
-    }
-  };
-
-  const submitAssistantQuery = (query) => {
-    const trimmedQuery = query.trim();
-
-    if (!trimmedQuery) {
-      return;
-    }
-
-    const assistantRequest = resolveAssistantRequest(trimmedQuery);
-
-    setAssistantMessages((currentMessages) => [
-      ...currentMessages,
-      { role: 'user', content: trimmedQuery },
-      { role: 'assistant', content: assistantRequest.response },
-    ]);
-    setAssistantInput('');
-    runAssistantActions(assistantRequest);
-  };
 
   return (
     <>
@@ -293,6 +254,7 @@ const Hero = () => {
                 className="btn btn-outline"
                 style={{ whiteSpace: 'nowrap', paddingInline: '1rem' }}
                 aria-label="Send prompt"
+                disabled={isThinking}
               >
                 Send
               </button>

@@ -1,13 +1,5 @@
 import { portfolioData } from './portfolioData';
 
-const normalizeText = (value) => value.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
-
-const tokenize = (value) => normalizeText(value).split(/\s+/).filter(Boolean);
-
-const projectSearchText = (project) => normalizeText([project.title, project.description, ...(project.tech || [])].join(' '));
-
-const formatProjectLine = (project) => `${project.title} — ${project.description}`;
-
 const profileSummary = 'Bharathi is a backend-focused software engineer and ECE student at Chennai Institute of Technology with experience in cloud systems, research-driven orchestration, and full-stack backend platforms.';
 
 const backendExpertise = [
@@ -24,156 +16,123 @@ const cloudExperience = [
 
 const whyHireMeSummary = 'Bharathi combines backend engineering, cloud awareness, and research discipline. The portfolio shows practical full-stack delivery, multi-cloud reasoning, and a consistent focus on building reliable systems with reproducible workflows.';
 
+const normalizeText = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+
+const tokenize = (value) => normalizeText(value).split(/\s+/).filter((token) => token.length > 1);
+
+const compact = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+
+const formatProjectLine = (project) => `${project.title} — ${project.description}`;
+
+const projectSearchText = (project) => normalizeText([project.title, project.description, ...(project.tech || []), project.demoType || ''].join(' '));
+
+const buildDocument = ({ id, source, title, text, tags = [], url = '' }) => ({
+  id,
+  source,
+  title,
+  text: compact(text),
+  tags: Array.from(new Set(tags.map((tag) => normalizeText(tag)).filter(Boolean))),
+  url,
+});
+
 export const assistantPromptChips = [
-  { label: 'Skills', query: 'skills' },
-  { label: 'Projects', query: 'projects' },
-  { label: 'Experience', query: 'experience' },
+  { label: 'Resume Summary', query: 'resume summary' },
+  { label: 'Best Project', query: 'best project' },
+  { label: 'Backend Skills', query: 'backend skills' },
+  { label: 'Cloud Experience', query: 'cloud experience' },
   { label: 'Contact', query: 'contact' },
-  { label: 'Resume', query: 'resume' },
   { label: 'Why Hire Me', query: 'why hire me' },
 ];
 
-export const resolveAssistantRequest = (query) => {
-  const normalizedQuery = normalizeText(query);
-  const queryTokens = tokenize(query);
-
-  if (!normalizedQuery) {
-    return {
-      response: 'Ask me about skills, projects, experience, contact, resume, best project, backend skills, cloud experience, internships, certifications, or why hire me.',
-      sectionId: null,
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  const matchedProjects = portfolioData.projects.filter((project) => {
-    const searchText = projectSearchText(project);
-    return queryTokens.some((token) => token.length > 2 && searchText.includes(token));
-  });
-
-  const projectTitles = matchedProjects.map((project) => project.title);
-  const wantsGithubOpen = normalizedQuery.includes('open') && normalizedQuery.includes('github');
-
-  if (normalizedQuery.includes('why hire me')) {
-    return {
-      response: `Why hire me: ${whyHireMeSummary}`,
-      sectionId: null,
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('best project')) {
-    const bestProject = portfolioData.projects[0];
-    return {
-      response: `Best project: ${bestProject.title} — ${bestProject.description}`,
-      sectionId: 'projects',
-      highlightProjectTitles: [bestProject.title],
-      openUrls: wantsGithubOpen ? [bestProject.github] : [],
-    };
-  }
-
-  if (normalizedQuery.includes('backend skill') || normalizedQuery.includes('backend') || normalizedQuery.includes('fastapi') || normalizedQuery.includes('api')) {
-    const backendProjects = matchedProjects.length > 0
-      ? matchedProjects
-      : portfolioData.projects.filter((project) => project.tech.some((tech) => /fastapi|python|postgresql|redis|jwt/i.test(tech)));
-
-    return {
-      response: backendProjects.length > 0
-        ? `I found these backend projects.\n${backendProjects.slice(0, 3).map((project) => `- ${formatProjectLine(project)}`).join('\n')}`
-        : `Backend skills: ${backendExpertise.join('; ')}.`,
-      sectionId: 'projects',
-      highlightProjectTitles: backendProjects.slice(0, 3).map((project) => project.title),
-      openUrls: wantsGithubOpen ? backendProjects.slice(0, 2).map((project) => project.github) : [],
-    };
-  }
-
-  if (normalizedQuery.includes('cloud experience') || normalizedQuery.includes('cloud') || normalizedQuery.includes('devops') || normalizedQuery.includes('docker') || normalizedQuery.includes('kubernetes')) {
-    return {
-      response: `Cloud experience: ${cloudExperience.join('; ')}.`,
-      sectionId: 'skills',
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('internship')) {
-    const internshipLines = portfolioData.experience.map((item) => `${item.title} (${item.year}) — ${item.description}`);
-    return {
-      response: `Internships:\n${internshipLines.map((line) => `- ${line}`).join('\n')}`,
-      sectionId: 'experience',
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('certif')) {
-    return {
-      response: portfolioData.certifications.length > 0
-        ? `Certifications: ${portfolioData.certifications.join('; ')}.`
-        : 'No certifications are listed in the portfolio yet.',
-      sectionId: null,
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('resume')) {
-    return {
-      response: 'Opening the resume.',
-      sectionId: null,
-      highlightProjectTitles: [],
-      openUrls: [portfolioData.hero.buttons.resume.href],
-    };
-  }
-
-  if (normalizedQuery.includes('project') || matchedProjects.length > 0) {
-    const projectList = matchedProjects.length > 0 ? matchedProjects.slice(0, 3) : portfolioData.projects.slice(0, 3);
-
-    return {
-      response: matchedProjects.length > 0
-        ? `I found these matching projects.\n${projectList.map((project) => `- ${formatProjectLine(project)}`).join('\n')}`
-        : `Featured projects:\n${projectList.map((project) => `- ${formatProjectLine(project)}`).join('\n')}`,
-      sectionId: 'projects',
-      highlightProjectTitles: projectList.map((project) => project.title),
-      openUrls: wantsGithubOpen ? projectList.map((project) => project.github) : [],
-    };
-  }
-
-  if (normalizedQuery.includes('skills')) {
-    return {
-      response: `Skills: ${portfolioData.skills.cards.map((card) => card.label).join(', ')}.`,
-      sectionId: 'skills',
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('experience')) {
-    return {
-      response: `Experience: ${portfolioData.experience.map((item) => `${item.title} (${item.year})`).join('; ')}.`,
-      sectionId: 'experience',
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  if (normalizedQuery.includes('contact') || normalizedQuery.includes('email') || normalizedQuery.includes('linkedin') || normalizedQuery.includes('github')) {
-    return {
-      response: `Contact: ${portfolioData.contact.email}. GitHub: ${portfolioData.socialLinks.github.href}. LinkedIn: ${portfolioData.socialLinks.linkedin.href}.`,
-      sectionId: 'contact',
-      highlightProjectTitles: [],
-      openUrls: [],
-    };
-  }
-
-  return {
-    response: 'I can answer from the portfolio about skills, projects, experience, contact, resume, best project, backend skills, cloud experience, internships, certifications, and why hire me.',
-    sectionId: null,
-    highlightProjectTitles: [],
-    openUrls: [],
-  };
-};
+const knowledgeDocuments = [
+  buildDocument({
+    id: 'profile-summary',
+    source: 'Resume summary',
+    title: 'Profile summary',
+    text: profileSummary,
+    tags: ['resume', 'summary', 'profile'],
+  }),
+  buildDocument({
+    id: 'hero-summary',
+    source: 'Hero summary',
+    title: 'Hero summary',
+    text: portfolioData.hero.summary,
+    tags: ['hero', 'summary', 'introduction'],
+  }),
+  ...portfolioData.about.paragraphs.map((paragraph, index) => buildDocument({
+    id: `about-${index}`,
+    source: 'About section',
+    title: `About paragraph ${index + 1}`,
+    text: paragraph,
+    tags: ['about', 'resume', 'profile'],
+  })),
+  buildDocument({
+    id: 'backend-expertise',
+    source: 'Recruiter FAQ',
+    title: 'Backend expertise',
+    text: backendExpertise.join(' '),
+    tags: ['backend', 'fastapi', 'api', 'skills'],
+  }),
+  buildDocument({
+    id: 'cloud-experience',
+    source: 'Recruiter FAQ',
+    title: 'Cloud experience',
+    text: cloudExperience.join(' '),
+    tags: ['cloud', 'devops', 'docker', 'kubernetes'],
+  }),
+  buildDocument({
+    id: 'why-hire-me',
+    source: 'Recruiter FAQ',
+    title: 'Why hire me',
+    text: whyHireMeSummary,
+    tags: ['why hire me', 'strengths', 'recruiter'],
+  }),
+  ...portfolioData.projects.map((project) => buildDocument({
+    id: `project-${project.title}`,
+    source: 'Projects',
+    title: project.title,
+    text: [project.description, `Tech stack: ${(project.tech || []).join(', ')}`, project.architecture ? `Architecture: ${project.architecture.architectureFlow} ${project.architecture.backendFlow} ${project.architecture.databaseInteractions} ${project.architecture.deploymentNotes}` : ''].join(' '),
+    tags: [project.title, ...(project.tech || []), 'project', 'github'],
+    url: project.github,
+  })),
+  ...portfolioData.experience.map((experience) => buildDocument({
+    id: `experience-${experience.year}`,
+    source: 'Experience',
+    title: experience.title,
+    text: `${experience.year}. ${experience.description}`,
+    tags: ['experience', 'internship', 'resume'],
+  })),
+  ...portfolioData.writing.map((writing) => buildDocument({
+    id: `writing-${writing.title}`,
+    source: 'Writing',
+    title: writing.title,
+    text: `${writing.subtitle}. ${writing.description}`,
+    tags: ['writing', 'research', 'medium', 'ieee'],
+    url: writing.href,
+  })),
+  ...portfolioData.FAQs?.map((faq, index) => buildDocument({
+    id: `faq-${index}`,
+    source: 'Recruiter FAQs',
+    title: faq.question,
+    text: faq.answer,
+    tags: ['faq', 'recruiter', 'question'],
+  })) || [],
+  buildDocument({
+    id: 'contact',
+    source: 'Contact',
+    title: 'Contact details',
+    text: `Email ${portfolioData.contact.email}. GitHub ${portfolioData.socialLinks.github.href}. LinkedIn ${portfolioData.socialLinks.linkedin.href}.`,
+    tags: ['contact', 'email', 'github', 'linkedin'],
+  }),
+  buildDocument({
+    id: 'resume',
+    source: 'Resume',
+    title: 'Resume link',
+    text: 'The resume is available for download and preview from the hero buttons.',
+    tags: ['resume', 'download'],
+    url: portfolioData.hero.buttons.resume.href,
+  }),
+];
 
 export const chatbotKnowledge = {
   profileSummary,
@@ -192,7 +151,7 @@ export const chatbotKnowledge = {
   })),
   certifications: portfolioData.certifications,
   achievements: portfolioData.achievements,
-  FAQs: [
+  FAQs: portfolioData.FAQs || [
     {
       question: 'What does Bharathi specialize in?',
       answer: 'Backend systems, cloud engineering, and research-oriented multi-cloud orchestration.',
@@ -212,4 +171,201 @@ export const chatbotKnowledge = {
     'What evidence is there of research and publication work?',
   ],
   whyHireMeSummary,
+  documents: knowledgeDocuments,
+};
+
+export const retrieveKnowledgeSnippets = (query, limit = 6) => {
+  const normalizedQuery = normalizeText(query);
+  const tokens = tokenize(query);
+
+  const scoredDocuments = knowledgeDocuments.map((document) => {
+    let score = 0;
+
+    if (!normalizedQuery) {
+      score = 1;
+    } else {
+      const titleText = normalizeText(document.title);
+      const sourceText = normalizeText(document.source);
+      const haystack = `${titleText} ${sourceText} ${document.text} ${document.tags.join(' ')}`;
+
+      if (haystack.includes(normalizedQuery)) {
+        score += 8;
+      }
+
+      if (tokens.some((token) => titleText.includes(token))) {
+        score += 4;
+      }
+
+      if (tokens.some((token) => sourceText.includes(token))) {
+        score += 2;
+      }
+
+      for (const token of tokens) {
+        if (document.tags.includes(token)) {
+          score += 3;
+        }
+
+        if (haystack.includes(token)) {
+          score += 1;
+        }
+      }
+
+      if (normalizedQuery.includes('fastapi') && document.text.toLowerCase().includes('fastapi')) {
+        score += 4;
+      }
+
+      if (normalizedQuery.includes('cloud') && document.text.toLowerCase().includes('cloud')) {
+        score += 3;
+      }
+
+      if (normalizedQuery.includes('resume') && document.tags.includes('resume')) {
+        score += 4;
+      }
+    }
+
+    return { ...document, score };
+  });
+
+  return scoredDocuments
+    .filter((document) => document.score > 0)
+    .sort((left, right) => right.score - left.score)
+    .slice(0, limit)
+    .map(({ id, source, title, text, url }) => ({ id, source, title, text, url }));
+};
+
+export const buildRagContext = (query) => {
+  const snippets = retrieveKnowledgeSnippets(query);
+  const contextText = snippets
+    .map((snippet, index) => `[${index + 1}] ${snippet.source}: ${snippet.title}\n${snippet.text}`)
+    .join('\n\n');
+
+  return {
+    query,
+    snippets,
+    contextText,
+  };
+};
+
+export const buildAssistantSystemPrompt = (ragContext) => `You are BharathiGPT, a recruiter-friendly assistant for Bharathi's portfolio.
+Answer only from the provided portfolio context.
+Do not hallucinate or use external knowledge.
+If the context is insufficient, say you do not have that information in the portfolio.
+Keep answers concise, factual, and professional.
+If the user asks about a project, you may summarize matching projects from the context.
+
+Portfolio context:
+${ragContext.contextText || 'No matching context found.'}`;
+
+export const resolveAssistantAction = (query) => {
+  const normalizedQuery = normalizeText(query);
+  const queryTokens = tokenize(query);
+  const matchedProjects = portfolioData.projects.filter((project) => {
+    const searchText = projectSearchText(project);
+    return queryTokens.some((token) => token.length > 2 && searchText.includes(token));
+  });
+
+  const wantsGithubOpen = normalizedQuery.includes('open') && normalizedQuery.includes('github');
+  const wantsResume = normalizedQuery.includes('resume');
+
+  if (wantsResume) {
+    return {
+      sectionId: null,
+      highlightProjectTitles: [],
+      openUrls: [portfolioData.hero.buttons.resume.href],
+    };
+  }
+
+  if (normalizedQuery.includes('contact') || normalizedQuery.includes('email') || normalizedQuery.includes('linkedin') || normalizedQuery.includes('github')) {
+    return {
+      sectionId: 'contact',
+      highlightProjectTitles: [],
+      openUrls: [],
+    };
+  }
+
+  if (normalizedQuery.includes('experience') || normalizedQuery.includes('internship')) {
+    return {
+      sectionId: 'experience',
+      highlightProjectTitles: [],
+      openUrls: [],
+    };
+  }
+
+  if (normalizedQuery.includes('cloud') || normalizedQuery.includes('skills') || normalizedQuery.includes('backend') || normalizedQuery.includes('devops') || normalizedQuery.includes('fastapi') || normalizedQuery.includes('project')) {
+    const projectTitles = matchedProjects.length > 0
+      ? matchedProjects.slice(0, 3).map((project) => project.title)
+      : portfolioData.projects
+        .filter((project) => project.tech.some((tech) => /fastapi|python|postgresql|redis|jwt|cloud|docker|kubernetes/i.test(tech)))
+        .slice(0, 3)
+        .map((project) => project.title);
+
+    return {
+      sectionId: 'projects',
+      highlightProjectTitles: projectTitles,
+      openUrls: wantsGithubOpen ? matchedProjects.slice(0, 2).map((project) => project.github) : [],
+    };
+  }
+
+  return {
+    sectionId: null,
+    highlightProjectTitles: [],
+    openUrls: [],
+  };
+};
+
+export const composeGroundedFallback = (query, ragContext) => {
+  const normalizedQuery = normalizeText(query);
+  const snippets = ragContext.snippets;
+  const sourceLines = snippets.map((snippet) => snippet.text).filter(Boolean);
+
+  if (!normalizedQuery) {
+    return 'Ask me about resume summary, projects, backend skills, cloud experience, internships, certifications, contact, best project, or why hire me.';
+  }
+
+  if (normalizedQuery.includes('why hire me')) {
+    return `Why hire me: ${whyHireMeSummary}`;
+  }
+
+  if (normalizedQuery.includes('best project')) {
+    const bestProject = portfolioData.projects[0];
+    return `Best project: ${bestProject.title} — ${bestProject.description}`;
+  }
+
+  if (normalizedQuery.includes('resume')) {
+    return compact(`${portfolioData.hero.summary} ${profileSummary}`);
+  }
+
+  if (normalizedQuery.includes('contact') || normalizedQuery.includes('email') || normalizedQuery.includes('linkedin') || normalizedQuery.includes('github')) {
+    return compact(`Contact: ${portfolioData.contact.email}. GitHub: ${portfolioData.socialLinks.github.href}. LinkedIn: ${portfolioData.socialLinks.linkedin.href}.`);
+  }
+
+  if (normalizedQuery.includes('skills') || normalizedQuery.includes('backend') || normalizedQuery.includes('fastapi') || normalizedQuery.includes('cloud')) {
+    return sourceLines.length > 0
+      ? compact(sourceLines.slice(0, 2).join(' '))
+      : compact(`${backendExpertise.join('. ')}. ${cloudExperience.join('. ')}.`);
+  }
+
+  if (normalizedQuery.includes('project')) {
+    const matchingProjects = portfolioData.projects.filter((project) => {
+      const searchText = projectSearchText(project);
+      return tokenize(query).some((token) => token.length > 2 && searchText.includes(token));
+    });
+
+    const projectsToUse = matchingProjects.length > 0 ? matchingProjects : portfolioData.projects.slice(0, 3);
+    return `I found these matching projects.\n${projectsToUse.slice(0, 3).map((project) => `- ${formatProjectLine(project)}`).join('\n')}`;
+  }
+
+  if (normalizedQuery.includes('experience') || normalizedQuery.includes('internship')) {
+    return `Internships:\n${portfolioData.experience.map((item) => `- ${item.title} (${item.year}) — ${item.description}`).join('\n')}`;
+  }
+
+  if (normalizedQuery.includes('certif')) {
+    return portfolioData.certifications.length > 0
+      ? `Certifications: ${portfolioData.certifications.join('; ')}.`
+      : 'No certifications are listed in the portfolio yet.';
+  }
+
+  return sourceLines.length > 0
+    ? compact(sourceLines[0])
+    : 'I can answer from the portfolio about resume summary, projects, backend skills, cloud experience, internships, certifications, contact, best project, and why hire me.';
 };
