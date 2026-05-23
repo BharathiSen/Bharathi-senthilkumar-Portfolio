@@ -48,17 +48,3 @@ All core colors are defined in `src/index.css` under `:root`. You can modify the
 ### Modifying 3D Scene
 The 3D cube and its interactions are located in `src/components/Scene.jsx`. You can change the geometry, material, or animation logic there.
 
-## 📦 Deployment
-
-### Vercel
-1. Connect your GitHub repository to Vercel.
-2. Ensure the build command is `npm run build` and the output directory is `dist`.
-3. Click **Deploy**.
-
-### Netlify
-1. Connect your repository to Netlify.
-2. Use `npm run build` as the build command and `dist` as the publish directory.
-3. Deploy!
-
-## 📄 License
-This project is for personal use as a portfolio. Feel free to customize it to showcase your own work.
