@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   assistantPromptChips,
   buildAssistantSystemPrompt,
@@ -151,7 +151,7 @@ const useBharathiGpt = () => {
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const cacheRef = useRef(new Map());
-  const providerConfig = useMemo(getProviderConfig, []);
+  const providerConfig = getProviderConfig();
 
   useEffect(() => {
     cacheRef.current = readCache();
