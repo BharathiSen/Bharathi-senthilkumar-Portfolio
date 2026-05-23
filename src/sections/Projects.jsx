@@ -13,14 +13,6 @@ const projects = [
     date: 'Feb 2026'
   },
   {
-    title: 'ACDOF: Adaptive Cloud DevOps Orchestration Framework',
-    description: 'Research prototype for carbon-aware, cost-aware multi-cloud decisioning with predictive workload forecasting, multi-objective region scoring, closed-loop adaptation, and cross-cloud failover simulation.',
-    tech: ['Python', 'Multi-Cloud', 'Carbon-Aware Scheduling', 'Control Loop', 'Kubernetes', 'KEDA'],
-    github: 'https://github.com/BharathiSen/ACDOF',
-    demo: '#',
-    date: 'Apr 2026'
-  },
-  {
     title: 'Carbon Aware Serverless Scheduler',
     description: 'Built a multi-cloud scheduler using ElectricityMap API to optimize workloads based on real-time carbon intensity, significantly reducing estimated carbon emissions. Designed serverless architecture on Google Cloud with automated CI/CD and monitoring.',
     tech: ['Google Cloud', 'Cloud Run', 'Cloud Functions', 'Firestore', 'Python', 'Docker', 'CI/CD'],
@@ -29,21 +21,31 @@ const projects = [
     date: 'Oct 2025'
   },
   {
-    title: 'VectorShift Studio',
-    description: 'High-fidelity pipeline editor using ReactFlow + FastAPI with DAG validation, custom nodes, and interactive canvas tooling for production-style workflow composition.',
-    tech: ['ReactFlow', 'React', 'FastAPI', 'Python', 'Zustand', 'DAG Validation'],
-    github: 'https://github.com/BharathiSen/vector-shift',
-    demo: 'https://vector-shift-frontend-theta.vercel.app/',
-    date: 'May 2026'
-  },
-  {
     title: 'TaskFlow: Multi-Tenant Backend',
     description: 'Designed a multi-tenant backend with secure JWT-based authentication, RBAC, and data isolation. Built scalable REST APIs using FastAPI and PostgreSQL and optimized read performance with Redis caching.',
     tech: ['FastAPI', 'PostgreSQL', 'Redis', 'JWT'],
     github: 'https://github.com/BharathiSen/Taskflow',
     demo: '#',
     date: 'Mar 2025'
+  },
+  {
+    title: 'ACDOF: Adaptive Cloud DevOps Orchestration Framework',
+    description: 'Research prototype for carbon-aware, cost-aware multi-cloud decisioning with predictive workload forecasting, multi-objective region scoring, closed-loop adaptation, and cross-cloud failover simulation.',
+    tech: ['Python', 'Multi-Cloud', 'Carbon-Aware Scheduling', 'Control Loop', 'Kubernetes', 'KEDA'],
+    github: 'https://github.com/BharathiSen/ACDOF',
+    demo: 'https://ieeexplore.ieee.org/document/11346190',
+    demoType: 'research',
+    date: 'Apr 2026'
+  },
+  {
+    title: 'VectorShift Studio',
+    description: 'High-fidelity pipeline editor using ReactFlow + FastAPI with DAG validation, custom nodes, and interactive canvas tooling for production-style workflow composition.',
+    tech: ['ReactFlow', 'React', 'FastAPI', 'Python', 'Zustand', 'DAG Validation'],
+    github: 'https://github.com/BharathiSen/vector-shift',
+    demo: 'https://vector-shift-frontend-theta.vercel.app/',
+    date: 'May 2026'
   }
+  
 ];
 
 const Projects = () => {
@@ -89,13 +91,13 @@ const Projects = () => {
                   <a href={project.github} className="btn btn-outline" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
                     <FaGithub size={16} /> GitHub
                   </a>
-                  {project.demo !== '#' ? (
+                  {project.demoType === 'research' ? (
                     <a href={project.demo} className="btn btn-primary" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
-                      <ExternalLink size={16} /> Live Demo
+                      <ExternalLink size={16} /> Research Link
                     </a>
                   ) : (
-                    <a href={project.github} className="btn btn-primary" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
-                      <ExternalLink size={16} /> Research Repo
+                    <a href={project.demo} className="btn btn-primary" target="_blank" rel="noopener noreferrer" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', flex: '1 1 160px', justifyContent: 'center' }}>
+                      <ExternalLink size={16} /> Live Demo
                     </a>
                   )}
                 </div>
