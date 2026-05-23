@@ -16,6 +16,10 @@ const cloudExperience = [
 
 const whyHireMeSummary = 'Bharathi combines backend engineering, cloud awareness, and research discipline. The portfolio shows practical full-stack delivery, multi-cloud reasoning, and a consistent focus on building reliable systems with reproducible workflows.';
 
+const directFacts = {
+  cgpa: portfolioData.about.quickFacts.cgpa,
+};
+
 const normalizeText = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
 
 const tokenize = (value) => normalizeText(value).split(/\s+/).filter((token) => token.length > 1);
@@ -252,14 +256,31 @@ Do not hallucinate or use external knowledge.
 If the context is insufficient, say you do not have that information in the portfolio.
 Keep answers concise, factual, and professional.
 If the user asks about a project, you may summarize matching projects from the context.
+If the user asks for a direct fact like CGPA, answer with the exact value from the portfolio.
 
 Portfolio context:
 ${ragContext.contextText || 'No matching context found.'}`;
+
+export const answerDirectFact = (query) => {
+  const normalizedQuery = normalizeText(query);
+
+  if (normalizedQuery.includes('cgpa')) {
+    return `Bharathi's CGPA is ${directFacts.cgpa}.`;
+  }
+
+  return null;
+};
 
 export const composeGroundedFallback = (query, ragContext) => {
   const normalizedQuery = normalizeText(query);
   const snippets = ragContext.snippets;
   const sourceLines = snippets.map((snippet) => snippet.text).filter(Boolean);
+
+  const directFactAnswer = answerDirectFact(query);
+
+  if (directFactAnswer) {
+    return directFactAnswer;
+  }
 
   if (!normalizedQuery) {
     return 'Ask me about resume summary, projects, backend skills, cloud experience, internships, certifications, contact, best project, or why hire me.';

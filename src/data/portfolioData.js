@@ -56,6 +56,9 @@ export const portfolioData = {
       highlight: 'Me',
     },
     name: 'BHARATHI',
+    quickFacts: {
+      cgpa: '8.9',
+    },
     image: {
       src: '/Profpic.jpeg',
       alt: 'Profile',

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   assistantPromptChips,
+  answerDirectFact,
   buildAssistantSystemPrompt,
   buildRagContext,
   chatbotKnowledge,
@@ -161,6 +162,12 @@ const useBharathiGpt = () => {
   }, []);
 
   const generateResponse = useCallback(async (query) => {
+    const directFactAnswer = answerDirectFact(query);
+
+    if (directFactAnswer) {
+      return directFactAnswer;
+    }
+
     const ragContext = buildRagContext(query);
     const cacheKey = buildCacheKey(providerConfig.provider, providerConfig.openAiModel || providerConfig.geminiModel, query, ragContext.contextText);
 
