@@ -18,6 +18,13 @@ const whyHireMeSummary = 'Bharathi combines backend engineering, cloud awareness
 
 const directFacts = {
   cgpa: portfolioData.about.quickFacts.cgpa,
+  college: portfolioData.about.quickFacts.college,
+  degree: portfolioData.about.quickFacts.degree,
+  department: portfolioData.about.quickFacts.department,
+  batch: portfolioData.about.quickFacts.batch,
+  name: portfolioData.hero.name,
+  title: portfolioData.hero.title,
+  email: portfolioData.contact.email,
 };
 
 const normalizeText = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
@@ -63,6 +70,13 @@ const knowledgeDocuments = [
     text: portfolioData.hero.summary,
     tags: ['hero', 'summary', 'introduction'],
   }),
+  buildDocument({
+    id: 'education-quick-facts',
+    source: 'About section',
+    title: 'Education quick facts',
+    text: `CGPA ${portfolioData.about.quickFacts.cgpa}. College ${portfolioData.about.quickFacts.college}. Degree ${portfolioData.about.quickFacts.degree}. Batch ${portfolioData.about.quickFacts.batch}.`,
+    tags: ['education', 'cgpa', 'college', 'degree', 'batch'],
+  }),
   ...portfolioData.about.paragraphs.map((paragraph, index) => buildDocument({
     id: `about-${index}`,
     source: 'About section',
@@ -77,6 +91,13 @@ const knowledgeDocuments = [
     text: backendExpertise.join(' '),
     tags: ['backend', 'fastapi', 'api', 'skills'],
   }),
+  ...portfolioData.skills.cards.map((card, index) => buildDocument({
+    id: `skill-card-${index}`,
+    source: 'Skills',
+    title: `${card.label} skills`,
+    text: `${card.title}. ${card.description}.`,
+    tags: [card.label, card.title, ...card.description.split(/,\s*/)],
+  })),
   buildDocument({
     id: 'cloud-experience',
     source: 'Recruiter FAQ',
@@ -257,6 +278,7 @@ If the context is insufficient, say you do not have that information in the port
 Keep answers concise, factual, and professional.
 If the user asks about a project, you may summarize matching projects from the context.
 If the user asks for a direct fact like CGPA, answer with the exact value from the portfolio.
+If the user asks about Bharathi's background, education, skills, projects, experience, writing, contact, or recruiter FAQs, answer only from the portfolio context.
 
 Portfolio context:
 ${ragContext.contextText || 'No matching context found.'}`;
@@ -266,6 +288,30 @@ export const answerDirectFact = (query) => {
 
   if (normalizedQuery.includes('cgpa')) {
     return `Bharathi's CGPA is ${directFacts.cgpa}.`;
+  }
+
+  if (normalizedQuery.includes('study') || normalizedQuery.includes('studies') || normalizedQuery.includes('department') || normalizedQuery.includes('branch') || normalizedQuery.includes('what does bharathi study')) {
+    return `Bharathi studies ${directFacts.degree} at ${directFacts.college}. His department is ${directFacts.department}.`;
+  }
+
+  if (normalizedQuery.includes('degree') || normalizedQuery.includes('branch') || normalizedQuery.includes('engineering')) {
+    return `Bharathi is pursuing ${directFacts.degree} at ${directFacts.college}.`;
+  }
+
+  if (normalizedQuery.includes('batch') || normalizedQuery.includes('year')) {
+    return `Bharathi's batch is ${directFacts.batch}.`;
+  }
+
+  if (normalizedQuery.includes('name')) {
+    return `Bharathi's name is ${directFacts.name}.`;
+  }
+
+  if (normalizedQuery.includes('role') || normalizedQuery.includes('title')) {
+    return `Bharathi describes himself as a ${directFacts.title}.`;
+  }
+
+  if (normalizedQuery.includes('email') || normalizedQuery.includes('contact')) {
+    return `Bharathi's contact email is ${directFacts.email}.`;
   }
 
   return null;

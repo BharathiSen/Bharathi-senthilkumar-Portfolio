@@ -58,6 +58,10 @@ export const portfolioData = {
     name: 'BHARATHI',
     quickFacts: {
       cgpa: '8.9',
+      college: 'Chennai Institute of Technology',
+      degree: 'B.E. Electronics and Communication Engineering',
+      department: 'Electronics and Communication Engineering',
+      batch: '2023–2027',
     },
     image: {
       src: '/Profpic.jpeg',
