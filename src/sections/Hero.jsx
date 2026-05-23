@@ -1,13 +1,40 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import SplitText from '../components/SplitText';
 import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { portfolioData } from '../data/portfolioData';
-import { chatbotKnowledge } from '../data/chatbotKnowledge';
+import { assistantPromptChips, chatbotKnowledge, getAssistantResponse } from '../data/chatbotKnowledge';
 
 const Hero = () => {
   const heroContent = portfolioData.hero;
   const contactLinks = portfolioData.socialLinks;
+  const [assistantMessages, setAssistantMessages] = useState([
+    { role: 'assistant', content: chatbotKnowledge.profileSummary },
+  ]);
+  const [assistantInput, setAssistantInput] = useState('');
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [assistantMessages]);
+
+  const submitAssistantQuery = (query) => {
+    const trimmedQuery = query.trim();
+
+    if (!trimmedQuery) {
+      return;
+    }
+
+    const assistantReply = getAssistantResponse(trimmedQuery);
+
+    setAssistantMessages((currentMessages) => [
+      ...currentMessages,
+      { role: 'user', content: trimmedQuery },
+      { role: 'assistant', content: assistantReply },
+    ]);
+    setAssistantInput('');
+  };
 
   return (
     <>
@@ -157,17 +184,61 @@ const Hero = () => {
               Ask about projects, skills, or experience.
             </p>
 
-            <div style={{ border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.03)', borderRadius: '18px', padding: '0.95rem', marginBottom: '1rem' }}>
-              <p style={{ margin: 0, color: 'var(--text-primary)', fontSize: '0.92rem', lineHeight: 1.6 }}>
-                {chatbotKnowledge.profileSummary}
-              </p>
+            <div style={{ border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.03)', borderRadius: '18px', padding: '0.95rem', marginBottom: '1rem', maxHeight: '220px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {assistantMessages.map((message, index) => (
+                <div
+                  key={`${message.role}-${index}-${message.content.slice(0, 18)}`}
+                  style={{
+                    alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
+                    maxWidth: '92%',
+                    borderRadius: '16px',
+                    border: '1px solid var(--glass-border)',
+                    background: message.role === 'user' ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)',
+                    padding: '0.8rem 0.9rem',
+                  }}
+                >
+                  <p style={{ margin: 0, color: 'var(--text-primary)', fontSize: '0.88rem', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
+                    {message.content}
+                  </p>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
             </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem', marginBottom: '1rem' }}>
+              {assistantPromptChips.map((chip) => (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => submitAssistantQuery(chip.query)}
+                  className="hero-social-button"
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    borderRadius: '999px',
+                    padding: '0.55rem 0.8rem',
+                    fontSize: '0.8rem',
+                    whiteSpace: 'nowrap',
+                  }}
+                  aria-label={chip.label}
+                >
+                  {chip.label}
+                </button>
+              ))}
+            </div>
+
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                submitAssistantQuery(assistantInput);
+              }}
+              style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '0.25rem' }}
+            >
               <input
                 type="text"
-                readOnly
-                value="Ask a question..."
+                value={assistantInput}
+                onChange={(event) => setAssistantInput(event.target.value)}
+                placeholder="Ask a question..."
                 aria-label="Assistant prompt input"
                 style={{
                   flex: 1,
@@ -181,14 +252,14 @@ const Hero = () => {
                 }}
               />
               <button
-                type="button"
+                type="submit"
                 className="btn btn-outline"
                 style={{ whiteSpace: 'nowrap', paddingInline: '1rem' }}
                 aria-label="Send prompt"
               >
                 Send
               </button>
-            </div>
+            </form>
 
           </div>
         </motion.aside>
