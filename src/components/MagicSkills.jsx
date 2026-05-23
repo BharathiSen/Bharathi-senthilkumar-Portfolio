@@ -1,70 +1,13 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { gsap } from 'gsap';
-import {
-  SiDocker,
-  SiFirebase,
-  SiFastapi,
-  SiGithubactions,
-  SiGooglecloud,
-  SiJavascript,
-  SiKubernetes,
-  SiNextdotjs,
-  SiC,
-  SiJsonwebtokens,
-  SiPostgresql,
-  SiPython,
-  SiReact,
-  SiRedis,
-  SiScikitlearn,
-  SiTypescript,
-} from 'react-icons/si';
-import { FaDatabase, FaHtml5, FaCss3Alt, FaRobot, FaShieldAlt, FaLock } from 'react-icons/fa';
+import { portfolioData } from '../data/portfolioData';
 import './MagicSkills.css';
 
 const DEFAULT_PARTICLE_COUNT = 8;
 const DEFAULT_SPOTLIGHT_RADIUS = 250;
 const DEFAULT_GLOW_COLOR = '220,220,220';
 const MOBILE_BREAKPOINT = 768;
-
-const cardData = [
-  {
-    label: 'Languages',
-    title: 'Programming',
-    description: 'Python, Java, C, SQL',
-    icons: [SiPython, SiC, FaDatabase],
-  },
-  {
-    label: 'Frontend',
-    title: 'UI Engineering',
-    description: 'React.js, Next.js, TypeScript, JavaScript, HTML, CSS',
-    icons: [SiReact, SiNextdotjs, SiTypescript, SiJavascript, FaHtml5, FaCss3Alt],
-  },
-  {
-    label: 'Backend',
-    title: 'API & Systems',
-    description: 'FastAPI, REST APIs, JWT, OAuth, RBAC',
-    icons: [SiFastapi, SiJsonwebtokens, FaShieldAlt, FaLock],
-  },
-  {
-    label: 'Database',
-    title: 'Data Layer',
-    description: 'PostgreSQL, Redis, Firebase',
-    icons: [SiPostgresql, SiRedis, SiFirebase],
-  },
-  {
-    label: 'Cloud',
-    title: 'Cloud & DevOps',
-    description: 'GCP, Docker, CI/CD, GitHub Actions, Serverless Architecture',
-    icons: [SiGooglecloud, SiDocker, SiGithubactions, SiKubernetes],
-  },
-  {
-    label: 'AI / ML',
-    title: 'Intelligent Systems',
-    description: 'scikit-learn, MLOps, LLM Integration',
-    icons: [SiScikitlearn, SiPython, FaRobot],
-  },
-];
 
 const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
   const el = document.createElement('div');
@@ -529,6 +472,7 @@ const MagicSkills = ({
   const prefersReducedMotion = useReducedMotion();
   const shouldDisableAnimations = disableAnimations || isMobile || prefersReducedMotion;
   const effectiveParticleCount = useMemo(() => (shouldDisableAnimations ? 0 : Math.min(particleCount, 6)), [particleCount, shouldDisableAnimations]);
+  const cardData = portfolioData.skills.cards;
 
   return (
     <>

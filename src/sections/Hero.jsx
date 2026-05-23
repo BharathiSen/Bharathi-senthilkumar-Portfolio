@@ -2,9 +2,11 @@ import { motion } from 'framer-motion';
 import SplitText from '../components/SplitText';
 import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import resumePdf from '../assets/Bharathi_Resume.pdf';
+import { portfolioData } from '../data/portfolioData';
 
 const Hero = () => {
+  const heroContent = portfolioData.hero;
+  const contactLinks = portfolioData.socialLinks;
   
 
   return (
@@ -18,10 +20,10 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h2 style={{ fontSize: '1.5rem', color: '#808080', marginBottom: '1rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase' }}>
-            Hello, I am
+            {heroContent.greeting}
           </h2>
           <SplitText
-            text="BHARATHI"
+            text={heroContent.name}
             className="hero-title"
             tag="h1"
             delay={50}
@@ -77,7 +79,7 @@ const Hero = () => {
             }
           `}</style>
           <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', color: 'var(--text-secondary)', marginBottom: '2rem', fontWeight: 400 }}>
-            Backend Engineer | Cloud & AI Enthusiast
+            {heroContent.title}
           </h3>
         </motion.div>
 
@@ -88,7 +90,7 @@ const Hero = () => {
           style={{ maxWidth: '600px', marginBottom: '3rem' }}
         >
           <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)' }}>
-            I build backend systems, cloud-based applications, and practical software projects while mastering DSA and CS fundamentals.
+            {heroContent.summary}
           </p>
         </motion.div>
 
@@ -98,29 +100,29 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 1 }}
           style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', pointerEvents: 'auto' }}
         >
-          <a href="#projects" className="btn btn-primary">
-            View Projects <ArrowRight size={18} />
+          <a href={heroContent.buttons.primary.href} className="btn btn-primary">
+            {heroContent.buttons.primary.label} <ArrowRight size={18} />
           </a>
-          <a href={resumePdf} className="btn btn-outline" download="Bharathi_Resume.pdf" aria-label="Download resume" title="Download resume">
-            Download Resume <ArrowDown size={18} />
+          <a href={heroContent.buttons.resume.href} className="btn btn-outline" download={heroContent.buttons.resume.download} aria-label="Download resume" title="Download resume">
+            {heroContent.buttons.resume.label} <ArrowDown size={18} />
           </a>
-          <a href={resumePdf} className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Preview resume" title="Preview resume" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            Preview Resume
+          <a href={heroContent.buttons.preview.href} className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Preview resume" title="Preview resume" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+            {heroContent.buttons.preview.label}
           </a>
           <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=bharathisenthilkumar28@gmail.com"
+            href={portfolioData.contact.emailComposeUrl}
             className="hero-contact-button"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Email Bharathi"
-            title="Email Bharathi"
+            aria-label={`Email ${heroContent.name}`}
+            title={`Email ${heroContent.name}`}
           >
             <Mail size={22} />
           </a>
-          <a href="https://github.com/BharathiSen/" className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
+          <a href={contactLinks.github.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.github.ariaLabel} title={contactLinks.github.title}>
             <FaGithub size={20} />
           </a>
-          <a href="https://www.linkedin.com/in/bharathisenthilkumar28/" className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+          <a href={contactLinks.linkedin.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.linkedin.ariaLabel} title={contactLinks.linkedin.title}>
             <FaLinkedin size={20} />
           </a>
         </motion.div>

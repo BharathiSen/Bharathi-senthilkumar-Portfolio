@@ -1,18 +1,7 @@
 import { motion } from 'framer-motion';
-import { SiDocker, SiFastapi, SiGithub, SiJavascript, SiPostgresql, SiPython, SiReact } from 'react-icons/si';
-
 import LogoLoop from '../components/LogoLoop';
 import MagicSkills from '../components/MagicSkills';
-
-const skillLogos = [
-  { node: <SiPython />, title: 'Python', href: 'https://www.python.org/' },
-  { node: <SiFastapi />, title: 'FastAPI', href: 'https://fastapi.tiangolo.com/' },
-  { node: <SiPostgresql />, title: 'PostgreSQL', href: 'https://www.postgresql.org/' },
-  { node: <SiReact />, title: 'React', href: 'https://react.dev/' },
-  { node: <SiJavascript />, title: 'JavaScript', href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-  { node: <SiDocker />, title: 'Docker', href: 'https://www.docker.com/' },
-  { node: <SiGithub />, title: 'GitHub', href: 'https://github.com/' },
-];
+import { portfolioData } from '../data/portfolioData';
 
 const Skills = () => {
   return (
@@ -51,7 +40,7 @@ const Skills = () => {
           style={{ marginTop: '3rem' }}
         >
           <LogoLoop
-            logos={skillLogos}
+            logos={portfolioData.skills.logos}
             speed={70}
             direction="left"
             logoHeight={42}

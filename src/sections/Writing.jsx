@@ -1,26 +1,10 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, BookText, FileText } from 'lucide-react';
-
-const writingItems = [
-  {
-    title: 'Medium Blogs',
-    subtitle: 'Product notes, engineering reflections, and practical write-ups.',
-    description: 'Short-form blogs and tutorials published on Medium, covering ideas, lessons, and implementation notes from ongoing work.',
-    href: 'https://medium.com/@bharathisenthilkumar28',
-    cta: 'Read on Medium',
-    icon: BookText,
-  },
-  {
-    title: 'Research Writings',
-    subtitle: 'IEEE-indexed and research-oriented writing.',
-    description: 'Research documentation and publication work focused on multi-cloud orchestration, adaptive control loops, and carbon-aware decisioning.',
-    href: 'https://ieeexplore.ieee.org/document/11346190/authors#authors',
-    cta: 'View research profile',
-    icon: FileText,
-  },
-];
+import { ExternalLink } from 'lucide-react';
+import { portfolioData } from '../data/portfolioData';
 
 const Writing = () => {
+  const writingItems = portfolioData.writing;
+
   return (
     <section id="writing" className="section" style={{ background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.02), transparent)' }}>
       <div className="container">

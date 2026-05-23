@@ -1,0 +1,241 @@
+import React from 'react';
+import { BookText, FileText } from 'lucide-react';
+import {
+  FaCss3Alt,
+  FaDatabase,
+  FaHtml5,
+  FaLock,
+  FaRobot,
+  FaShieldAlt,
+} from 'react-icons/fa';
+import {
+  SiDocker,
+  SiFastapi,
+  SiFirebase,
+  SiGithub,
+  SiGithubactions,
+  SiGooglecloud,
+  SiJavascript,
+  SiKubernetes,
+  SiNextdotjs,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiRedis,
+  SiScikitlearn,
+  SiTypescript,
+  SiC,
+} from 'react-icons/si';
+import resumePdf from '../assets/Bharathi_Resume.pdf';
+
+export const portfolioData = {
+  hero: {
+    greeting: 'Hello, I am',
+    name: 'BHARATHI',
+    title: 'Backend Engineer | Cloud & AI Enthusiast',
+    summary: 'I build backend systems, cloud-based applications, and practical software projects while mastering DSA and CS fundamentals.',
+    buttons: {
+      primary: {
+        label: 'View Projects',
+        href: '#projects',
+      },
+      resume: {
+        label: 'Download Resume',
+        href: resumePdf,
+        download: 'Bharathi_Resume.pdf',
+      },
+      preview: {
+        label: 'Preview Resume',
+        href: resumePdf,
+      },
+    },
+  },
+  about: {
+    title: {
+      prefix: 'About',
+      highlight: 'Me',
+    },
+    name: 'BHARATHI',
+    image: {
+      src: '/Profpic.jpeg',
+      alt: 'Profile',
+    },
+    paragraphs: [
+      'I am a final year B.E. Electronics and Communication Engineering student at Chennai Institute of Technology (2023–2027) with a CGPA: 8.9',
+      'I am a software engineer with strong interest in backend systems, cloud computing, and AI applications.',
+      'My work focuses on building scalable APIs, multi-tenant backend systems, and cloud-native solutions using technologies such as FastAPI, PostgreSQL, Docker, and modern web frameworks.',
+    ],
+  },
+  skills: {
+    logos: [
+      { node: React.createElement(SiPython), title: 'Python', href: 'https://www.python.org/' },
+      { node: React.createElement(SiFastapi), title: 'FastAPI', href: 'https://fastapi.tiangolo.com/' },
+      { node: React.createElement(SiPostgresql), title: 'PostgreSQL', href: 'https://www.postgresql.org/' },
+      { node: React.createElement(SiReact), title: 'React', href: 'https://react.dev/' },
+      { node: React.createElement(SiJavascript), title: 'JavaScript', href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+      { node: React.createElement(SiDocker), title: 'Docker', href: 'https://www.docker.com/' },
+      { node: React.createElement(SiGithub), title: 'GitHub', href: 'https://github.com/' },
+    ],
+    cards: [
+      {
+        label: 'Languages',
+        title: 'Programming',
+        description: 'Python, Java, C, SQL',
+        icons: [SiPython, SiC, FaDatabase],
+      },
+      {
+        label: 'Frontend',
+        title: 'UI Engineering',
+        description: 'React.js, Next.js, TypeScript, JavaScript, HTML, CSS',
+        icons: [SiReact, SiNextdotjs, SiTypescript, SiJavascript, FaHtml5, FaCss3Alt],
+      },
+      {
+        label: 'Backend',
+        title: 'API & Systems',
+        description: 'FastAPI, REST APIs, JWT, OAuth, RBAC',
+        icons: [SiFastapi, SiDocker, FaShieldAlt, FaLock],
+      },
+      {
+        label: 'Database',
+        title: 'Data Layer',
+        description: 'PostgreSQL, Redis, Firebase',
+        icons: [SiPostgresql, SiRedis, SiFirebase],
+      },
+      {
+        label: 'Cloud',
+        title: 'Cloud & DevOps',
+        description: 'GCP, Docker, CI/CD, GitHub Actions, Serverless Architecture',
+        icons: [SiGooglecloud, SiDocker, SiGithubactions, SiKubernetes],
+      },
+      {
+        label: 'AI / ML',
+        title: 'Intelligent Systems',
+        description: 'scikit-learn, MLOps, LLM Integration',
+        icons: [SiScikitlearn, SiPython, FaRobot],
+      },
+    ],
+  },
+  projects: [
+    {
+      title: 'API Reliability Lab (Production SaaS Platform)',
+      description: 'Built a full-stack SaaS platform to simulate API failures (latency, rate limits, timeouts) and analyze backend reliability. Implemented real-time streaming using SSE to deliver live latency metrics and simulation logs. Optimized performance with Redis caching and PostgreSQL indexing, and designed secure multi-tenant architecture.',
+      tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Redis', 'Docker', 'CI/CD'],
+      github: 'https://github.com/BharathiSen/ARP-cgpt',
+      demo: 'https://arp-cgpt.vercel.app/',
+      architecture: {
+        architectureFlow: 'Browser UI -> Next.js app -> simulation engine -> live SSE stream -> dashboard updates',
+        backendFlow: 'Request orchestration, failure injection, metrics aggregation, and multi-tenant isolation',
+        databaseInteractions: 'Redis for fast runtime state; PostgreSQL for indexed history and event persistence',
+        deploymentNotes: 'Frontend deployed on Vercel; services containerized for reproducible local and cloud runs',
+      },
+      date: 'Feb 2026',
+    },
+    {
+      title: 'Carbon Aware Serverless Scheduler',
+      description: 'Built a multi-cloud scheduler using ElectricityMap API to optimize workloads based on real-time carbon intensity, significantly reducing estimated carbon emissions. Designed serverless architecture on Google Cloud with automated CI/CD and monitoring.',
+      tech: ['Google Cloud', 'Cloud Run', 'Cloud Functions', 'Firestore', 'Python', 'Docker', 'CI/CD'],
+      github: 'https://github.com/BharathiSen/cass',
+      demo: '#',
+      architecture: {
+        architectureFlow: 'Workload input -> carbon intensity lookup -> scoring engine -> scheduling decision -> cloud execution',
+        backendFlow: 'Policy evaluation, serverless trigger handling, and monitoring for emissions-aware execution',
+        databaseInteractions: 'Firestore stores workflow state and decision history; external API calls remain stateless',
+        deploymentNotes: 'Designed for Google Cloud serverless deployment with CI/CD and Dockerized local runs',
+      },
+      date: 'Oct 2025',
+    },
+    {
+      title: 'TaskFlow: Multi-Tenant Backend',
+      description: 'Designed a multi-tenant backend with secure JWT-based authentication, RBAC, and data isolation. Built scalable REST APIs using FastAPI and PostgreSQL and optimized read performance with Redis caching.',
+      tech: ['FastAPI', 'PostgreSQL', 'Redis', 'JWT'],
+      github: 'https://github.com/BharathiSen/Taskflow',
+      demo: '#',
+      architecture: {
+        architectureFlow: 'Client -> auth gateway -> FastAPI services -> tenant-aware data layer -> cached responses',
+        backendFlow: 'JWT auth, RBAC, tenancy checks, and REST endpoint orchestration',
+        databaseInteractions: 'PostgreSQL for primary records; Redis for hot-path caching and session-adjacent lookups',
+        deploymentNotes: 'Container-friendly backend designed for repeatable deployment across cloud runtimes',
+      },
+      date: 'Mar 2025',
+    },
+    {
+      title: 'ACDOF: Adaptive Cloud DevOps Orchestration Framework',
+      description: 'Research prototype for carbon-aware, cost-aware multi-cloud decisioning with predictive workload forecasting, multi-objective region scoring, closed-loop adaptation, and cross-cloud failover simulation.',
+      tech: ['Python', 'Multi-Cloud', 'Carbon-Aware Scheduling', 'Control Loop', 'Kubernetes', 'KEDA'],
+      github: 'https://github.com/BharathiSen/ACDOF',
+      demo: 'https://ieeexplore.ieee.org/document/11346190',
+      demoType: 'research',
+      architecture: {
+        architectureFlow: 'Forecasting layer -> region scoring -> adaptive control loop -> failover and routing policy simulation',
+        backendFlow: 'Online adaptation, carbon/cost objective balancing, and stability checks under noisy signals',
+        databaseInteractions: 'Experiment artifacts and traces are recorded for reproducibility and baseline comparison',
+        deploymentNotes: 'Research prototype targets reproducible local experiments with optional KEDA/Kubernetes live-mode integration',
+      },
+      date: 'Apr 2026',
+    },
+    {
+      title: 'VectorShift Studio',
+      description: 'High-fidelity pipeline editor using ReactFlow + FastAPI with DAG validation, custom nodes, and interactive canvas tooling for production-style workflow composition.',
+      tech: ['ReactFlow', 'React', 'FastAPI', 'Python', 'Zustand', 'DAG Validation'],
+      github: 'https://github.com/BharathiSen/vector-shift',
+      demo: 'https://vector-shift-frontend-theta.vercel.app/',
+      architecture: {
+        architectureFlow: 'Canvas editor -> node graph -> backend DAG validation -> execution-ready workflow state',
+        backendFlow: 'Node actions, graph validation, and pipeline integrity checks through FastAPI',
+        databaseInteractions: 'State is managed in the app store; persisted data can be extended for pipeline history and templates',
+        deploymentNotes: 'Frontend deployment is separated from the FastAPI backend for easy cloud rollout',
+      },
+      date: 'May 2026',
+    },
+  ],
+  writing: [
+    {
+      title: 'Medium Blogs',
+      subtitle: 'Product notes, engineering reflections, and practical write-ups.',
+      description: 'Short-form blogs and tutorials published on Medium, covering ideas, lessons, and implementation notes from ongoing work.',
+      href: 'https://medium.com/@bharathisenthilkumar28',
+      cta: 'Read on Medium',
+      icon: BookText,
+    },
+    {
+      title: 'Research Writings',
+      subtitle: 'IEEE-indexed and research-oriented writing.',
+      description: 'Research documentation and publication work focused on multi-cloud orchestration, adaptive control loops, and carbon-aware decisioning.',
+      href: 'https://ieeexplore.ieee.org/document/11346190/authors#authors',
+      cta: 'View research profile',
+      icon: FileText,
+    },
+  ],
+  experience: [
+    {
+      year: 'Nov 2024',
+      title: 'Software Development Intern — India Meteorological Department (Doppler Weather Radar)',
+      description: 'Developed terrain-aware radar propagation models using Python, DSM/DEM datasets, and GIS tools. Modeled beam blockage and wave propagation to improve radar siting accuracy. Built geospatial workflows to process large-scale terrain datasets for operational meteorological decision systems.',
+    },
+    {
+      year: 'Aug 2024',
+      title: 'Machine Learning Intern — Cognifyz Technologies',
+      description: 'Built ML pipelines for prediction, clustering, and recommendation systems. Applied feature engineering and model tuning to improve performance, and developed visualizations to surface model insights and interpretability.',
+    },
+  ],
+  certifications: [],
+  achievements: [],
+  contact: {
+    intro: "I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+    email: 'bharathisenthilkumar28@gmail.com',
+    emailComposeUrl: 'https://mail.google.com/mail/?view=cm&fs=1&to=bharathisenthilkumar28@gmail.com',
+    footer: 'Designed & Built by BHARATHI',
+  },
+  socialLinks: {
+    github: {
+      href: 'https://github.com/BharathiSen/',
+      ariaLabel: 'GitHub profile',
+      title: 'GitHub',
+    },
+    linkedin: {
+      href: 'https://www.linkedin.com/in/bharathisenthilkumar28/',
+      ariaLabel: 'LinkedIn profile',
+      title: 'LinkedIn',
+    },
+  },
+};

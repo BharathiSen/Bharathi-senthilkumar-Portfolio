@@ -2,8 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
+import { portfolioData } from '../data/portfolioData';
 
 const Contact = () => {
+  const contactContent = portfolioData.contact;
+  const socialLinks = portfolioData.socialLinks;
+
   return (
     <section id="contact" className="section" style={{ paddingBottom: '2rem' }}>
       <div className="container">
@@ -26,7 +30,7 @@ const Contact = () => {
             transition={{ delay: 0.2 }}
             style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1.1rem' }}
           >
-            I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            {contactContent.intro}
           </motion.p>
 
           <motion.div
@@ -36,13 +40,13 @@ const Contact = () => {
             transition={{ delay: 0.4 }}
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem' }}
           >
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=bharathisenthilkumar28@gmail.com" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Email Bharathi" title="Email Bharathi">
+            <a href={contactContent.emailComposeUrl} className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Email Bharathi" title="Email Bharathi">
               <Mail size={24} />
             </a>
-            <a href="https://www.linkedin.com/in/bharathisenthilkumar28/" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+            <a href={socialLinks.linkedin.href} className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label={socialLinks.linkedin.ariaLabel} title={socialLinks.linkedin.title}>
               <FaLinkedin size={24} />
             </a>
-            <a href="https://github.com/BharathiSen/" className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
+            <a href={socialLinks.github.href} className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label={socialLinks.github.ariaLabel} title={socialLinks.github.title}>
               <FaGithub size={24} />
             </a>
           </motion.div>
@@ -50,7 +54,7 @@ const Contact = () => {
           <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, transparent, var(--glass-border), transparent)', marginBottom: '2rem' }}></div>
           
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Designed & Built by BHARATHI &copy; {new Date().getFullYear()}
+            {contactContent.footer} &copy; {new Date().getFullYear()}
           </p>
         </div>
 

@@ -1,20 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const timeline = [
-  {
-    year: 'Nov 2024',
-    title: 'Software Development Intern — India Meteorological Department (Doppler Weather Radar)',
-    description: 'Developed terrain-aware radar propagation models using Python, DSM/DEM datasets, and GIS tools. Modeled beam blockage and wave propagation to improve radar siting accuracy. Built geospatial workflows to process large-scale terrain datasets for operational meteorological decision systems.'
-  },
-  {
-    year: 'Aug 2024',
-    title: 'Machine Learning Intern — Cognifyz Technologies',
-    description: 'Built ML pipelines for prediction, clustering, and recommendation systems. Applied feature engineering and model tuning to improve performance, and developed visualizations to surface model insights and interpretability.'
-  }
-];
+import { portfolioData } from '../data/portfolioData';
 
 const Experience = () => {
+  const timeline = portfolioData.experience;
+
   return (
     <section id="experience" className="section">
       <div className="container">
