@@ -4,6 +4,7 @@ import Hero from './sections/Hero';
 import About from './sections/About';
 import Skills from './sections/Skills';
 import Projects from './sections/Projects';
+import Writing from './sections/Writing';
 import Experience from './sections/Experience';
 import Contact from './sections/Contact';
 import ClickSpark from './components/ClickSpark';
@@ -41,6 +42,7 @@ function App() {
             <About />
             <Skills />
             <Projects />
+            <Writing />
             <Experience />
           </main>
           <Contact />
