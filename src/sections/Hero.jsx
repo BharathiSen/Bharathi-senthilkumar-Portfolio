@@ -49,12 +49,12 @@ const Hero = () => {
             }
           `}</style>
           <style>{`
-            .hero-contact-button {
+            .hero-social-button {
               display: inline-flex;
               align-items: center;
               justify-content: center;
-              width: clamp(44px, 12vw, 64px);
-              height: clamp(44px, 12vw, 64px);
+              width: 52px;
+              height: 52px;
               background: var(--bg-card);
               border: 1px solid var(--glass-border);
               border-radius: 50%;
@@ -65,12 +65,12 @@ const Hero = () => {
               touch-action: manipulation;
             }
 
-            .hero-contact-button:focus-visible {
+            .hero-social-button:focus-visible {
               outline: 2px solid var(--accent-grey);
               outline-offset: 4px;
             }
 
-            .hero-contact-button:hover {
+            .hero-social-button:hover {
               color: #ffffff;
               border-color: var(--accent-grey);
               background: rgba(255, 255, 255, 0.05);
@@ -114,18 +114,18 @@ const Hero = () => {
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'flex-start', alignItems: 'center', pointerEvents: 'auto' }}>
             <a
               href={portfolioData.contact.emailComposeUrl}
-              className="hero-contact-button"
+              className="hero-social-button"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Email ${heroContent.name}`}
               title={`Email ${heroContent.name}`}
             >
-              <Mail size={22} />
+              <Mail size={20} />
             </a>
-            <a href={contactLinks.github.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.github.ariaLabel} title={contactLinks.github.title}>
+            <a href={contactLinks.github.href} className="hero-social-button" target="_blank" rel="noopener noreferrer" aria-label={contactLinks.github.ariaLabel} title={contactLinks.github.title}>
               <FaGithub size={20} />
             </a>
-            <a href={contactLinks.linkedin.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.linkedin.ariaLabel} title={contactLinks.linkedin.title}>
+            <a href={contactLinks.linkedin.href} className="hero-social-button" target="_blank" rel="noopener noreferrer" aria-label={contactLinks.linkedin.ariaLabel} title={contactLinks.linkedin.title}>
               <FaLinkedin size={20} />
             </a>
           </div>
