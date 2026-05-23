@@ -13,7 +13,7 @@ const Hero = () => {
     <>
     <section id="hero" style={{ height: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
       {/* Content */}
-      <div className="container" style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', pointerEvents: 'none' }}>
+      <div className="container" style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', pointerEvents: 'none', paddingLeft: 'clamp(1rem, 6vw, 5rem)', paddingRight: '1rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -32,7 +32,7 @@ const Hero = () => {
             splitType="chars"
             from={{ opacity: 0, y: 40 }}
             to={{ opacity: 1, y: 0 }}
-            textAlign="center"
+            textAlign="left"
           />
           <style>{`
             .hero-title {
@@ -98,33 +98,37 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1 }}
-          style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', pointerEvents: 'auto' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start', pointerEvents: 'auto' }}
         >
-          <a href={heroContent.buttons.primary.href} className="btn btn-primary">
-            {heroContent.buttons.primary.label} <ArrowRight size={18} />
-          </a>
-          <a href={heroContent.buttons.resume.href} className="btn btn-outline" download={heroContent.buttons.resume.download} aria-label="Download resume" title="Download resume">
-            {heroContent.buttons.resume.label} <ArrowDown size={18} />
-          </a>
-          <a href={heroContent.buttons.preview.href} className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Preview resume" title="Preview resume" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            {heroContent.buttons.preview.label}
-          </a>
-          <a
-            href={portfolioData.contact.emailComposeUrl}
-            className="hero-contact-button"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Email ${heroContent.name}`}
-            title={`Email ${heroContent.name}`}
-          >
-            <Mail size={22} />
-          </a>
-          <a href={contactLinks.github.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.github.ariaLabel} title={contactLinks.github.title}>
-            <FaGithub size={20} />
-          </a>
-          <a href={contactLinks.linkedin.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.linkedin.ariaLabel} title={contactLinks.linkedin.title}>
-            <FaLinkedin size={20} />
-          </a>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'flex-start', alignItems: 'center' }}>
+            <a href={heroContent.buttons.primary.href} className="btn btn-primary">
+              {heroContent.buttons.primary.label} <ArrowRight size={18} />
+            </a>
+            <a href={heroContent.buttons.resume.href} className="btn btn-outline" download={heroContent.buttons.resume.download} aria-label="Download resume" title="Download resume">
+              {heroContent.buttons.resume.label} <ArrowDown size={18} />
+            </a>
+            <a href={heroContent.buttons.preview.href} className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Preview resume" title="Preview resume" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              {heroContent.buttons.preview.label}
+            </a>
+          </div>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'flex-start', alignItems: 'center', pointerEvents: 'auto' }}>
+            <a
+              href={portfolioData.contact.emailComposeUrl}
+              className="hero-contact-button"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Email ${heroContent.name}`}
+              title={`Email ${heroContent.name}`}
+            >
+              <Mail size={22} />
+            </a>
+            <a href={contactLinks.github.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.github.ariaLabel} title={contactLinks.github.title}>
+              <FaGithub size={20} />
+            </a>
+            <a href={contactLinks.linkedin.href} className="btn btn-outline" style={{ padding: '0.75rem', borderRadius: '50%', pointerEvents: 'auto', touchAction: 'manipulation' }} target="_blank" rel="noopener noreferrer" aria-label={contactLinks.linkedin.ariaLabel} title={contactLinks.linkedin.title}>
+              <FaLinkedin size={20} />
+            </a>
+          </div>
         </motion.div>
       </div>
       
