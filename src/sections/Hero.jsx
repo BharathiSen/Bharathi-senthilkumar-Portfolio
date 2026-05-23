@@ -5,7 +5,10 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import resumePdf from '../assets/Bharathi_Resume.pdf';
 
 const Hero = () => {
+  
+
   return (
+    <>
     <section id="hero" style={{ height: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
       {/* Content */}
       <div className="container" style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', pointerEvents: 'none' }}>
@@ -101,6 +104,9 @@ const Hero = () => {
           <a href={resumePdf} className="btn btn-outline" download="Bharathi_Resume.pdf" aria-label="Download resume" title="Download resume">
             Download Resume <ArrowDown size={18} />
           </a>
+          <a href={resumePdf} className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Preview resume" title="Preview resume" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+            Preview Resume
+          </a>
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=bharathisenthilkumar28@gmail.com"
             className="hero-contact-button"
@@ -137,6 +143,8 @@ const Hero = () => {
         </a>
       </motion.div>
     </section>
+    
+    </>
   );
 };
 
