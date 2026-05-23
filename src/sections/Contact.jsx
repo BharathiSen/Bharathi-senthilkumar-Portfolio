@@ -50,7 +50,7 @@ const Contact = () => {
           <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, transparent, var(--glass-border), transparent)', marginBottom: '2rem' }}></div>
           
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Designed & Built by BHARATHI S &copy; {new Date().getFullYear()}
+            Designed & Built by BHARATHI &copy; {new Date().getFullYear()}
           </p>
         </div>
 

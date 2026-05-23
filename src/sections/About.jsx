@@ -45,7 +45,7 @@ const About = () => {
             <div className="glass-panel" style={{ padding: '0.9rem', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'center', maxWidth: '420px', margin: '0 auto' }}>
               <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
               <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.75rem', lineHeight: 1.6 }}>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.35rem', color: 'var(--text-primary)' }}>BHARATHI S</h3>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.35rem', color: 'var(--text-primary)', textAlign: 'center' }}>BHARATHI</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: 0 }}>
                   I am a final year B.E. Electronics and Communication Engineering student at Chennai Institute of Technology (2023–2027) with a CGPA: 8.9
                 </p>

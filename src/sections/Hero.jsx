@@ -18,7 +18,7 @@ const Hero = () => {
             Hello, I am
           </h2>
           <SplitText
-            text="BHARATHI S"
+            text="BHARATHI"
             className="hero-title"
             tag="h1"
             delay={50}
