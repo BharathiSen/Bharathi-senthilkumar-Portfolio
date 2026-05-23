@@ -2,6 +2,12 @@ import { portfolioData } from './portfolioData';
 
 const profileSummary = 'Bharathi is a backend-focused software engineer and ECE student at Chennai Institute of Technology with experience in cloud systems, research-driven orchestration, and full-stack backend platforms.';
 
+const profileHighlights = [
+  'Backend-focused engineering student building APIs, cloud systems, and applied AI tooling.',
+  'Works across FastAPI, PostgreSQL, Redis, Docker, Google Cloud, React, and TypeScript.',
+  'Shows research depth through carbon-aware orchestration, scheduling, and adaptive control-loop work.',
+];
+
 const backendExpertise = [
   'FastAPI, REST APIs, JWT authentication, RBAC, tenant-aware architecture',
   'Redis caching, PostgreSQL indexing, multi-tenant data isolation',
@@ -16,15 +22,48 @@ const cloudExperience = [
 
 const whyHireMeSummary = 'Bharathi combines backend engineering, cloud awareness, and research discipline. The portfolio shows practical full-stack delivery, multi-cloud reasoning, and a consistent focus on building reliable systems with reproducible workflows.';
 
+const githubSummary = `GitHub profile: ${portfolioData.socialLinks.github.href}. Recent work includes API Reliability Lab, Carbon Aware Serverless Scheduler, TaskFlow, ACDOF, and VectorShift Studio.`;
+
+const certificationsSummary = portfolioData.certifications.length > 0
+  ? portfolioData.certifications.join('; ')
+  : "No certifications are listed in Bharathi's portfolio yet.";
+
+const achievementsSummary = portfolioData.achievements.length > 0
+  ? portfolioData.achievements.join('; ')
+  : "No achievements are listed in Bharathi's portfolio yet.";
+
+const recruiterQuestions = [
+  'What backend systems has Bharathi built end-to-end?',
+  'How has Bharathi applied cloud and DevOps in real projects?',
+  'What evidence is there of research and publication work?',
+  'Tell me about Bharathi',
+  'Is Bharathi backend focused?',
+  'Does Bharathi know cloud?',
+  'What makes Bharathi a good hire?',
+  'Which project is strongest?',
+  'What technologies does Bharathi prefer?',
+  'Is Bharathi experienced with APIs?',
+  'What internship experience does Bharathi have?',
+  'What is Bharathi\'s engineering focus?',
+];
+
 const directFacts = {
   cgpa: portfolioData.about.quickFacts.cgpa,
   college: portfolioData.about.quickFacts.college,
   degree: portfolioData.about.quickFacts.degree,
   department: portfolioData.about.quickFacts.department,
   batch: portfolioData.about.quickFacts.batch,
+  currentInterest: portfolioData.about.quickFacts.currentInterest,
   name: portfolioData.hero.name,
   title: portfolioData.hero.title,
   email: portfolioData.contact.email,
+  availability: 'Bharathi is currently looking for new opportunities.',
+  latestRepo: 'VectorShift Studio',
+  latestRepoLink: portfolioData.projects[portfolioData.projects.length - 1].github,
+  topLanguages: ['Python', 'JavaScript', 'TypeScript', 'SQL', 'Java', 'C'],
+  githubSummary,
+  certificationsSummary,
+  achievementsSummary,
 };
 
 const normalizeText = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
@@ -46,6 +85,80 @@ const buildDocument = ({ id, source, title, text, tags = [], url = '' }) => ({
   url,
 });
 
+const buildSectionText = (title, lines) => `${title}\n${lines.map((line) => `- ${compact(line)}`).join('\n')}`;
+
+const buildProjectSummary = (project) => `${project.title}: ${project.description} Tech stack: ${(project.tech || []).join(', ')}.`;
+
+const buildExperienceSummary = (experience) => `${experience.title} (${experience.year}): ${experience.description}`;
+
+const recruiterFaqEntries = [
+  {
+    question: 'Tell me about Bharathi',
+    answer: `${profileSummary} ${portfolioData.hero.summary}`,
+  },
+  {
+    question: 'Is Bharathi backend focused?',
+    answer: 'Yes. Bharathi is backend-focused, with FastAPI, REST APIs, JWT authentication, RBAC, tenant-aware architecture, PostgreSQL, and Redis featured throughout the portfolio.',
+  },
+  {
+    question: 'Does Bharathi know cloud?',
+    answer: 'Yes. The portfolio shows Google Cloud, Cloud Run, Cloud Functions, Firestore, Docker, Kubernetes, KEDA, CI/CD, and multi-cloud scheduling work.',
+  },
+  {
+    question: 'What makes Bharathi a good hire?',
+    answer: whyHireMeSummary,
+  },
+  {
+    question: 'Which project is strongest?',
+    answer: 'API Reliability Lab is the strongest product-style project because it combines secure multi-tenant architecture, Redis caching, PostgreSQL indexing, live SSE metrics, and reliability simulation.',
+  },
+  {
+    question: 'What technologies does Bharathi prefer?',
+    answer: "Bharathi's portfolio leans toward Python, FastAPI, PostgreSQL, Redis, Docker, Google Cloud, React, TypeScript, and JavaScript.",
+  },
+  {
+    question: 'Is Bharathi experienced with APIs?',
+    answer: 'Yes. The portfolio includes REST APIs, authentication flows, multi-tenant backend services, streaming updates, and orchestration logic.',
+  },
+  {
+    question: 'What internship experience does Bharathi have?',
+    answer: portfolioData.experience.map((item) => buildExperienceSummary(item)).join(' '),
+  },
+  {
+    question: 'What is Bharathi\'s engineering focus?',
+    answer: 'Bharathi focuses on backend engineering, cloud-native systems, and research-informed software design.',
+  },
+];
+
+const portfolioContextSections = [
+  buildSectionText('Profile summary', [profileSummary, ...profileHighlights]),
+  buildSectionText('Education', [
+    `CGPA ${portfolioData.about.quickFacts.cgpa}`,
+    `College ${portfolioData.about.quickFacts.college}`,
+    `Degree ${portfolioData.about.quickFacts.degree}`,
+    `Department ${portfolioData.about.quickFacts.department}`,
+    `Batch ${portfolioData.about.quickFacts.batch}`,
+    `Current interest ${portfolioData.about.quickFacts.currentInterest}`,
+  ]),
+  buildSectionText('Backend expertise', backendExpertise),
+  buildSectionText('Cloud skills', cloudExperience),
+  buildSectionText('AI skills', ['scikit-learn, LLM integration, and applied intelligent systems work.']),
+  buildSectionText('Internships', portfolioData.experience.map((item) => buildExperienceSummary(item))),
+  buildSectionText('Projects', portfolioData.projects.map((project) => buildProjectSummary(project))),
+  buildSectionText('Certifications', [certificationsSummary]),
+  buildSectionText('Achievements', [achievementsSummary]),
+  buildSectionText('GitHub', [githubSummary]),
+  buildSectionText('Contact', [
+    `Email ${portfolioData.contact.email}`,
+    `GitHub ${portfolioData.socialLinks.github.href}`,
+    `LinkedIn ${portfolioData.socialLinks.linkedin.href}`,
+  ]),
+  buildSectionText('Why hire me', [whyHireMeSummary]),
+  buildSectionText('Recruiter FAQs', recruiterFaqEntries.map((faq) => `${faq.question} — ${faq.answer}`)),
+];
+
+const portfolioKnowledgeContext = portfolioContextSections.join('\n\n');
+
 export const assistantPromptChips = [
   { label: 'Resume Summary', query: 'resume summary' },
   { label: 'Best Project', query: 'best project' },
@@ -57,11 +170,25 @@ export const assistantPromptChips = [
 
 const knowledgeDocuments = [
   buildDocument({
+    id: 'portfolio-overview',
+    source: 'Portfolio overview',
+    title: 'Portfolio overview',
+    text: "Bharathi's portfolio covers backend engineering, cloud systems, research-oriented orchestration, internships, technical writing, and recruiter-facing FAQs. The strongest project areas are API reliability, multi-cloud scheduling, multi-tenant backend systems, and interactive workflow tooling.",
+    tags: ['portfolio', 'overview', 'works', 'projects', 'writing', 'internships'],
+  }),
+  buildDocument({
     id: 'profile-summary',
     source: 'Resume summary',
     title: 'Profile summary',
     text: profileSummary,
     tags: ['resume', 'summary', 'profile'],
+  }),
+  buildDocument({
+    id: 'profile-highlights',
+    source: 'Profile summary',
+    title: 'Profile highlights',
+    text: profileHighlights.join(' '),
+    tags: ['profile', 'backend', 'cloud', 'ai'],
   }),
   buildDocument({
     id: 'hero-summary',
@@ -106,33 +233,75 @@ const knowledgeDocuments = [
     tags: ['cloud', 'devops', 'docker', 'kubernetes'],
   }),
   buildDocument({
+    id: 'ai-skills',
+    source: 'Skills',
+    title: 'AI skills',
+    text: 'Bharathi lists scikit-learn, LLM integration, and applied intelligent systems work in the portfolio.',
+    tags: ['ai', 'ml', 'llm', 'scikit-learn'],
+  }),
+  buildDocument({
     id: 'why-hire-me',
     source: 'Recruiter FAQ',
     title: 'Why hire me',
     text: whyHireMeSummary,
     tags: ['why hire me', 'strengths', 'recruiter'],
   }),
+  buildDocument({
+    id: 'github-summary',
+    source: 'GitHub',
+    title: 'GitHub summary',
+    text: githubSummary,
+    tags: ['github', 'repositories', 'projects'],
+    url: portfolioData.socialLinks.github.href,
+  }),
+  buildDocument({
+    id: 'availability',
+    source: 'Contact',
+    title: 'Availability',
+    text: directFacts.availability,
+    tags: ['availability', 'opportunities', 'internships', 'recruiter'],
+  }),
+  buildDocument({
+    id: 'latest-repo',
+    source: 'Projects',
+    title: 'Latest repository',
+    text: `The latest repository shown in the portfolio is ${directFacts.latestRepo}. Link: ${directFacts.latestRepoLink}.`,
+    tags: ['latest repo', 'github', 'project', 'repository'],
+    url: directFacts.latestRepoLink,
+  }),
+  buildDocument({
+    id: 'top-languages',
+    source: 'Skills',
+    title: 'Top languages',
+    text: `Bharathi's top languages in the portfolio are ${directFacts.topLanguages.join(', ')}.`,
+    tags: ['top languages', 'languages', 'skills', 'programming'],
+  }),
   ...portfolioData.projects.map((project) => buildDocument({
     id: `project-${project.title}`,
     source: 'Projects',
     title: project.title,
-    text: [project.description, `Tech stack: ${(project.tech || []).join(', ')}`, project.architecture ? `Architecture: ${project.architecture.architectureFlow} ${project.architecture.backendFlow} ${project.architecture.databaseInteractions} ${project.architecture.deploymentNotes}` : ''].join(' '),
-    tags: [project.title, ...(project.tech || []), 'project', 'github'],
+    text: [
+      project.description,
+      `Tech stack: ${(project.tech || []).join(', ')}`,
+      project.architecture ? `Architecture: ${project.architecture.architectureFlow} ${project.architecture.backendFlow} ${project.architecture.databaseInteractions} ${project.architecture.deploymentNotes}` : '',
+      project.demoType === 'research' ? 'Research-linked project.' : 'Product-style project.',
+    ].join(' '),
+    tags: [project.title, ...(project.tech || []), 'project', 'github', 'portfolio'],
     url: project.github,
   })),
   ...portfolioData.experience.map((experience) => buildDocument({
     id: `experience-${experience.year}`,
     source: 'Experience',
     title: experience.title,
-    text: `${experience.year}. ${experience.description}`,
-    tags: ['experience', 'internship', 'resume'],
+    text: `${experience.year}. ${experience.description} This internship experience is part of Bharathi's portfolio work history.`,
+    tags: ['experience', 'internship', 'resume', 'work'],
   })),
   ...portfolioData.writing.map((writing) => buildDocument({
     id: `writing-${writing.title}`,
     source: 'Writing',
     title: writing.title,
-    text: `${writing.subtitle}. ${writing.description}`,
-    tags: ['writing', 'research', 'medium', 'ieee'],
+    text: `${writing.subtitle}. ${writing.description} This is part of Bharathi's writing and research portfolio.`,
+    tags: ['writing', 'research', 'medium', 'ieee', 'portfolio'],
     url: writing.href,
   })),
   ...portfolioData.FAQs?.map((faq, index) => buildDocument({
@@ -142,6 +311,20 @@ const knowledgeDocuments = [
     text: faq.answer,
     tags: ['faq', 'recruiter', 'question'],
   })) || [],
+  ...recruiterFaqEntries.map((faq, index) => buildDocument({
+    id: `recruiter-faq-${index}`,
+    source: 'Recruiter FAQs',
+    title: faq.question,
+    text: faq.answer,
+    tags: ['faq', 'recruiter', 'question', 'conversational'],
+  })),
+  ...recruiterQuestions.map((question, index) => buildDocument({
+    id: `recruiter-question-${index}`,
+    source: 'Recruiter Questions',
+    title: question,
+    text: question,
+    tags: ['recruiter', 'faq', 'question'],
+  })),
   buildDocument({
     id: 'contact',
     source: 'Contact',
@@ -161,8 +344,10 @@ const knowledgeDocuments = [
 
 export const chatbotKnowledge = {
   profileSummary,
+  profileHighlights,
   backendExpertise,
   cloudExperience,
+  aiSkills: ['scikit-learn', 'LLM integration', 'applied intelligent systems'],
   internships: portfolioData.experience.map((item) => ({
     role: item.title,
     period: item.year,
@@ -176,6 +361,7 @@ export const chatbotKnowledge = {
   })),
   certifications: portfolioData.certifications,
   achievements: portfolioData.achievements,
+  githubSummary,
   FAQs: portfolioData.FAQs || [
     {
       question: 'What does Bharathi specialize in?',
@@ -190,14 +376,13 @@ export const chatbotKnowledge = {
       answer: 'The portfolio Projects and Writing sections, plus GitHub and Medium links, show the latest work.',
     },
   ],
-  recruiterQuestions: [
-    'What backend systems has Bharathi built end-to-end?',
-    'How has Bharathi applied cloud and DevOps in real projects?',
-    'What evidence is there of research and publication work?',
-  ],
+  recruiterQuestions,
   whyHireMeSummary,
+  portfolioKnowledgeContext,
   documents: knowledgeDocuments,
 };
+
+export const buildPortfolioKnowledgeContext = () => portfolioKnowledgeContext;
 
 export const retrieveKnowledgeSnippets = (query, limit = 6) => {
   const normalizedQuery = normalizeText(query);
@@ -243,7 +428,27 @@ export const retrieveKnowledgeSnippets = (query, limit = 6) => {
         score += 3;
       }
 
+      if (normalizedQuery.includes('backend') && document.text.toLowerCase().includes('backend')) {
+        score += 4;
+      }
+
+      if (normalizedQuery.includes('api') && document.text.toLowerCase().includes('api')) {
+        score += 4;
+      }
+
+      if (normalizedQuery.includes('intern') && document.text.toLowerCase().includes('intern')) {
+        score += 3;
+      }
+
+      if (normalizedQuery.includes('hire') && document.text.toLowerCase().includes('hire')) {
+        score += 4;
+      }
+
       if (normalizedQuery.includes('resume') && document.tags.includes('resume')) {
+        score += 4;
+      }
+
+      if (normalizedQuery.includes('github') && document.text.toLowerCase().includes('github')) {
         score += 4;
       }
     }
@@ -268,20 +473,27 @@ export const buildRagContext = (query) => {
     query,
     snippets,
     contextText,
+    portfolioKnowledgeContext,
   };
 };
 
 export const buildAssistantSystemPrompt = (ragContext) => `You are BharathiGPT, a recruiter-friendly assistant for Bharathi's portfolio.
 Answer only from the provided portfolio context.
+Use the supplied knowledge to infer reasonable answers to recruiter-style and conversational questions about Bharathi.
 Do not hallucinate or use external knowledge.
-If the context is insufficient, say you do not have that information in the portfolio.
-Keep answers concise, factual, and professional.
-If the user asks about a project, you may summarize matching projects from the context.
+If the portfolio does not contain the answer, say it is not available in Bharathi's portfolio.
+Keep answers concise, factual, professional, and conversational.
+Prefer grounded summaries over keyword matching.
+If multiple snippets point to the same conclusion, state that conclusion plainly.
+If the user asks about a project, summarize the most relevant project(s) from the context.
 If the user asks for a direct fact like CGPA, answer with the exact value from the portfolio.
-If the user asks about Bharathi's background, education, skills, projects, experience, writing, contact, or recruiter FAQs, answer only from the portfolio context.
+If the user asks about Bharathi's background, education, backend expertise, cloud skills, AI skills, internships, projects, certifications, achievements, GitHub, contact, or why hire me, answer only from the portfolio context.
 
-Portfolio context:
-${ragContext.contextText || 'No matching context found.'}`;
+Recent matched context:
+${ragContext.contextText || 'No matching context found.'}
+
+Full portfolio knowledge:
+${ragContext.portfolioKnowledgeContext || portfolioKnowledgeContext}`;
 
 export const answerDirectFact = (query) => {
   const normalizedQuery = normalizeText(query);
@@ -302,6 +514,14 @@ export const answerDirectFact = (query) => {
     return `Bharathi's batch is ${directFacts.batch}.`;
   }
 
+  if (normalizedQuery.includes('latest repo') || normalizedQuery.includes('latest repository') || normalizedQuery.includes('latest project')) {
+    return `The latest repository shown in the portfolio is ${directFacts.latestRepo}.`;
+  }
+
+  if (normalizedQuery.includes('top languages') || normalizedQuery.includes('main languages') || normalizedQuery.includes('languages')) {
+    return `Bharathi's top languages in the portfolio are ${directFacts.topLanguages.join(', ')}.`;
+  }
+
   if (normalizedQuery.includes('name')) {
     return `Bharathi's name is ${directFacts.name}.`;
   }
@@ -312,6 +532,30 @@ export const answerDirectFact = (query) => {
 
   if (normalizedQuery.includes('email') || normalizedQuery.includes('contact')) {
     return `Bharathi's contact email is ${directFacts.email}.`;
+  }
+
+  if (normalizedQuery.includes('available') || normalizedQuery.includes('opportunit') || normalizedQuery.includes('open to')) {
+    return directFacts.availability;
+  }
+
+  if (normalizedQuery.includes('current interest') || normalizedQuery.includes('interest') || normalizedQuery.includes('focus')) {
+    return `Bharathi's current interest is ${directFacts.currentInterest}.`;
+  }
+
+  if (normalizedQuery.includes('research') || normalizedQuery.includes('publication')) {
+    return 'Bharathi shows research and publication work through the IEEE-linked research writing section, ACDOF research prototype, and research-oriented portfolio documentation on multi-cloud orchestration, adaptive control loops, and carbon-aware decisioning.';
+  }
+
+  if (normalizedQuery.includes('certif')) {
+    return `Certifications: ${directFacts.certificationsSummary}`;
+  }
+
+  if (normalizedQuery.includes('achiev')) {
+    return `Achievements: ${directFacts.achievementsSummary}`;
+  }
+
+  if (normalizedQuery.includes('github')) {
+    return directFacts.githubSummary;
   }
 
   return null;
@@ -353,6 +597,17 @@ export const composeGroundedFallback = (query, ragContext) => {
     return sourceLines.length > 0
       ? compact(sourceLines.slice(0, 2).join(' '))
       : compact(`${backendExpertise.join('. ')}. ${cloudExperience.join('. ')}.`);
+  }
+
+  if (normalizedQuery.includes('convers') || normalizedQuery.includes('tell me about') || normalizedQuery.includes('focus')) {
+    const summary = [
+      profileSummary,
+      whyHireMeSummary,
+      `Backend: ${backendExpertise[0]}`,
+      `Cloud: ${cloudExperience[0]}`,
+    ].join(' ');
+
+    return compact(summary);
   }
 
   if (normalizedQuery.includes('project')) {

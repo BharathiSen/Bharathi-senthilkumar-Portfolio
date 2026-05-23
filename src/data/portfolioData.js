@@ -62,6 +62,7 @@ export const portfolioData = {
       degree: 'B.E. Electronics and Communication Engineering',
       department: 'Electronics and Communication Engineering',
       batch: '2023–2027',
+      currentInterest: 'Backend systems, cloud computing, and AI applications',
     },
     image: {
       src: '/Profpic.jpeg',

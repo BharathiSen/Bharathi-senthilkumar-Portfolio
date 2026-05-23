@@ -4,6 +4,7 @@ import {
   answerDirectFact,
   buildAssistantSystemPrompt,
   buildRagContext,
+  buildPortfolioKnowledgeContext,
   chatbotKnowledge,
   composeGroundedFallback,
 } from '../data/chatbotKnowledge';
@@ -91,7 +92,11 @@ const parseGeminiResponse = async (response) => {
   return parts.map((part) => part?.text || '').join(' ').trim();
 };
 
-const generateWithOpenAI = async ({ apiKey, model, systemPrompt, userPrompt }) => {
+const formatChatHistory = (messages) => messages
+  .map((message) => `${message.role === 'user' ? 'User' : 'BharathiGPT'}: ${message.content}`)
+  .join('\n');
+
+const generateWithOpenAI = async ({ apiKey, model, systemPrompt, userPrompt, conversationHistory }) => {
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -104,6 +109,7 @@ const generateWithOpenAI = async ({ apiKey, model, systemPrompt, userPrompt }) =
       max_tokens: 220,
       messages: [
         { role: 'system', content: systemPrompt },
+        ...(conversationHistory ? [{ role: 'user', content: `Conversation history for context only:\n${conversationHistory}` }] : []),
         { role: 'user', content: userPrompt },
       ],
     }),
@@ -116,7 +122,7 @@ const generateWithOpenAI = async ({ apiKey, model, systemPrompt, userPrompt }) =
   return parseOpenAIResponse(response);
 };
 
-const generateWithGemini = async ({ apiKey, model, systemPrompt, userPrompt }) => {
+const generateWithGemini = async ({ apiKey, model, systemPrompt, userPrompt, conversationHistory, knowledgeContext }) => {
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
     method: 'POST',
     headers: {
@@ -127,6 +133,11 @@ const generateWithGemini = async ({ apiKey, model, systemPrompt, userPrompt }) =
         parts: [{ text: systemPrompt }],
       },
       contents: [
+        {
+          role: 'user',
+          parts: [{ text: `Portfolio knowledge context:\n${knowledgeContext || buildPortfolioKnowledgeContext()}` }],
+        },
+        ...(conversationHistory ? [{ role: 'user', parts: [{ text: `Recent conversation context for grounding only:\n${conversationHistory}` }] }] : []),
         {
           role: 'user',
           parts: [{ text: userPrompt }],
@@ -151,11 +162,16 @@ const useBharathiGpt = () => {
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const cacheRef = useRef(new Map());
+  const messagesRef = useRef(messages);
   const providerConfig = getProviderConfig();
 
   useEffect(() => {
     cacheRef.current = readCache();
   }, []);
+
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   const persistCache = useCallback(() => {
     writeCache(cacheRef.current);
@@ -169,7 +185,8 @@ const useBharathiGpt = () => {
     }
 
     const ragContext = buildRagContext(query);
-    const cacheKey = buildCacheKey(providerConfig.provider, providerConfig.openAiModel || providerConfig.geminiModel, query, ragContext.contextText);
+    const conversationHistory = formatChatHistory(messagesRef.current.slice(-8));
+    const cacheKey = buildCacheKey(providerConfig.provider, providerConfig.openAiModel || providerConfig.geminiModel, query, `${ragContext.contextText}::${conversationHistory}`);
 
     if (cacheRef.current.has(cacheKey)) {
       return cacheRef.current.get(cacheKey);
@@ -177,6 +194,7 @@ const useBharathiGpt = () => {
 
     const systemPrompt = buildAssistantSystemPrompt(ragContext);
     const userPrompt = `User question: ${query}\n\nAnswer using only the portfolio context.`;
+    const knowledgeContext = ragContext.portfolioKnowledgeContext || buildPortfolioKnowledgeContext();
 
     let responseText = '';
 
@@ -187,6 +205,7 @@ const useBharathiGpt = () => {
           model: providerConfig.openAiModel,
           systemPrompt,
           userPrompt,
+          conversationHistory,
         });
       } else if (providerConfig.provider === 'gemini' && providerConfig.geminiKey) {
         responseText = await generateWithGemini({
@@ -194,6 +213,8 @@ const useBharathiGpt = () => {
           model: providerConfig.geminiModel,
           systemPrompt,
           userPrompt,
+          conversationHistory,
+          knowledgeContext,
         });
       }
     } catch {
