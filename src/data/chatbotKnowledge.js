@@ -503,7 +503,7 @@ export const answerDirectFact = (query) => {
   }
 
   if (normalizedQuery.includes('study') || normalizedQuery.includes('studies') || normalizedQuery.includes('department') || normalizedQuery.includes('branch') || normalizedQuery.includes('what does bharathi study')) {
-    return `Bharathi studies ${directFacts.degree} at ${directFacts.college}. His department is ${directFacts.department}.`;
+    return `Bharathi studies ${directFacts.degree} at ${directFacts.college}. Her department is ${directFacts.department}.`;
   }
 
   if (normalizedQuery.includes('degree') || normalizedQuery.includes('branch') || normalizedQuery.includes('engineering')) {
@@ -527,7 +527,7 @@ export const answerDirectFact = (query) => {
   }
 
   if (normalizedQuery.includes('role') || normalizedQuery.includes('title')) {
-    return `Bharathi describes himself as a ${directFacts.title}.`;
+    return `Bharathi describes herself as a ${directFacts.title}.`;
   }
 
   if (normalizedQuery.includes('email') || normalizedQuery.includes('contact')) {
