@@ -4,7 +4,7 @@ import SplitText from '../components/SplitText';
 import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { portfolioData } from '../data/portfolioData';
-import { assistantPromptChips, chatbotKnowledge, getAssistantResponse } from '../data/chatbotKnowledge';
+import { assistantPromptChips, chatbotKnowledge, resolveAssistantRequest } from '../data/chatbotKnowledge';
 
 const Hero = () => {
   const heroContent = portfolioData.hero;
@@ -19,6 +19,24 @@ const Hero = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [assistantMessages]);
 
+  const runAssistantActions = (request) => {
+    if (request.sectionId) {
+      document.getElementById(request.sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    if (request.highlightProjectTitles.length > 0) {
+      window.dispatchEvent(new CustomEvent('portfolio-assistant:highlight-projects', {
+        detail: { titles: request.highlightProjectTitles },
+      }));
+    }
+
+    if (request.openUrls.length > 0) {
+      request.openUrls.forEach((url) => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      });
+    }
+  };
+
   const submitAssistantQuery = (query) => {
     const trimmedQuery = query.trim();
 
@@ -26,14 +44,15 @@ const Hero = () => {
       return;
     }
 
-    const assistantReply = getAssistantResponse(trimmedQuery);
+    const assistantRequest = resolveAssistantRequest(trimmedQuery);
 
     setAssistantMessages((currentMessages) => [
       ...currentMessages,
       { role: 'user', content: trimmedQuery },
-      { role: 'assistant', content: assistantReply },
+      { role: 'assistant', content: assistantRequest.response },
     ]);
     setAssistantInput('');
+    runAssistantActions(assistantRequest);
   };
 
   return (
@@ -104,6 +123,32 @@ const Hero = () => {
               background: rgba(255, 255, 255, 0.05);
               transform: translateY(-6px);
               box-shadow: 0 8px 18px rgba(255, 255, 255, 0.06);
+            }
+
+            .assistant-chip {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              border: 1px solid var(--glass-border);
+              border-radius: 999px;
+              background: rgba(255, 255, 255, 0.03);
+              color: var(--text-primary);
+              padding: 0.55rem 0.8rem;
+              font-size: 0.8rem;
+              line-height: 1;
+              transition: all 0.2s ease;
+              cursor: pointer;
+            }
+
+            .assistant-chip:hover {
+              border-color: rgba(255, 255, 255, 0.18);
+              background: rgba(255, 255, 255, 0.06);
+              transform: translateY(-2px);
+            }
+
+            .assistant-chip:focus-visible {
+              outline: 2px solid var(--accent-grey);
+              outline-offset: 4px;
             }
           `}</style>
             <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', color: 'var(--text-secondary)', marginBottom: '2rem', fontWeight: 400 }}>
@@ -211,15 +256,7 @@ const Hero = () => {
                   key={chip.label}
                   type="button"
                   onClick={() => submitAssistantQuery(chip.query)}
-                  className="hero-social-button"
-                  style={{
-                    width: 'auto',
-                    height: 'auto',
-                    borderRadius: '999px',
-                    padding: '0.55rem 0.8rem',
-                    fontSize: '0.8rem',
-                    whiteSpace: 'nowrap',
-                  }}
+                  className="assistant-chip"
                   aria-label={chip.label}
                 >
                   {chip.label}
