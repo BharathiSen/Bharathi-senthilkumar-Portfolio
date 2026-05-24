@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText as GSAPSplitText } from 'gsap/SplitText';
@@ -24,22 +24,35 @@ const SplitText = ({
   const ref = useRef(null);
   const animationCompletedRef = useRef(false);
   const onCompleteRef = useRef(onLetterAnimationComplete);
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const fontsLoaded = useSyncExternalStore(
+    (onStoreChange) => {
+      if (typeof document === 'undefined' || !document.fonts) {
+        return () => {};
+      }
 
-  // Keep callback ref updated
+      if (document.fonts.status === 'loaded') {
+        onStoreChange();
+        return () => {};
+      }
+
+      let cancelled = false;
+      document.fonts.ready.then(() => {
+        if (!cancelled) {
+          onStoreChange();
+        }
+      });
+
+      return () => {
+        cancelled = true;
+      };
+    },
+    () => typeof document !== 'undefined' && Boolean(document.fonts) && document.fonts.status === 'loaded',
+    () => true
+  );
+
   useEffect(() => {
     onCompleteRef.current = onLetterAnimationComplete;
   }, [onLetterAnimationComplete]);
-
-  useEffect(() => {
-    if (document.fonts.status === 'loaded') {
-      setFontsLoaded(true);
-    } else {
-      document.fonts.ready.then(() => {
-        setFontsLoaded(true);
-      });
-    }
-  }, []);
 
   useGSAP(
     () => {
@@ -51,7 +64,7 @@ const SplitText = ({
       if (el._rbsplitInstance) {
         try {
           el._rbsplitInstance.revert();
-        } catch (_) {
+        } catch {
           /* noop */
         }
         el._rbsplitInstance = null;
@@ -122,7 +135,7 @@ const SplitText = ({
         });
         try {
           splitInstance.revert();
-        } catch (_) {
+        } catch {
           /* noop */
         }
         el._rbsplitInstance = null;
