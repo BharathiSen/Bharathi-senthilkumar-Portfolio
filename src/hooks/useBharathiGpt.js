@@ -2,12 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   assistantPromptChips,
   answerDirectFact,
-  buildAssistantSystemPrompt,
   buildRagContext,
   buildPortfolioKnowledgeContext,
   chatbotKnowledge,
   composeGroundedFallback,
+  classifyQueryIntent,
 } from '../data/chatbotKnowledge';
+import { getRecruiterSystemPrompt } from '../data/recruiterSystemPrompt';
 
 const STORAGE_KEY = 'bharathi-gpt-cache-v1';
 const HISTORY_LIMIT = 20;
@@ -184,7 +185,7 @@ const useBharathiGpt = () => {
       return directFactAnswer;
     }
 
-    const ragContext = buildRagContext(query);
+    const ragContext = await buildRagContext(query);
     const conversationHistory = formatChatHistory(messagesRef.current.slice(-8));
     const cacheKey = buildCacheKey(providerConfig.provider, providerConfig.openAiModel || providerConfig.geminiModel, query, `${ragContext.contextText}::${conversationHistory}`);
 
@@ -192,9 +193,18 @@ const useBharathiGpt = () => {
       return cacheRef.current.get(cacheKey);
     }
 
-    const systemPrompt = buildAssistantSystemPrompt(ragContext);
+    const systemPrompt = getRecruiterSystemPrompt(ragContext);
     const userPrompt = `User question: ${query}\n\nAnswer using only the portfolio context.`;
     const knowledgeContext = ragContext.portfolioKnowledgeContext || buildPortfolioKnowledgeContext();
+
+    if (import.meta.env.DEV && providerConfig.provider === 'gemini') {
+      console.groupCollapsed('[BharathiGPT] Gemini context debug');
+      console.log('intent', ragContext.intent || classifyQueryIntent(query));
+      console.log('retrievedChunks', ragContext.snippets);
+      console.log('knowledgeContext', knowledgeContext);
+      console.log('systemPrompt', systemPrompt);
+      console.groupEnd();
+    }
 
     let responseText = '';
 
