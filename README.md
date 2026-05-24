@@ -32,6 +32,36 @@ npm run dev
 
 The site will be available at `http://localhost:5173`.
 
+## 🚀 Vercel Deployment
+
+This project is prepared for Vercel as a static Vite app.
+
+### Build settings
+
+- **Build Command:** `npm run build`
+- **Output Directory:** `dist`
+
+### Environment variables
+
+If you want BharathiGPT to use Gemini or OpenAI on Vercel, add these environment variables in the Vercel project settings:
+
+- `VITE_BHARATHI_GPT_PROVIDER` = `gemini` or `openai`
+- `VITE_GEMINI_API_KEY`
+- `VITE_GEMINI_MODEL`
+- `VITE_OPENAI_API_KEY`
+- `VITE_OPENAI_MODEL`
+
+If no provider key is set, the assistant falls back to grounded portfolio responses.
+
+### Automatic deploys
+
+Link the GitHub repository to Vercel and enable deployments from the main branch. After that, every successful push will trigger a new deployment automatically.
+
+### Notes
+
+- The app is a Vite single-page portfolio, so Vercel should serve `dist/index.html` for client-side navigation.
+- No extra deployment logic was added to the application.
+
 ## 🎨 Customization
 
 ### Changing Theme Colors
@@ -46,5 +76,5 @@ All core colors are defined in `src/index.css` under `:root`. You can modify the
 - **Social Links**: Modify `src/sections/Contact.jsx` and `src/sections/Hero.jsx`
 
 ### Modifying 3D Scene
-The 3D cube and its interactions are located in `src/components/Scene.jsx`. You can change the geometry, material, or animation logic there.
+The current portfolio does not use a separate 3D scene component in the app shell.
 
