@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
@@ -6,7 +6,34 @@ import { portfolioData } from '../data/portfolioData';
 
 const Projects = () => {
   const [expandedProject, setExpandedProject] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('All');
   const projects = portfolioData.projects;
+
+  useEffect(() => {
+    const handleAction = (e) => {
+      const { action, payload } = e.detail || {};
+      if (action === 'FILTER_PROJECTS' && payload) {
+        setActiveFilter(payload);
+        // Smooth scroll to projects
+        const element = document.getElementById('projects');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+    window.addEventListener('portfolio-action', handleAction);
+    return () => window.removeEventListener('portfolio-action', handleAction);
+  }, []);
+
+  const filteredProjects = projects.filter((project) => {
+    if (activeFilter === 'All') return true;
+    if (activeFilter === 'FastAPI') return project.tech.includes('FastAPI');
+    if (activeFilter === 'Serverless') return project.tech.includes('Google Cloud') || project.tech.includes('Cloud Run') || project.tech.includes('Cloud Functions') || project.tech.includes('Carbon-Aware Scheduling') || project.tech.includes('Multi-Cloud');
+    if (activeFilter === 'SaaS') return project.title.toLowerCase().includes('saas') || project.title.toLowerCase().includes('lab') || project.tech.includes('Prisma') || project.tech.includes('NextAuth');
+    if (activeFilter === 'GenAI') return project.tech.includes('Zustand') || project.tech.includes('DAG Validation') || project.title.toLowerCase().includes('shift') || project.title.toLowerCase().includes('lab');
+    return true;
+  });
+
 
   return (
     <section id="projects" className="section" style={{ background: 'linear-gradient(to bottom, transparent, rgba(0, 210, 255, 0.02), transparent)' }}>
@@ -17,13 +44,33 @@ const Projects = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="section-title">
+          <h2 className="section-title" style={{ marginBottom: '1.5rem' }}>
             Featured <span style={{ background: 'linear-gradient(to right, #00d2ff, #3a7bd5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Projects</span>
           </h2>
         </motion.div>
 
+        {/* Filter buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '3rem', flexWrap: 'wrap' }}
+        >
+          {['All', 'FastAPI', 'Serverless', 'SaaS', 'GenAI'].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
+              type="button"
+            >
+              {filter}
+            </button>
+          ))}
+        </motion.div>
+
         <div className="projects-slider" role="region" aria-label="Projects slider">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <motion.div
               key={index}
               className="projects-slide"
@@ -171,6 +218,30 @@ const Projects = () => {
             border-color: rgba(0, 210, 255, 0.3);
             box-shadow: 0 8px 32px rgba(0, 210, 255, 0.1);
           }
+          .filter-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+          }
+          .filter-btn:hover {
+            border-color: rgba(0, 210, 255, 0.4);
+            color: #fff;
+            background: rgba(0, 210, 255, 0.06);
+            transform: translateY(-2px);
+          }
+          .filter-btn.active {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+          }
           @media (max-width: 560px) {
             .projects-slide {
               flex-basis: 88vw;
@@ -189,3 +260,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

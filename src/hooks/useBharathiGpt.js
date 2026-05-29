@@ -257,10 +257,53 @@ const useBharathiGpt = () => {
 
     try {
       const responseText = await generateResponse(trimmedQuery);
+      
+      let cleanText = responseText;
+      let actionObj = null;
+      
+      // Parse potential action enclosed in ||| ... |||
+      const actionRegex = /\|\|\|(.*?)\|\|\|/s;
+      const match = responseText.match(actionRegex);
+      
+      if (match) {
+        cleanText = responseText.replace(actionRegex, '').trim();
+        try {
+          actionObj = JSON.parse(match[1].trim());
+        } catch (e) {
+          console.error('[BharathiGPT] Failed to parse action JSON:', e);
+        }
+      }
+
       setMessages((currentMessages) => [
         ...currentMessages,
-        { role: 'assistant', content: responseText },
+        { role: 'assistant', content: cleanText },
       ]);
+
+      // Execute custom UI actions
+      if (actionObj) {
+        console.log('[BharathiGPT] Triggered Action:', actionObj);
+        
+        // Dispatch custom global event for interested components (e.g., Projects)
+        window.dispatchEvent(new CustomEvent('portfolio-action', { detail: actionObj }));
+
+        // Perform standard DOM reactions immediately
+        if (actionObj.action === 'NAVIGATE' && actionObj.payload) {
+          const element = document.getElementById(actionObj.payload);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else if (actionObj.action === 'DOWNLOAD_RESUME') {
+          // Find the resume download link in the DOM or download programmatically
+          const link = document.createElement('a');
+          link.href = '/src/assets/Bharathi_Resume.pdf';
+          link.download = 'Bharathi_Resume.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+    } catch (err) {
+      console.error('[BharathiGPT] Error in sendMessage:', err);
     } finally {
       setIsThinking(false);
     }
