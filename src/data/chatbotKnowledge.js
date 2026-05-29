@@ -419,7 +419,6 @@ const getQueryEmbedding = async (query) => {
 };
 
 export const retrieveKnowledgeSnippets = async (query, limit = 5) => {
-  const q = normalizeText(query || '');
   const intent = classifyQueryIntent(query || '');
 
   // ─── Semantic path (preferred) ────────────────────────────────────────
