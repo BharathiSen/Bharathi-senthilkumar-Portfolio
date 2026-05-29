@@ -23,7 +23,8 @@ Recent matched context:
 ${ragContext?.contextText || 'No matching context found.'}
 
 Full portfolio knowledge:
-${ragContext?.portfolioKnowledgeContext || portfolioKnowledgeContext || ''};
+${ragContext?.portfolioKnowledgeContext || portfolioKnowledgeContext || ''}`;
+};
 
 export const explainerSystemPrompt = `
 You are Bharathi's Virtual Systems Architect. Your job is to deeply explain the engineering decisions behind the project requested by the user.
@@ -46,5 +47,4 @@ Keep it highly technical, catering to Senior Engineers and Engineering Managers.
 export const getExplainerSystemPrompt = (projectData) => {
   return explainerSystemPrompt.replace('{PROJECT_DATA}', typeof projectData === 'object' ? JSON.stringify(projectData, null, 2) : String(projectData));
 };
-
-};
+
