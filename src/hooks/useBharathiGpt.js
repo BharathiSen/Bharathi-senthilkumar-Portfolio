@@ -3,12 +3,11 @@ import {
   assistantPromptChips,
   answerDirectFact,
   buildRagContext,
-  buildPortfolioKnowledgeContext,
   chatbotKnowledge,
   composeGroundedFallback,
   classifyQueryIntent,
 } from '../data/chatbotKnowledge';
-import { getRecruiterSystemPrompt } from '../data/recruiterSystemPrompt';
+import { getRecruiterSystemPrompt, buildFinalGeminiPrompt } from '../data/recruiterSystemPrompt';
 
 const STORAGE_KEY = 'bharathi-gpt-cache-v1';
 const HISTORY_LIMIT = 20;
@@ -123,7 +122,13 @@ const generateWithOpenAI = async ({ apiKey, model, systemPrompt, userPrompt, con
   return parseOpenAIResponse(response);
 };
 
-const generateWithGemini = async ({ apiKey, model, systemPrompt, userPrompt, conversationHistory, knowledgeContext }) => {
+const generateWithGemini = async ({ apiKey, model, systemPrompt, userPrompt, conversationHistory }) => {
+  // userPrompt already contains the fully composed Master Prompt payload
+  // (background context + [USER'S REAL-TIME QUERY] boundary)
+  const fullUserContent = conversationHistory
+    ? `Recent Conversation History:\n${conversationHistory}\n\n${userPrompt}`
+    : userPrompt;
+
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
     method: 'POST',
     headers: {
@@ -136,17 +141,12 @@ const generateWithGemini = async ({ apiKey, model, systemPrompt, userPrompt, con
       contents: [
         {
           role: 'user',
-          parts: [{ text: `Portfolio knowledge context:\n${knowledgeContext || buildPortfolioKnowledgeContext()}` }],
-        },
-        ...(conversationHistory ? [{ role: 'user', parts: [{ text: `Recent conversation context for grounding only:\n${conversationHistory}` }] }] : []),
-        {
-          role: 'user',
-          parts: [{ text: userPrompt }],
+          parts: [{ text: fullUserContent }],
         },
       ],
       generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens: 220,
+        temperature: 0.25,
+        maxOutputTokens: 400,
       },
     }),
   });
@@ -179,30 +179,40 @@ const useBharathiGpt = () => {
   }, []);
 
   const generateResponse = useCallback(async (query) => {
-    const directFactAnswer = answerDirectFact(query);
-
-    if (directFactAnswer) {
-      return directFactAnswer;
-    }
+    // NOTE: answerDirectFact is intentionally NOT called here.
+    // All questions — including simple ones like "Which college?" — flow to
+    // Gemini so the response is natural and conversational.
 
     const ragContext = await buildRagContext(query);
     const conversationHistory = formatChatHistory(messagesRef.current.slice(-8));
-    const cacheKey = buildCacheKey(providerConfig.provider, providerConfig.openAiModel || providerConfig.geminiModel, query, `${ragContext.contextText}::${conversationHistory}`);
+    const cacheKey = buildCacheKey(
+      providerConfig.provider,
+      providerConfig.openAiModel || providerConfig.geminiModel,
+      query,
+      `${ragContext.contextText}::${conversationHistory}`,
+    );
 
     if (cacheRef.current.has(cacheKey)) {
       return cacheRef.current.get(cacheKey);
     }
 
+    // Build context from only the freshly-retrieved RAG snippets.
+    // The full portfolio bio is already in the system instruction — no need
+    // to repeat it here. Keeping only the retrieved snippets lets Gemini
+    // focus on the most relevant chunks for this specific query.
+    const localContext = ragContext?.contextText?.trim() || '';
+
     const systemPrompt = getRecruiterSystemPrompt(ragContext);
-    const userPrompt = `User question: ${query}\n\nAnswer using only the portfolio context.`;
-    const knowledgeContext = ragContext.portfolioKnowledgeContext || buildPortfolioKnowledgeContext();
+    // Master Prompt: wraps localContext as a hidden background string
+    const userPrompt = buildFinalGeminiPrompt(localContext, query);
 
     if (import.meta.env.DEV && providerConfig.provider === 'gemini') {
       console.groupCollapsed('[BharathiGPT] Gemini context debug');
       console.log('intent', ragContext.intent || classifyQueryIntent(query));
       console.log('retrievedChunks', ragContext.snippets);
-      console.log('knowledgeContext', knowledgeContext);
+      console.log('localContext (hidden background)', localContext);
       console.log('systemPrompt', systemPrompt);
+      console.log('userPrompt (full master payload)', userPrompt);
       console.groupEnd();
     }
 
@@ -224,7 +234,6 @@ const useBharathiGpt = () => {
           systemPrompt,
           userPrompt,
           conversationHistory,
-          knowledgeContext,
         });
       }
     } catch {
@@ -232,11 +241,15 @@ const useBharathiGpt = () => {
     }
 
     if (!responseText) {
-      responseText = composeGroundedFallback(query, ragContext);
+      // Try grounded fallback first, then raw direct fact as absolute last resort
+      responseText = composeGroundedFallback(query, ragContext) || answerDirectFact(query) || '';
     }
 
-    cacheRef.current.set(cacheKey, responseText);
-    persistCache();
+    // Only cache non-empty results
+    if (responseText) {
+      cacheRef.current.set(cacheKey, responseText);
+      persistCache();
+    }
 
     return responseText;
   }, [persistCache, providerConfig.geminiKey, providerConfig.geminiModel, providerConfig.openAiKey, providerConfig.openAiModel, providerConfig.provider]);
