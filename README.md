@@ -6,11 +6,6 @@ A portfolio for Bharathi S built with React and Vite. It highlights backend engi
 
 - React
 - Vite
-- Three.js / React Three Fiber
-- Framer Motion
-- GSAP
-- Lucide React
-- Plain CSS
 
 ## Quick Start
 
