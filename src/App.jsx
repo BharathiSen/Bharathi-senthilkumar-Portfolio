@@ -12,15 +12,10 @@ import ProjectDetail from './sections/ProjectDetail';
 import './index.css';
 
 function App() {
-  // If URL contains ?projectDetail=..., render the standalone ProjectDetail view
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const projectTitle = params.get('projectDetail');
-    if (projectTitle) {
-      return <ProjectDetail />;
-    }
-  } catch (e) {
-    // ignore
+  const params = new URLSearchParams(window.location.search);
+  const projectTitle = params.get('projectDetail');
+  if (projectTitle) {
+    return <ProjectDetail />;
   }
   return (
     <div className="App">
