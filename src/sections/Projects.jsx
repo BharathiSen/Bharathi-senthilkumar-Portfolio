@@ -110,13 +110,19 @@ const Projects = () => {
                   <div style={{ marginTop: '1rem' }}>
                     <button
                       type="button"
-                      onClick={() => setExpandedProject(expandedProject === index ? null : index)}
+                      onClick={() => {
+                        try {
+                          const url = `${window.location.origin}${window.location.pathname}?projectDetail=${encodeURIComponent(project.title)}`;
+                          window.open(url, '_blank');
+                        } catch (e) {
+                          // fallback: navigate in same tab
+                          window.location.href = `${window.location.origin}${window.location.pathname}?projectDetail=${encodeURIComponent(project.title)}`;
+                        }
+                      }}
                       className="project-architecture-toggle"
-                      aria-expanded={expandedProject === index}
-                      aria-controls={`project-architecture-${index}`}
                     >
                       Architecture View
-                      <ChevronDown size={16} style={{ transform: expandedProject === index ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }} />
+                      <ChevronDown size={16} style={{ transition: 'transform 0.2s ease' }} />
                     </button>
 
                     <motion.div

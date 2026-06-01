@@ -8,9 +8,20 @@ import Writing from './sections/Writing';
 import Experience from './sections/Experience';
 import Contact from './sections/Contact';
 import ClickSpark from './components/ClickSpark';
+import ProjectDetail from './sections/ProjectDetail';
 import './index.css';
 
 function App() {
+  // If URL contains ?projectDetail=..., render the standalone ProjectDetail view
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const projectTitle = params.get('projectDetail');
+    if (projectTitle) {
+      return <ProjectDetail />;
+    }
+  } catch (e) {
+    // ignore
+  }
   return (
     <div className="App">
       <ClickSpark sparkColor="#ffffff" sparkSize={6} sparkRadius={12} sparkCount={2} duration={220}>
