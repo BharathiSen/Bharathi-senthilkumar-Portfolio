@@ -5,13 +5,12 @@ import { FaGithub } from 'react-icons/fa';
 import { portfolioData } from '../data/portfolioData';
 
 const Projects = () => {
-  const [expandedProject, setExpandedProject] = useState(null);
   const [activeFilter, setActiveFilter] = useState('All');
   const projects = portfolioData.projects;
 
   useEffect(() => {
-    const handleAction = (e) => {
-      const { action, payload } = e.detail || {};
+    const handleAction = (event) => {
+      const { action, payload } = event.detail || {};
       if (action === 'FILTER_PROJECTS' && payload) {
         setActiveFilter(payload);
         // Smooth scroll to projects
@@ -125,32 +124,9 @@ const Projects = () => {
                       <ChevronDown size={16} style={{ transition: 'transform 0.2s ease' }} />
                     </button>
 
-                    <motion.div
-                      id={`project-architecture-${index}`}
-                      initial={false}
-                      animate={{ height: expandedProject === index ? 'auto' : 0, opacity: expandedProject === index ? 1 : 0 }}
-                      transition={{ duration: 0.25, ease: 'easeOut' }}
-                      style={{ overflow: 'hidden' }}
-                    >
-                      <div className="project-architecture-panel">
-                        <div>
-                          <span className="project-architecture-label">Architecture flow</span>
-                          <p className="project-architecture-text">{project.architecture.architectureFlow}</p>
-                        </div>
-                        <div>
-                          <span className="project-architecture-label">Backend flow</span>
-                          <p className="project-architecture-text">{project.architecture.backendFlow}</p>
-                        </div>
-                        <div>
-                          <span className="project-architecture-label">Database interactions</span>
-                          <p className="project-architecture-text">{project.architecture.databaseInteractions}</p>
-                        </div>
-                        <div>
-                          <span className="project-architecture-label">Deployment notes</span>
-                          <p className="project-architecture-text">{project.architecture.deploymentNotes}</p>
-                        </div>
-                      </div>
-                    </motion.div>
+                    <p className="project-architecture-text" style={{ marginTop: '0.75rem' }}>
+                      Opens a focused project detail tab with architecture information and a back option.
+                    </p>
                   </div>
                 )}
               </div>
