@@ -113,7 +113,7 @@ const Projects = () => {
                         try {
                           const url = `${window.location.origin}${window.location.pathname}?projectDetail=${encodeURIComponent(project.title)}`;
                           window.open(url, '_blank');
-                        } catch (e) {
+                        } catch {
                           // fallback: navigate in same tab
                           window.location.href = `${window.location.origin}${window.location.pathname}?projectDetail=${encodeURIComponent(project.title)}`;
                         }
