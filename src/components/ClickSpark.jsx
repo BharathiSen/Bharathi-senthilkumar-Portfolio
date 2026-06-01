@@ -91,12 +91,16 @@ const ClickSpark = ({
         const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
         const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
 
+        // Subtle, low-opacity strokes to avoid distracting clicks
+        ctx.save();
+        ctx.globalAlpha = 0.12; // make sparks faint
         ctx.strokeStyle = sparkColor;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1; // thinner lines for a cleaner look
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
         ctx.stroke();
+        ctx.restore();
 
         return true;
       });

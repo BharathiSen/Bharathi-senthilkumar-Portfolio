@@ -13,12 +13,12 @@ import './index.css';
 function App() {
   return (
     <div className="App">
-      <ClickSpark sparkColor="#ffffff" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
+      <ClickSpark sparkColor="#ffffff" sparkSize={6} sparkRadius={12} sparkCount={2} duration={220}>
         <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'auto', touchAction: 'pan-y' }}>
           <LiquidEther
             colors={['#ffffff', '#bdbdbd', '#7a7a7a']}
-            mouseForce={20}
-            cursorSize={100}
+            mouseForce={6} /* reduced mouse influence */
+            cursorSize={60} /* smaller cursor footprint */
             isViscous={false}
             viscous={30}
             iterationsViscous={32}
@@ -26,10 +26,10 @@ function App() {
             resolution={0.5}
             isBounce={false}
             autoDemo={true}
-            autoSpeed={0.5}
-            autoIntensity={2.2}
-            takeoverDuration={0.25}
-            autoResumeDelay={3000}
+            autoSpeed={0.2} /* slower auto motion */
+            autoIntensity={0.8} /* gentler auto movement */
+            takeoverDuration={0.6} /* smoother handover */
+            autoResumeDelay={10000} /* avoid frequent auto re-takeovers */
             autoRampDuration={0.6}
             style={{ position: 'absolute', inset: 0 }}
           />
