@@ -48,8 +48,11 @@ const Hero = () => {
               line-height: 1.1 !important;
               margin-bottom: 1rem !important;
               display: inline-block;
+              color: #ffffff;
             }
-            .hero-title, .hero-title div {
+            /* Gradient only on char nodes — applying it to parent + all nested
+               SplitText wrappers double-paints letters (ghost overlap on first char). */
+            .hero-title .split-char {
               background: linear-gradient(to right, #ffffff, #808080);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
