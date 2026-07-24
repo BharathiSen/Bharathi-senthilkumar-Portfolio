@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Local engineering notes (do not publish)
+ENGINEERING_NOTEBOOK.md
+docs/engineering-notebook.md
+**/ENGINEERING_NOTEBOOK.md

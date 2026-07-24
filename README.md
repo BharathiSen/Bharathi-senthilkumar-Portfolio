@@ -1,31 +1,33 @@
-# Bharathi Portfolio
+# Bharathi Senthilkumar — Portfolio
 
-A portfolio for Bharathi S built with React and Vite. It highlights backend engineering, cloud work, and selected projects in a polished 3D-style UI. Have incorporated AI assistant.
+Personal portfolio site for **Bharathi Senthilkumar**, a backend-focused software engineer and ECE student at Chennai Institute of Technology.
 
-## Tech Stack
+The site presents selected projects, skills, writing, and experience, with an embedded recruiter-oriented assistant (**BharathiGPT**) that answers from portfolio context.
 
-- React
-- Vite
+## Live site
 
-## Quick Start
+Deployed as a Vite single-page application (Vercel).
 
-```bash
-npm install
-npm run dev
-```
+## Focus areas shown
 
-Open `http://localhost:5173`.
+- Backend systems (FastAPI, PostgreSQL, Redis, multi-tenant APIs)
+- Cloud & serverless (Google Cloud, Docker, orchestration)
+- Applied GenAI tooling and research-backed work
+- Production-minded full-stack delivery
 
-## Scripts
+## Stack (high level)
 
-- `npm run dev` - start the local dev server
-- `npm run build` - create a production build
-- `npm run preview` - preview the production build
-- `npm run lint` - run ESLint
+- React + Vite
+- Framer Motion / GSAP for motion
+- WebGL fluid background (LiquidEther)
+- BharathiGPT: local RAG-style retrieval with optional OpenAI / Gemini
 
-## Notes
+## Contact
 
-- Deployed as a Vite SPA
-- Supports portfolio-based responses for the BharathiGPT assistant
-- Easy to customize in `src/sections/` and `src/data/`
+- Email: bharathisenthilkumar28@gmail.com
+- GitHub: [BharathiSen](https://github.com/BharathiSen/)
+- LinkedIn: [bharathisenthilkumar28](https://www.linkedin.com/in/bharathisenthilkumar28/)
 
+---
+
+This repository is the personal website of Bharathi Senthilkumar. It is not a template or starter kit.
