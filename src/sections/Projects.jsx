@@ -234,6 +234,14 @@ const Projects = () => {
             .project-card-actions .btn {
               width: 100%;
             }
+            .filter-btn {
+              padding: 0.55rem 1rem;
+              font-size: 0.85rem;
+              min-height: 40px;
+            }
+            .project-card h3 {
+              font-size: 1.2rem !important;
+            }
           }
         `}</style>
       </div>

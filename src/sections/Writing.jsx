@@ -26,14 +26,14 @@ const Writing = () => {
           transition={{ duration: 0.55, delay: 0.1 }}
           style={{ maxWidth: '1000px', margin: '0 auto' }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '1.25rem' }}>
+          <div className="writing-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '1.25rem' }}>
             {writingItems.map((item) => {
               const Icon = item.icon;
 
               return (
                 <div
                   key={item.title}
-                  className="glass-panel"
+                  className="glass-panel writing-card"
                   style={{
                     position: 'relative',
                     overflow: 'hidden',
@@ -45,8 +45,8 @@ const Writing = () => {
                   <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at top right, rgba(255,255,255,0.06), transparent 40%)', pointerEvents: 'none' }} />
 
                   <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                      <div style={{ width: '2.75rem', height: '2.75rem', borderRadius: '14px', border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.03)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)' }}>
+                    <div className="writing-card-header" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                      <div style={{ width: '2.75rem', height: '2.75rem', flexShrink: 0, borderRadius: '14px', border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.03)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)' }}>
                         <Icon size={18} />
                       </div>
                       <div>
@@ -78,8 +78,18 @@ const Writing = () => {
 
       <style>{`
         @media (max-width: 768px) {
-          #writing .container > div > div {
+          .writing-grid {
             grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+
+          .writing-card h3 {
+            font-size: 1.15rem !important;
+          }
+
+          .writing-card .btn {
+            width: 100%;
+            justify-content: center;
           }
         }
       `}</style>

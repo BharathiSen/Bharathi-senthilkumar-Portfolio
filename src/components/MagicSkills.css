@@ -227,6 +227,7 @@
   .magic-skills-grid {
     grid-template-columns: 1fr;
     gap: 0.9rem;
+    grid-auto-rows: auto;
   }
 
   .magic-skills-grid__item {
@@ -234,12 +235,22 @@
   }
 
   .magic-skills-card {
-    min-height: 190px;
+    min-height: 170px;
+    padding: 1.1rem;
   }
 
   .magic-skills-card__icon {
     width: 1.6rem;
     height: 1.6rem;
+  }
+
+  .magic-skills-card__title {
+    font-size: 1.15rem;
+  }
+
+  .magic-skills-card__description {
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
 }
 

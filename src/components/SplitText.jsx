@@ -165,7 +165,8 @@ const SplitText = ({
       display: 'inline-block',
       whiteSpace: 'normal',
       wordWrap: 'break-word',
-      willChange: 'transform, opacity'
+      willChange: 'transform, opacity',
+      maxWidth: '100%',
     };
     const classes = `split-parent ${className}`;
     const Tag = tag || 'p';

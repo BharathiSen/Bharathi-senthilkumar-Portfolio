@@ -23,6 +23,7 @@ const Contact = () => {
 
         <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
           <motion.p 
+            className="contact-intro"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -33,11 +34,12 @@ const Contact = () => {
           </motion.p>
 
           <motion.div
+            className="contact-socials"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem' }}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem', flexWrap: 'wrap' }}
           >
             <a href={contactContent.emailComposeUrl} className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Email Bharathi" title="Email Bharathi">
               <Mail size={24} />
@@ -70,6 +72,8 @@ const Contact = () => {
             color: var(--text-primary);
             transition: all 0.25s ease;
             text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
           }
 
           .contact-icon:focus-visible {
@@ -83,6 +87,31 @@ const Contact = () => {
             background: rgba(255, 255, 255, 0.05);
             transform: translateY(-6px);
             box-shadow: 0 8px 18px rgba(255, 255, 255, 0.06);
+          }
+
+          @media (max-width: 768px) {
+            #contact .contact-intro {
+              font-size: 1rem !important;
+              margin-bottom: 2rem !important;
+              line-height: 1.65;
+            }
+
+            #contact .contact-icon {
+              width: 52px;
+              height: 52px;
+            }
+
+            #contact .contact-socials {
+              margin-bottom: 2.5rem !important;
+              gap: 1rem !important;
+            }
+          }
+
+          @media (hover: none) and (pointer: coarse) {
+            .contact-icon:hover {
+              transform: none;
+              box-shadow: none;
+            }
           }
         `}</style>
       </div>

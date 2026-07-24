@@ -192,3 +192,50 @@ ul {
 .nav-link:hover::after {
   width: 100%;
 }
+
+/* ─── Mobile / tablet layout (desktop unchanged) ─── */
+@media (max-width: 768px) {
+  .container {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 7vw, 2.15rem);
+    margin-bottom: 2rem;
+    padding-inline: 0.25rem;
+  }
+
+  .btn {
+    min-height: 44px;
+    padding: 0.7rem 1.15rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .section {
+    padding: 3.25rem 0;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .btn:hover,
+  .glass-panel:hover,
+  .nav-link:hover {
+    transform: none;
+  }
+
+  .nav-link:hover::after {
+    width: 0;
+  }
+}

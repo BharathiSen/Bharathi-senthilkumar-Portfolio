@@ -18,7 +18,7 @@ const About = () => {
           </h2>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(220px, 1fr))', gap: '1.25rem', alignItems: 'stretch', maxWidth: '900px', margin: '0 auto', width: '100%' }}>
+        <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(220px, 1fr))', gap: '1.25rem', alignItems: 'stretch', maxWidth: '900px', margin: '0 auto', width: '100%' }}>
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -26,7 +26,7 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             style={{ minHeight: '220px' }}
           >
-            <div className="glass-panel" style={{ padding: '0', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'stretch', justifyContent: 'stretch', maxWidth: '360px', margin: '0 auto' }}>
+            <div className="glass-panel about-photo" style={{ padding: '0', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'stretch', justifyContent: 'stretch', maxWidth: '360px', margin: '0 auto' }}>
               <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
               <div style={{ position: 'relative', zIndex: 1, height: '100%', width: '100%' }}>
                 <img
@@ -45,9 +45,9 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             style={{ minHeight: '220px', display: 'flex' }}
           >
-            <div className="glass-panel" style={{ padding: '0.9rem', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'center', maxWidth: '420px', margin: '0 auto' }}>
+            <div className="glass-panel about-copy" style={{ padding: '0.9rem', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'center', maxWidth: '420px', margin: '0 auto' }}>
               <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
-              <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.75rem', lineHeight: 1.6 }}>
+              <div className="about-copy-inner" style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.75rem', lineHeight: 1.6 }}>
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '0.35rem', color: 'var(--text-primary)', textAlign: 'center' }}>{aboutContent.name}</h3>
                 {aboutContent.paragraphs.map((paragraph) => (
                   <p key={paragraph} style={{ color: 'var(--text-secondary)', marginBottom: 0 }}>
@@ -59,6 +59,37 @@ const About = () => {
           </motion.div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .about-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+
+          .about-photo {
+            max-width: 100% !important;
+            min-height: 260px;
+            aspect-ratio: 4 / 5;
+          }
+
+          .about-copy {
+            max-width: 100% !important;
+            padding: 1.15rem !important;
+          }
+
+          .about-copy-inner {
+            max-width: 100% !important;
+          }
+
+          .about-copy-inner h3 {
+            font-size: 1.3rem !important;
+          }
+
+          .about-copy-inner p {
+            font-size: 0.95rem;
+          }
+        }
+      `}</style>
     </section>
   );
 };

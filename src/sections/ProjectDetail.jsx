@@ -36,7 +36,7 @@ const ProjectDetail = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', padding: '3rem', background: 'linear-gradient(180deg,#000 0%, rgba(0,0,0,0.6) 100%)' }}>
+    <div className="project-detail-page" style={{ minHeight: '100vh', padding: '3rem', background: 'linear-gradient(180deg,#000 0%, rgba(0,0,0,0.6) 100%)' }}>
       <div style={{ maxWidth: 980, margin: '0 auto' }}>
         <button onClick={handleBack} className="btn btn-outline" style={{ marginBottom: '1rem' }}>Back to projects</button>
 
@@ -50,7 +50,7 @@ const ProjectDetail = () => {
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem' }}>
+          <div className="project-detail-actions" style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem', flexWrap: 'wrap' }}>
             <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline"><FaGithub />&nbsp;GitHub</a>
             <a href={project.demo || '#'} target="_blank" rel="noopener noreferrer" className="btn btn-primary"><ExternalLink />&nbsp;Live Demo</a>
           </div>
@@ -80,6 +80,37 @@ const ProjectDetail = () => {
           )}
         </div>
       </div>
+      <style>{`
+        .project-architecture-label {
+          display: block;
+          margin-bottom: 0.25rem;
+          color: var(--text-primary);
+          font-size: 0.78rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+        .project-architecture-text {
+          margin: 0;
+          color: var(--text-secondary);
+          font-size: 0.88rem;
+          line-height: 1.55;
+        }
+        @media (max-width: 768px) {
+          .project-detail-page {
+            padding: calc(1.25rem + env(safe-area-inset-top)) 1rem calc(1.5rem + env(safe-area-inset-bottom)) !important;
+          }
+          .project-detail-page .project-card {
+            padding: 1.25rem !important;
+          }
+          .project-detail-actions {
+            flex-direction: column;
+          }
+          .project-detail-actions .btn {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+      `}</style>
     </div>
   );
 };
