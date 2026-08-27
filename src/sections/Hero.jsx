@@ -73,7 +73,6 @@ const Hero = ({ onAskAssistant }) => {
         {/* ── the name ── */}
         <motion.h1 className="hero-name" variants={rise}>
           {hero.name}
-          <span className="hero-name-tail">{hero.surname}</span>
         </motion.h1>
 
         {/* ── asymmetric role / summary ── */}

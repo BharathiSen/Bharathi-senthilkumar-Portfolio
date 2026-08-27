@@ -26,7 +26,6 @@ export const portfolioData = {
   hero: {
     greeting: 'Backend & AI systems',
     name: 'BHARATHI',
-    surname: 'S',
     title: 'Backend & AI Systems Engineer',
     summary:
       'I build retrieval and agent infrastructure that survives production — hybrid search, durable execution records, and APIs with the failure modes designed in rather than discovered later.',
