@@ -19,7 +19,6 @@ export const portfolioData = {
         href: resumePdf,
         download: 'Bharathi_Resume.pdf',
       },
-      preview: { label: 'Preview', href: resumePdf },
     },
     // Mono metadata strip under the name
     stats: [

@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import LiquidEther from '../components/LiquidEther';
 import { portfolioData } from '../data/portfolioData';
@@ -87,13 +87,17 @@ const Hero = ({ onAskAssistant }) => {
             {hero.buttons.primary.label}
             <ArrowRight size={16} />
           </a>
+          {/* Opens the PDF in a new tab rather than downloading it — a
+              recruiter skims first and saves later. The palette still
+              carries an explicit "Download résumé" command. */}
           <a
             href={hero.buttons.resume.href}
             className="btn"
-            download={hero.buttons.resume.download}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {hero.buttons.resume.label}
-            <ArrowDown size={16} />
+            <ArrowUpRight size={16} />
           </a>
           <button type="button" className="btn" onClick={onAskAssistant}>
             Ask BharathiGPT
