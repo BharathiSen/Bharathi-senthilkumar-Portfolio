@@ -33,7 +33,7 @@ const open = (href) => {
  * highlighted one. Anything the command list does not match falls through
  * to the assistant, so the box is useful before you think of a question.
  */
-const CommandBar = ({ open: isOpen, onOpen, onClose }) => {
+const CommandBar = ({ open: isOpen, seed = '', onOpen, onClose }) => {
   const {
     assistantPromptChips,
     input,
@@ -214,10 +214,14 @@ const CommandBar = ({ open: isOpen, onOpen, onClose }) => {
     if (!isOpen) return undefined;
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    if (seed) setInput(seed);
     inputRef.current?.focus();
     return () => {
       document.body.style.overflow = previous;
     };
+    // `seed` is read once on open by design — later edits belong to the
+    // palette input, not the hero field that started the sentence.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   useEffect(() => {
@@ -262,10 +266,10 @@ const CommandBar = ({ open: isOpen, onOpen, onClose }) => {
           type="button"
           className="cmd-trigger"
           onClick={onOpen}
-          aria-label="Open command palette"
+          aria-label="Ask BharathiGPT — opens the command palette"
         >
           <span className="cmd-trigger-dot" aria-hidden="true" />
-          <span className="cmd-trigger-text">Jump to · Ask · Open</span>
+          <span className="cmd-trigger-text">Ask BharathiGPT</span>
           <kbd className="cmd-key">/</kbd>
         </button>
       </div>

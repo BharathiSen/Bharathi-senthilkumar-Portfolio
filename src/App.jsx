@@ -16,8 +16,14 @@ import './index.css';
 
 function App() {
   const [assistantOpen, setAssistantOpen] = useState(false);
+  const [assistantSeed, setAssistantSeed] = useState('');
 
-  const openAssistant = useCallback(() => setAssistantOpen(true), []);
+  // Accepts optional text so the hero ask bar can hand off whatever was
+  // typed before focus moved into the palette.
+  const openAssistant = useCallback((seed = '') => {
+    setAssistantSeed(typeof seed === 'string' ? seed : '');
+    setAssistantOpen(true);
+  }, []);
   const closeAssistant = useCallback(() => setAssistantOpen(false), []);
 
   // Deep-link route kept so previously shared ?projectDetail= URLs still resolve.
@@ -43,7 +49,7 @@ function App() {
           Skip to work
         </a>
 
-        <Navbar />
+        <Navbar onAsk={openAssistant} />
 
         <main id="main">
           <Hero onAskAssistant={openAssistant} />
@@ -59,6 +65,7 @@ function App() {
 
         <CommandBar
           open={assistantOpen}
+          seed={assistantSeed}
           onOpen={openAssistant}
           onClose={closeAssistant}
         />

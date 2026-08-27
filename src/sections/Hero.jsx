@@ -81,6 +81,27 @@ const Hero = ({ onAskAssistant }) => {
           <p className="hero-summary">{hero.summary}</p>
         </motion.div>
 
+        {/* ── ask bar ──
+            A real field rather than a button: it reads as something you use,
+            not something you might click. Focusing it hands off to the
+            palette, which owns the one conversation surface. */}
+        <motion.div className="hero-ask" variants={rise}>
+          <span className="hero-ask-dot" aria-hidden="true" />
+          <span className="hero-ask-name">Ask BharathiGPT</span>
+          <input
+            type="text"
+            className="hero-ask-field"
+            placeholder="How does the hybrid retrieval work?"
+            aria-label="Ask BharathiGPT about the work"
+            autoComplete="off"
+            spellCheck="false"
+            onFocus={() => onAskAssistant()}
+            onChange={(event) => onAskAssistant(event.target.value)}
+            value=""
+          />
+          <kbd className="hero-ask-key">/</kbd>
+        </motion.div>
+
         {/* ── actions ── */}
         <motion.div className="hero-actions" variants={rise}>
           <a href={hero.buttons.primary.href} className="btn btn-primary">
@@ -99,10 +120,6 @@ const Hero = ({ onAskAssistant }) => {
             {hero.buttons.resume.label}
             <ArrowUpRight size={16} />
           </a>
-          <button type="button" className="btn" onClick={onAskAssistant}>
-            Ask BharathiGPT
-          </button>
-
           <span className="hero-actions-sep" aria-hidden="true" />
 
           <a

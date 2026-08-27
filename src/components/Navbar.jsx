@@ -14,7 +14,7 @@ const LINKS = [
   { id: 'contact', name: 'Contact', num: '07' },
 ];
 
-const Navbar = () => {
+const Navbar = ({ onAsk }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState('hero');
@@ -112,6 +112,17 @@ const Navbar = () => {
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                className="nav-ask"
+                onClick={() => onAsk()}
+                aria-label="Ask BharathiGPT"
+              >
+                <span className="nav-ask-dot" aria-hidden="true" />
+                Ask
+              </button>
+            </li>
           </ul>
         </nav>
 
@@ -147,6 +158,19 @@ const Navbar = () => {
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                className="nav-ask nav-ask--mobile"
+                onClick={() => {
+                  setIsOpen(false);
+                  onAsk();
+                }}
+              >
+                <span className="nav-ask-dot" aria-hidden="true" />
+                Ask BharathiGPT
+              </button>
+            </li>
           </ul>
         </motion.nav>
       )}
