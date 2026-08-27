@@ -8,6 +8,7 @@ import {
   classifyQueryIntent,
 } from '../data/chatbotKnowledge';
 import { getRecruiterSystemPrompt, buildFinalGeminiPrompt } from '../data/recruiterSystemPrompt';
+import { portfolioData } from '../data/portfolioData';
 
 const STORAGE_KEY = 'bharathi-gpt-cache-v1';
 const HISTORY_LIMIT = 20;
@@ -306,10 +307,12 @@ const useBharathiGpt = () => {
             element.scrollIntoView({ behavior: 'smooth' });
           }
         } else if (actionObj.action === 'DOWNLOAD_RESUME') {
-          // Find the resume download link in the DOM or download programmatically
+          // Take the URL from the bundler-resolved asset. A literal
+          // /src/assets/... path only exists in dev; the production build
+          // emits a content-hashed filename, so hardcoding it 404s live.
           const link = document.createElement('a');
-          link.href = '/src/assets/Bharathi_Resume.pdf';
-          link.download = 'Bharathi_Resume.pdf';
+          link.href = portfolioData.hero.buttons.resume.href;
+          link.download = portfolioData.hero.buttons.resume.download;
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);

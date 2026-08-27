@@ -97,8 +97,11 @@ const Projects = () => {
                 >
                   <span className="pj-num">{project.index}</span>
 
+                  {/* A real heading, so screen-reader users can reach the
+                      projects by heading navigation. It sits inside the
+                      button, which is allowed and keeps one hit target. */}
                   <span className="pj-main">
-                    <span className="pj-title">{project.title}</span>
+                    <h3 className="pj-title">{project.title}</h3>
                     <span className="pj-tagline">{project.tagline}</span>
                     <span className="pj-stack">
                       {project.tech.join('  ·  ')}
@@ -132,6 +135,17 @@ const Projects = () => {
                       transition={{ duration: 0.36, ease: EASE }}
                     >
                       <div className="pj-panel-inner">
+                        {project.shot && (
+                          <figure className="pj-shot">
+                            <img
+                              src={project.shot.src}
+                              alt={project.shot.alt}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </figure>
+                        )}
+
                         <div className="pj-col">
                           <p className="label">What it does</p>
                           <p className="pj-desc">{project.description}</p>

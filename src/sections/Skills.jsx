@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import LogoLoop from '../components/LogoLoop';
 import SectionHead from '../components/SectionHead';
 import { portfolioData } from '../data/portfolioData';
 import './Skills.css';
@@ -7,7 +6,7 @@ import './Skills.css';
 const EASE = [0.22, 1, 0.36, 1];
 
 const Skills = () => {
-  const { groups, logos } = portfolioData.skills;
+  const { groups } = portfolioData.skills;
 
   return (
     <section id="skills" className="section">
@@ -44,27 +43,6 @@ const Skills = () => {
           ))}
         </div>
       </div>
-
-      <motion.div
-        className="sk-loop"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6, ease: EASE }}
-      >
-        <LogoLoop
-          logos={logos}
-          speed={52}
-          direction="left"
-          logoHeight={30}
-          gap={64}
-          hoverSpeed={0}
-          scaleOnHover
-          fadeOut
-          fadeOutColor="#000000"
-          ariaLabel="Tools and platforms"
-        />
-      </motion.div>
     </section>
   );
 };

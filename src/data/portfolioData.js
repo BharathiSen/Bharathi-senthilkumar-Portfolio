@@ -1,26 +1,7 @@
-import React from 'react';
-import { BookText, FileText } from 'lucide-react';
-import { FaDatabase } from 'react-icons/fa';
-import {
-  SiC,
-  SiCloudflare,
-  SiDocker,
-  SiFastapi,
-  SiGithubactions,
-  SiGooglecloud,
-  SiJavascript,
-  SiNextdotjs,
-  SiOpenai,
-  SiPostgresql,
-  SiPrisma,
-  SiPython,
-  SiReact,
-  SiRedis,
-  SiTailwindcss,
-  SiTypescript,
-  SiVercel,
-} from 'react-icons/si';
 import resumePdf from '../assets/Bharathi_Resume.pdf';
+import shotCodeAtlas from '../assets/code-atlas.webp';
+import shotOrchestra from '../assets/orchestra.webp';
+import shotApiLab from '../assets/api-rel-lab.webp';
 
 export const portfolioData = {
   hero: {
@@ -71,29 +52,12 @@ export const portfolioData = {
   },
 
   skills: {
-    // Marquee logos
-    logos: [
-      { node: React.createElement(SiPython), title: 'Python', href: 'https://www.python.org/' },
-      { node: React.createElement(SiFastapi), title: 'FastAPI', href: 'https://fastapi.tiangolo.com/' },
-      { node: React.createElement(SiNextdotjs), title: 'Next.js', href: 'https://nextjs.org/' },
-      { node: React.createElement(SiPostgresql), title: 'PostgreSQL', href: 'https://www.postgresql.org/' },
-      { node: React.createElement(SiRedis), title: 'Redis', href: 'https://redis.io/' },
-      { node: React.createElement(SiTypescript), title: 'TypeScript', href: 'https://www.typescriptlang.org/' },
-      { node: React.createElement(SiDocker), title: 'Docker', href: 'https://www.docker.com/' },
-      { node: React.createElement(SiGooglecloud), title: 'Google Cloud', href: 'https://cloud.google.com/' },
-      { node: React.createElement(SiCloudflare), title: 'Cloudflare Workers', href: 'https://workers.cloudflare.com/' },
-      { node: React.createElement(SiPrisma), title: 'Prisma', href: 'https://www.prisma.io/' },
-      { node: React.createElement(SiOpenai), title: 'OpenAI', href: 'https://openai.com/' },
-      { node: React.createElement(SiReact), title: 'React', href: 'https://react.dev/' },
-    ],
-
     // Skill matrix — mirrors the résumé's own grouping
     groups: [
       {
         id: 'languages',
         label: 'Languages',
         items: ['Python', 'TypeScript', 'JavaScript', 'SQL', 'C'],
-        icons: [SiPython, SiTypescript, SiJavascript, SiC],
       },
       {
         id: 'fundamentals',
@@ -106,13 +70,11 @@ export const portfolioData = {
           'Computer Networks',
           'System Design',
         ],
-        icons: [],
       },
       {
         id: 'backend',
         label: 'Backend',
         items: ['FastAPI', 'Next.js API routes', 'REST design', 'RBAC / JWT', 'SSE streaming'],
-        icons: [SiFastapi, SiNextdotjs],
       },
       {
         id: 'ai',
@@ -125,13 +87,11 @@ export const portfolioData = {
           'LangGraph',
           'OpenAI / Gemini APIs',
         ],
-        icons: [SiOpenai],
       },
       {
         id: 'data',
         label: 'Data & Infra',
         items: ['PostgreSQL', 'pgvector', 'Redis', 'Qdrant', 'Prisma', 'Docker'],
-        icons: [SiPostgresql, SiRedis, SiPrisma, SiDocker, FaDatabase],
       },
       {
         id: 'cloud',
@@ -142,13 +102,11 @@ export const portfolioData = {
           'Vercel',
           'GitHub Actions CI/CD',
         ],
-        icons: [SiGooglecloud, SiCloudflare, SiVercel, SiGithubactions],
       },
       {
         id: 'frontend',
         label: 'Frontend',
         items: ['Next.js 15', 'React', 'Tailwind CSS'],
-        icons: [SiNextdotjs, SiReact, SiTailwindcss],
       },
     ],
   },
@@ -156,6 +114,7 @@ export const portfolioData = {
   projects: [
     {
       id: 'codeatlas',
+      shot: { src: shotCodeAtlas, alt: 'CodeAtlas landing page: an input for a GitHub repository URL above example repositories to map.' },
       index: '01',
       title: 'CodeAtlas',
       tagline: 'AI code intelligence that reasons over an entire repository',
@@ -191,6 +150,7 @@ export const portfolioData = {
     },
     {
       id: 'orchestra',
+      shot: { src: shotOrchestra, alt: 'Orchestra interface showing an agent run with its per-step execution record.' },
       index: '02',
       title: 'Orchestra',
       tagline: 'Agentic AI platform where every run is a replayable record',
@@ -226,6 +186,7 @@ export const portfolioData = {
     },
     {
       id: 'api-reliability-lab',
+      shot: { src: shotApiLab, alt: 'API Reliability Lab dashboard showing a load-test run with latency percentiles.' },
       index: '03',
       title: 'API Reliability Lab',
       tagline: 'Full-stack SaaS that load-tests public APIs and scores their risk',
@@ -281,7 +242,6 @@ export const portfolioData = {
         'Short-form posts on retrieval design, agent execution models, and the decisions behind the systems above — written while building them rather than after the fact.',
       href: 'https://medium.com/@bharathisenthilkumar28',
       cta: 'Read on Medium',
-      icon: BookText,
     },
     {
       title: 'GitHub',
@@ -290,7 +250,6 @@ export const portfolioData = {
         'Every project above is public: the tree-sitter chunking, the Reciprocal Rank Fusion retrieval, the LangGraph pipelines, and the evaluation harnesses that run in CI.',
       href: 'https://github.com/BharathiSen/',
       cta: 'Browse repositories',
-      icon: FileText,
     },
   ],
 

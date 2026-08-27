@@ -39,9 +39,13 @@ function App() {
         sparkCount={2}
         duration={220}
       >
+        <a className="skip-link" href="#projects">
+          Skip to work
+        </a>
+
         <Navbar />
 
-        <main>
+        <main id="main">
           <Hero onAskAssistant={openAssistant} />
           <About />
           <Skills />

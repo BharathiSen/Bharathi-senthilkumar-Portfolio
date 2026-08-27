@@ -85,8 +85,10 @@
   min-width: 0;
 }
 
+h3.pj-title,
 .pj-title {
   font-family: var(--font-display);
+  margin: 0;
   font-variation-settings: 'wdth' 110, 'wght' 700;
   font-size: var(--step-5);
   line-height: 1;
@@ -192,6 +194,9 @@
 .pj-panel-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    'shot shot'
+    'what arch';
   gap: var(--space-7);
   padding: 0 0 var(--space-7) 3.5rem;
   border-top: 1px solid var(--line-hair);
@@ -200,6 +205,38 @@
 
 .pj-col {
   min-width: 0;
+  grid-area: what;
+}
+
+.pj-col--arch {
+  grid-area: arch;
+}
+
+/* ── screenshot ──
+   Held in greyscale so the page stays monochrome, and released to full
+   colour on hover — the same treatment the portrait gets. */
+.pj-shot {
+  grid-area: shot;
+  margin: 0 0 var(--space-2);
+  border: 1px solid var(--line-soft);
+  padding: var(--space-2);
+  overflow: hidden;
+}
+
+.pj-shot img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1500 / 722;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(1) contrast(1.06);
+  transition: filter var(--dur-mid) var(--ease),
+    transform var(--dur-mid) var(--ease);
+}
+
+.pj-shot:hover img {
+  filter: grayscale(0) contrast(1);
+  transform: scale(1.012);
 }
 
 .pj-col .label {
@@ -331,8 +368,18 @@
 @media (max-width: 860px) {
   .pj-panel-inner {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'shot'
+      'what'
+      'arch';
     gap: var(--space-6);
     padding-left: 0;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .pj-shot img {
+    filter: grayscale(0) contrast(1);
   }
 }
 

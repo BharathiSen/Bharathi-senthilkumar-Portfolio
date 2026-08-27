@@ -64,16 +64,6 @@
   border-color: var(--line-bright);
 }
 
-/* ── marquee ── */
-
-.sk-loop {
-  margin-top: var(--space-8);
-  padding-block: var(--space-6);
-  border-top: 1px solid var(--line-hair);
-  border-bottom: 1px solid var(--line-hair);
-  color: var(--text-low);
-}
-
 /* ═══════════════ RESPONSIVE ═══════════════ */
 
 @media (max-width: 860px) {

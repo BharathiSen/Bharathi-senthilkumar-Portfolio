@@ -692,13 +692,14 @@ export const composeGroundedFallback = (query, ragContext) => {
   return 'I may not have enough information about that from Bharathi\'s portfolio.';
 };
 
+// Lead with what the work is actually about now: retrieval and agents.
 export const assistantPromptChips = [
-  { label: 'Resume Summary', query: 'resume summary' },
-  { label: 'Best Project', query: 'best project' },
-  { label: 'Backend Skills', query: 'backend skills' },
-  { label: 'Cloud Experience', query: 'cloud experience' },
+  { label: 'Why hire Bharathi', query: 'why hire her' },
+  { label: 'Retrieval work', query: 'how does the hybrid retrieval in CodeAtlas work' },
+  { label: 'Agent architecture', query: 'how is Orchestra architected' },
+  { label: 'Backend depth', query: 'which project best demonstrates backend skill' },
+  { label: 'Research', query: 'has she published research' },
   { label: 'Contact', query: 'contact' },
-  { label: 'Why Hire Me', query: 'why hire me' },
 ];
 
 export const chatbotKnowledge = {

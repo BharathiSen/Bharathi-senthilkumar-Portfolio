@@ -15,6 +15,25 @@ const formatGraphEdge = (edge) => {
   return `- ${fromLabel} ↔ ${toLabel}${relation}`;
 };
 
+// The UI action contract is DERIVED, never hand-written: the model is only
+// ever told payload values the UI can actually honour. When tags or sections
+// change, this changes with them.
+const NAV_TARGETS = [
+  'about',
+  'skills',
+  'projects',
+  'writing',
+  'experience',
+  'credentials',
+  'contact',
+]
+  .map((id) => `"${id}"`)
+  .join(' | ');
+
+const PROJECT_TAGS = [...new Set((_p.projects || []).flatMap((p) => p.tags || []))]
+  .map((tag) => `"${tag}"`)
+  .join(' | ');
+
 const relationshipHighlights = knowledgeGraph.edges
   .filter((edge) => [edge.from, edge.to].some((nodeId) => nodeIndex.get(nodeId)))
   .map(formatGraphEdge)
@@ -124,12 +143,14 @@ RESPONSE QUALITY FOR RECRUITER QUESTIONS:
 When a user explicitly asks to see, navigate, or filter a section, append ONE action JSON at the end:
 
 Available actions:
-1. { "action": "NAVIGATE", "payload": "projects" | "skills" | "about" | "experience" | "contact" }
-2. { "action": "FILTER_PROJECTS", "payload": "FastAPI" | "Serverless" | "SaaS" | "GenAI" }
+1. { "action": "NAVIGATE", "payload": ${NAV_TARGETS} }
+2. { "action": "FILTER_PROJECTS", "payload": ${PROJECT_TAGS} }
 3. { "action": "DOWNLOAD_RESUME" }
 
+Use ONLY the exact payload values listed above. Any other value is ignored by the UI.
+
 Format: end your reply with |||{ ...action }|||
-Example: "Sure, let me show you the FastAPI projects.\n|||{ "action": "FILTER_PROJECTS", "payload": "FastAPI" }|||"
+Example: "Sure — here is the retrieval work.\n|||{ "action": "FILTER_PROJECTS", "payload": "Retrieval" }|||"
 `;
 
 export const getRecruiterSystemPrompt = (ragContext) => {

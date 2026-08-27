@@ -26,25 +26,52 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Scroll spy — the nav now says where you are.
+  // Scroll spy, by position rather than intersection ratio.
+  //
+  // IntersectionObserver was the wrong tool here: `intersectionRatio` is
+  // relative to each target's own height, so against a thin detection band a
+  // short section scores ~1.0 while a tall one scores ~0.05 — short sections
+  // always won. Its callback also only carries *changed* entries, so any
+  // comparison across sections ran on a partial set.
+  //
+  // Measuring against a fixed reading line is deterministic: the active
+  // section is simply the last one whose top has crossed it.
   useEffect(() => {
-    const sections = LINKS.map((link) => document.getElementById(link.id)).filter(
-      Boolean,
-    );
-    if (!sections.length) return undefined;
+    let frame = 0;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 1] },
-    );
+    const measure = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.35;
+      let current = '';
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+      for (const link of LINKS) {
+        const el = document.getElementById(link.id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= line) current = link.id;
+      }
+
+      // The last section can be too short to reach the line — at the bottom
+      // of the page it is unambiguously the one being read.
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+      if (atBottom) current = LINKS[LINKS.length - 1].id;
+
+      setActive(current);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(measure);
+    };
+
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
   useEffect(() => {
