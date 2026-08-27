@@ -1,17 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Terminal } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import './Navbar.css';
+
+const LINKS = [
+  { id: 'hero', name: 'Index', num: '00' },
+  { id: 'about', name: 'About', num: '01' },
+  { id: 'skills', name: 'Stack', num: '02' },
+  { id: 'projects', name: 'Work', num: '03' },
+  { id: 'writing', name: 'Research', num: '04' },
+  { id: 'experience', name: 'Experience', num: '05' },
+  { id: 'credentials', name: 'Credentials', num: '06' },
+  { id: 'contact', name: 'Contact', num: '07' },
+];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState('hero');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Scroll spy — the nav now says where you are.
+  useEffect(() => {
+    const sections = LINKS.map((link) => document.getElementById(link.id)).filter(
+      Boolean,
+    );
+    if (!sections.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 1] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -23,47 +56,31 @@ const Navbar = () => {
     };
   }, [isOpen]);
 
-  const navLinks = [
-    { name: 'Home', href: '#hero' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Writing', href: '#writing' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
   return (
     <motion.header
-      className="site-header"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        transition: 'all 0.3s ease',
-        background: scrolled || isOpen ? 'rgba(10, 10, 12, 0.92)' : 'transparent',
-        backdropFilter: scrolled || isOpen ? 'blur(12px)' : 'none',
-        borderBottom: scrolled || isOpen ? '1px solid var(--glass-border)' : '1px solid transparent',
-        paddingTop: 'calc(0.75rem + env(safe-area-inset-top))',
-        paddingBottom: '0.75rem',
-      }}
+      className="nav"
+      data-scrolled={scrolled || isOpen}
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="container site-header-inner">
-        <a href="#hero" aria-label="Go to top" className="site-logo">
-          <Terminal size={22} color="#ffffff" />
-          <span>Bharathi<span className="text-gradient">.dev</span></span>
+      <div className="shell nav-inner">
+        <a href="#hero" className="nav-logo" aria-label="Back to top">
+          <span className="nav-logo-mark" aria-hidden="true" />
+          Bharathi&nbsp;S
         </a>
 
-        <nav className="desktop-nav" aria-label="Primary">
+        <nav className="nav-desktop" aria-label="Sections">
           <ul>
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a href={link.href} className="nav-link">
+            {LINKS.slice(1).map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  className="nav-link"
+                  data-active={active === link.id}
+                  aria-current={active === link.id ? 'true' : undefined}
+                >
+                  <span className="nav-link-num">{link.num}</span>
                   {link.name}
                 </a>
               </li>
@@ -72,146 +89,40 @@ const Navbar = () => {
         </nav>
 
         <button
-          className="mobile-toggle"
           type="button"
+          className="nav-toggle"
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen((value) => !value)}
         >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
+          {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       {isOpen && (
-        <motion.div
-          className="mobile-nav-panel"
-          initial={{ opacity: 0, y: -12 }}
+        <motion.nav
+          className="nav-mobile"
+          aria-label="Sections"
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22 }}
         >
           <ul>
-            {navLinks.map((link) => (
-              <li key={link.name}>
+            {LINKS.slice(1).map((link) => (
+              <li key={link.id}>
                 <a
-                  href={link.href}
-                  className="mobile-nav-link"
+                  href={`#${link.id}`}
+                  data-active={active === link.id}
                   onClick={() => setIsOpen(false)}
                 >
+                  <span className="nav-link-num">{link.num}</span>
                   {link.name}
                 </a>
               </li>
             ))}
           </ul>
-        </motion.div>
+        </motion.nav>
       )}
-
-      <style>{`
-        .site-header-inner {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 1rem;
-          width: 100%;
-        }
-
-        .site-logo {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.45rem;
-          font-weight: 700;
-          font-size: 1.15rem;
-          color: #fff;
-          min-width: 0;
-          flex-shrink: 1;
-        }
-
-        .desktop-nav {
-          display: none;
-        }
-
-        .desktop-nav ul {
-          display: flex;
-          gap: 2rem;
-          align-items: center;
-        }
-
-        .mobile-toggle {
-          display: none;
-          align-items: center;
-          justify-content: center;
-          width: 44px;
-          height: 44px;
-          flex-shrink: 0;
-          margin: 0;
-          padding: 0;
-          background: none;
-          border: none;
-          color: #fff;
-          cursor: pointer;
-          -webkit-tap-highlight-color: transparent;
-        }
-
-        .mobile-nav-panel {
-          display: none;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background: rgba(10, 10, 12, 0.98);
-          backdrop-filter: blur(14px);
-          border-bottom: 1px solid var(--glass-border);
-          padding: 0.5rem max(1.25rem, env(safe-area-inset-right)) 1.25rem max(1.25rem, env(safe-area-inset-left));
-          max-height: min(70vh, 520px);
-          overflow-y: auto;
-        }
-
-        .mobile-nav-panel ul {
-          display: flex;
-          flex-direction: column;
-          gap: 0.15rem;
-        }
-
-        .mobile-nav-link {
-          display: block;
-          color: var(--text-primary);
-          font-size: 1.05rem;
-          padding: 0.85rem 0.25rem;
-          min-height: 44px;
-        }
-
-        @media (min-width: 768px) {
-          .desktop-nav {
-            display: block;
-          }
-
-          .mobile-toggle,
-          .mobile-nav-panel {
-            display: none !important;
-          }
-
-          .site-logo {
-            font-size: 1.25rem;
-          }
-        }
-
-        @media (max-width: 767px) {
-          .site-header-inner.container {
-            padding-left: max(1.25rem, env(safe-area-inset-left));
-            padding-right: max(1.25rem, env(safe-area-inset-right));
-          }
-
-          .mobile-toggle {
-            display: inline-flex !important;
-          }
-
-          .mobile-nav-panel {
-            display: block;
-          }
-
-          .site-logo {
-            font-size: 1.05rem;
-          }
-        }
-      `}</style>
     </motion.header>
   );
 };

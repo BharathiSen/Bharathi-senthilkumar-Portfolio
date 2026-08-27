@@ -1,121 +1,69 @@
 import { motion } from 'framer-motion';
-import { Mail } from 'lucide-react';
-import { FaLinkedin, FaGithub } from 'react-icons/fa';
+import { ArrowUpRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import './Contact.css';
+
+const EASE = [0.22, 1, 0.36, 1];
 
 const Contact = () => {
-  const contactContent = portfolioData.contact;
-  const socialLinks = portfolioData.socialLinks;
+  const contact = portfolioData.contact;
+  const social = portfolioData.socialLinks;
+
+  const channels = [
+    { label: 'Email', value: contact.email, href: contact.emailComposeUrl },
+    { label: 'GitHub', value: social.github.handle, href: social.github.href },
+    { label: 'LinkedIn', value: social.linkedin.handle, href: social.linkedin.href },
+  ];
 
   return (
-    <section id="contact" className="section" style={{ paddingBottom: '2rem' }}>
-      <div className="container">
+    <footer id="contact" className="section contact">
+      <div className="shell">
         <motion.div
+          className="ct-top"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, ease: EASE }}
         >
-          <h2 className="section-title">
-            Get In <span className="text-gradient">Touch</span>
+          <span className="sec-index">07 / Contact</span>
+
+          <h2 className="ct-headline">
+            Let’s build
+            <br />
+            something durable.
           </h2>
+
+          <p className="ct-intro">{contact.intro}</p>
         </motion.div>
 
-        <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-          <motion.p 
-            className="contact-intro"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1.1rem' }}
-          >
-            {contactContent.intro}
-          </motion.p>
+        <motion.ul
+          className="ct-channels"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, delay: 0.12, ease: EASE }}
+        >
+          {channels.map((channel) => (
+            <li key={channel.label}>
+              <a href={channel.href} target="_blank" rel="noopener noreferrer">
+                <span className="ct-ch-label">{channel.label}</span>
+                <span className="ct-ch-value">{channel.value}</span>
+                <ArrowUpRight size={16} />
+              </a>
+            </li>
+          ))}
+        </motion.ul>
 
-          <motion.div
-            className="contact-socials"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem', flexWrap: 'wrap' }}
-          >
-            <a href={contactContent.emailComposeUrl} className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Email Bharathi" title="Email Bharathi">
-              <Mail size={24} />
-            </a>
-            <a href={socialLinks.linkedin.href} className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label={socialLinks.linkedin.ariaLabel} title={socialLinks.linkedin.title}>
-              <FaLinkedin size={24} />
-            </a>
-            <a href={socialLinks.github.href} className="contact-icon" target="_blank" rel="noopener noreferrer" aria-label={socialLinks.github.ariaLabel} title={socialLinks.github.title}>
-              <FaGithub size={24} />
-            </a>
-          </motion.div>
-
-          <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, transparent, var(--glass-border), transparent)', marginBottom: '2rem' }}></div>
-          
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            {contactContent.footer} &copy; {new Date().getFullYear()}
-          </p>
+        <div className="ct-foot">
+          <span>
+            {contact.footer} · {new Date().getFullYear()}
+          </span>
+          <span className="ct-foot-right">
+            {contact.location} · Open to 2027 roles
+          </span>
         </div>
-
-        <style>{`
-          .contact-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: clamp(44px, 12vw, 64px);
-            height: clamp(44px, 12vw, 64px);
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 50%;
-            color: var(--text-primary);
-            transition: all 0.25s ease;
-            text-decoration: none;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-          }
-
-          .contact-icon:focus-visible {
-            outline: 2px solid var(--accent-grey);
-            outline-offset: 4px;
-          }
-          
-          .contact-icon:hover {
-            color: #ffffff;
-            border-color: var(--accent-grey);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-6px);
-            box-shadow: 0 8px 18px rgba(255, 255, 255, 0.06);
-          }
-
-          @media (max-width: 768px) {
-            #contact .contact-intro {
-              font-size: 1rem !important;
-              margin-bottom: 2rem !important;
-              line-height: 1.65;
-            }
-
-            #contact .contact-icon {
-              width: 52px;
-              height: 52px;
-            }
-
-            #contact .contact-socials {
-              margin-bottom: 2.5rem !important;
-              gap: 1rem !important;
-            }
-          }
-
-          @media (hover: none) and (pointer: coarse) {
-            .contact-icon:hover {
-              transform: none;
-              box-shadow: none;
-            }
-          }
-        `}</style>
       </div>
-    </section>
+    </footer>
   );
 };
 

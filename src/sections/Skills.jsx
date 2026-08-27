@@ -1,59 +1,70 @@
 import { motion } from 'framer-motion';
 import LogoLoop from '../components/LogoLoop';
-import MagicSkills from '../components/MagicSkills';
+import SectionHead from '../components/SectionHead';
 import { portfolioData } from '../data/portfolioData';
+import './Skills.css';
+
+const EASE = [0.22, 1, 0.36, 1];
 
 const Skills = () => {
+  const { groups, logos } = portfolioData.skills;
+
   return (
     <section id="skills" className="section">
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="section-title">
-            Core <span className="text-gradient">Skills</span>
-          </h2>
-        </motion.div>
-
-        <MagicSkills
-          textAutoHide={true}
-          enableStars={true}
-          enableSpotlight={true}
-          enableBorderGlow={true}
-          disableAnimations={false}
-          spotlightRadius={250}
-          particleCount={8}
-          enableTilt={true}
-          glowColor="220,220,220"
-          clickEffect={true}
-          enableMagnetism={true}
+      <div className="shell">
+        <SectionHead
+          index="02 / Capabilities"
+          title="The stack, precisely"
+          meta={`${groups.length} groups`}
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ marginTop: '3rem' }}
-        >
-          <LogoLoop
-            logos={portfolioData.skills.logos}
-            speed={70}
-            direction="left"
-            logoHeight={42}
-            gap={40}
-            hoverSpeed={0}
-            scaleOnHover
-            fadeOut
-            fadeOutColor="rgba(0, 0, 0, 0.9)"
-            ariaLabel="Core skill logos"
-            style={{ width: '100%' }}
-          />
-        </motion.div>
+        <div className="sk-matrix">
+          {groups.map((group, i) => (
+            <motion.div
+              key={group.id}
+              className="sk-row"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.45, delay: i * 0.05, ease: EASE }}
+            >
+              <div className="sk-label">
+                <span className="sk-label-num">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="sk-label-text">{group.label}</span>
+              </div>
+
+              <ul className="sk-items">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
       </div>
+
+      <motion.div
+        className="sk-loop"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, ease: EASE }}
+      >
+        <LogoLoop
+          logos={logos}
+          speed={52}
+          direction="left"
+          logoHeight={30}
+          gap={64}
+          hoverSpeed={0}
+          scaleOnHover
+          fadeOut
+          fadeOutColor="#000000"
+          ariaLabel="Tools and platforms"
+        />
+      </motion.div>
     </section>
   );
 };

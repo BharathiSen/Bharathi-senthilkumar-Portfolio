@@ -1,95 +1,74 @@
 import { motion } from 'framer-motion';
+import SectionHead from '../components/SectionHead';
 import { portfolioData } from '../data/portfolioData';
+import './About.css';
+
+const EASE = [0.22, 1, 0.36, 1];
 
 const About = () => {
-  const aboutContent = portfolioData.about;
+  const about = portfolioData.about;
+  const education = portfolioData.education;
+
+  const facts = [
+    ['Degree', education.degree],
+    ['Institution', education.school],
+    ['Period', education.period],
+    ['CGPA', education.cgpa],
+    ['Based in', about.quickFacts.location],
+    ['Focus', about.quickFacts.currentInterest],
+  ];
 
   return (
     <section id="about" className="section">
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="section-title">
-            {aboutContent.title.prefix} <span style={{ background: 'linear-gradient(to right, #00d2ff, #3a7bd5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{aboutContent.title.highlight}</span>
-          </h2>
-        </motion.div>
+      <div className="shell">
+        <SectionHead
+          index="01 / About"
+          title="Where the work comes from"
+          meta="Chennai, India"
+        />
 
-        <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(220px, 1fr))', gap: '1.25rem', alignItems: 'stretch', maxWidth: '900px', margin: '0 auto', width: '100%' }}>
+        <div className="ab-grid">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            style={{ minHeight: '220px' }}
+            className="ab-prose"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.55, ease: EASE }}
           >
-            <div className="glass-panel about-photo" style={{ padding: '0', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'stretch', justifyContent: 'stretch', maxWidth: '360px', margin: '0 auto' }}>
-              <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
-              <div style={{ position: 'relative', zIndex: 1, height: '100%', width: '100%' }}>
-                <img
-                  src={aboutContent.image.src}
-                  alt={aboutContent.image.alt}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', borderRadius: '16px', display: 'block' }}
-                />
-              </div>
-            </div>
+            {about.paragraphs.map((paragraph, i) => (
+              <p key={paragraph} data-lead={i === 0 ? 'true' : 'false'}>
+                {paragraph}
+              </p>
+            ))}
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            style={{ minHeight: '220px', display: 'flex' }}
+          <motion.figure
+            className="ab-portrait"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.55, delay: 0.1, ease: EASE }}
           >
-            <div className="glass-panel about-copy" style={{ padding: '0.9rem', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'center', maxWidth: '420px', margin: '0 auto' }}>
-              <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'var(--accent-weak)', filter: 'blur(100px)', opacity: 0.9, zIndex: 0 }}></div>
-              <div className="about-copy-inner" style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '88%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.75rem', lineHeight: 1.6 }}>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.35rem', color: 'var(--text-primary)', textAlign: 'center' }}>{aboutContent.name}</h3>
-                {aboutContent.paragraphs.map((paragraph) => (
-                  <p key={paragraph} style={{ color: 'var(--text-secondary)', marginBottom: 0 }}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+            <img src={about.image.src} alt={about.image.alt} loading="lazy" />
+            <figcaption>{about.name}</figcaption>
+          </motion.figure>
         </div>
+
+        <motion.dl
+          className="ab-facts"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
+        >
+          {facts.map(([term, value]) => (
+            <div key={term}>
+              <dt>{term}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </motion.dl>
       </div>
-      <style>{`
-        @media (max-width: 768px) {
-          .about-grid {
-            grid-template-columns: 1fr !important;
-            gap: 1rem !important;
-          }
-
-          .about-photo {
-            max-width: 100% !important;
-            min-height: 260px;
-            aspect-ratio: 4 / 5;
-          }
-
-          .about-copy {
-            max-width: 100% !important;
-            padding: 1.15rem !important;
-          }
-
-          .about-copy-inner {
-            max-width: 100% !important;
-          }
-
-          .about-copy-inner h3 {
-            font-size: 1.3rem !important;
-          }
-
-          .about-copy-inner p {
-            font-size: 0.95rem;
-          }
-        }
-      `}</style>
     </section>
   );
 };

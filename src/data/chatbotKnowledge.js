@@ -1,26 +1,40 @@
 import { portfolioData } from './portfolioData';
 
 // Short, focused summaries and helper builders
-const profileSummary = 'Bharathi is a backend-focused software engineer and ECE student at Chennai Institute of Technology with experience in cloud systems, research-driven orchestration, and full-stack backend platforms.';
+const profileSummary = 'Bharathi is a backend and AI-systems engineer and final-year ECE student at Chennai Institute of Technology, building retrieval infrastructure, agentic AI platforms, and production backend services on FastAPI, Next.js, PostgreSQL and Redis.';
 
 const profileHighlights = [
-  'Backend-focused engineering student building APIs, cloud systems, and applied AI tooling.',
-  'Works across FastAPI, PostgreSQL, Redis, Docker, Google Cloud, React, and TypeScript.',
+  'Builds retrieval and agent infrastructure: hybrid search, durable execution records, and APIs with failure modes designed in.',
+  'Works across FastAPI, Next.js, PostgreSQL, pgvector, Redis, Qdrant, Docker, GCP and Cloudflare Workers.',
+  'Three production systems shipped, one IEEE publication, and 1,600+ DSA problems solved.',
 ];
 
 const backendExpertise = [
-  'FastAPI, REST APIs, JWT authentication, RBAC, tenant-aware architecture',
-  'Redis caching, PostgreSQL indexing, multi-tenant data isolation',
+  'FastAPI, Next.js API routes, REST design, RBAC/JWT, SSE streaming',
+  'Redis quotas and tiered rate limiting, PostgreSQL with pgvector, multi-tier memory',
 ];
 
 const cloudExperience = [
-  'Google Cloud, Cloud Run, Cloud Functions, Firestore',
-  'Docker, Kubernetes, KEDA, CI/CD workflows',
+  'GCP (Cloud Run, Firestore), Cloudflare Workers, Vercel',
+  'Docker, GitHub Actions CI/CD',
 ];
 
-const whyHireMeSummary = 'Bharathi combines backend engineering, cloud awareness, and research discipline. The portfolio shows practical full-stack delivery, multi-cloud reasoning, and a consistent focus on building reliable systems with reproducible workflows.';
+const aiExpertise = [
+  'Agentic AI, RAG pipelines, LangGraph planner-tool-reviewer loops, multi-agent orchestration',
+  'Hybrid retrieval (dense + keyword via Reciprocal Rank Fusion), tree-sitter AST chunking, recall@k/MRR evaluation in CI',
+];
 
-const githubSummary = `GitHub profile: ${portfolioData.socialLinks.github.href}. Recent work includes API Reliability Lab, Carbon Aware Serverless Scheduler, TaskFlow, ACDOF, and VectorShift Studio.`;
+const whyHireMeSummary = 'Bharathi builds AI systems with the engineering discipline most portfolios skip: fail-closed quotas that bound spend, automatic fallbacks when a vector store dies, evaluation harnesses running in CI, and measured latency rather than claimed latency. Three shipped production systems, an IEEE publication, and 1,600+ DSA problems behind it.';
+
+const githubSummary = `GitHub profile: ${portfolioData.socialLinks.github.href}. Recent work includes CodeAtlas (AI code intelligence over whole repositories), Orchestra (agentic AI platform with replayable run records), and API Reliability Lab (API load-testing SaaS with AI risk scoring).`;
+
+const publicationsSummary = (portfolioData.publications || [])
+  .map((p) => `${p.title} — ${p.venue}. ${p.description} (${p.href})`)
+  .join(' ');
+
+const problemSolvingSummary = portfolioData.problemSolving
+  ? `${portfolioData.problemSolving.total} ${portfolioData.problemSolving.summary}: ${portfolioData.problemSolving.platforms.map((p) => `${p.name} (${p.count})`).join(', ')}.`
+  : '';
 
 const certificationsSummary = portfolioData.certifications.length > 0
   ? portfolioData.certifications.join('; ')
@@ -40,13 +54,16 @@ const directFacts = {
   name: portfolioData.hero.name,
   title: portfolioData.hero.title,
   email: portfolioData.contact.email,
-  availability: 'Bharathi is currently looking for new opportunities.',
-  latestRepo: 'VectorShift Studio',
-  latestRepoLink: portfolioData.projects[portfolioData.projects.length - 1].github,
-  topLanguages: ['Python', 'JavaScript', 'TypeScript', 'SQL', 'Java', 'C'],
+  availability: 'Bharathi is open to backend and AI-systems roles from 2027.',
+  location: portfolioData.contact.location,
+  latestRepo: portfolioData.projects[0].title,
+  latestRepoLink: portfolioData.projects[0].github,
+  topLanguages: ['Python', 'TypeScript', 'JavaScript', 'SQL', 'C'],
   githubSummary,
   certificationsSummary,
   achievementsSummary,
+  publicationsSummary,
+  problemSolvingSummary,
 };
 
 const normalizeText = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
@@ -188,7 +205,7 @@ export const classifyQueryIntent = (query) => {
 const semanticChunks = [
   buildDocument({
     id: 'resume-summary',
-    graphId: 'theme-learning-trajectory',
+    graphId: 'theme-backend-systems',
     source: 'Resume',
     title: 'Resume summary',
     text: profileSummary,
@@ -207,7 +224,7 @@ const semanticChunks = [
     graphId: 'theme-backend-systems',
     source: 'Expertise',
     title: 'Backend',
-    text: 'Bharathi focuses on backend engineering using FastAPI, PostgreSQL, Redis, JWT, RBAC, multi-tenant architectures, and scalable REST APIs.',
+    text: `Bharathi focuses on backend engineering. ${backendExpertise.join('. ')}.`,
     tags: ['backend', 'fastapi', 'postgresql', 'redis', 'api'],
   }),
   buildDocument({
@@ -215,52 +232,76 @@ const semanticChunks = [
     graphId: 'skill-fastapi',
     source: 'Skills',
     title: 'FastAPI',
-    text: 'Primary backend framework for API design, tenant-aware services, and orchestration layers. It connects directly to TaskFlow, API Reliability Lab, and VectorShift Studio.',
-    tags: ['fastapi', 'backend', 'api', 'rest'],
+    text: 'Primary backend framework across CodeAtlas and Orchestra, handling parsing and retrieval orchestration, JWT auth, three-axis rate limiting, and SSE streaming.',
+    tags: ['fastapi', 'backend', 'api', 'rest', 'sse'],
   }),
   buildDocument({
     id: 'skill-postgresql',
     graphId: 'skill-postgresql',
     source: 'Skills',
     title: 'PostgreSQL',
-    text: 'Used for durable storage, indexing, and relational data modeling across backend systems like TaskFlow and API Reliability Lab.',
-    tags: ['postgresql', 'sql', 'database'],
+    text: 'Used with pgvector in Orchestra for embeddings and long-term agent memory, and with Prisma in API Reliability Lab for run history and per-run metrics.',
+    tags: ['postgresql', 'sql', 'database', 'pgvector', 'prisma'],
   }),
   buildDocument({
     id: 'skill-redis',
     graphId: 'skill-redis',
     source: 'Skills',
     title: 'Redis',
-    text: 'Used for caching, hot-path reads, and runtime state optimization in backend systems.',
-    tags: ['redis', 'cache'],
+    text: 'Fail-closed quota ledger bounding API spend in CodeAtlas, short-term agent memory in Orchestra, and tiered rate limiting in API Reliability Lab.',
+    tags: ['redis', 'cache', 'quota', 'rate limiting'],
   }),
   buildDocument({
-    id: 'skill-gcp',
-    graphId: 'skill-gcp',
+    id: 'skill-retrieval',
+    graphId: 'skill-retrieval',
     source: 'Skills',
-    title: 'Google Cloud',
-    text: 'Cloud Run, Cloud Functions, Firestore, and serverless execution patterns used in Carbon Aware Serverless Scheduler and ACDOF.',
-    tags: ['gcp', 'google cloud', 'cloud', 'serverless'],
+    title: 'Retrieval and RAG',
+    text: `${aiExpertise[1]}. Applied in CodeAtlas (whole-function chunking across 15 languages, cited file/line answers) and Orchestra (upload to chunk to embed to pgvector with a sources UI).`,
+    tags: ['rag', 'retrieval', 'vector search', 'embeddings', 'rrf', 'qdrant', 'hybrid retrieval'],
+  }),
+  buildDocument({
+    id: 'skill-agentic',
+    graphId: 'skill-agentic',
+    source: 'Skills',
+    title: 'Agentic AI',
+    text: `${aiExpertise[0]}. Orchestra runs three pipelines — direct chat, tool-augmented via LangGraph, and multi-agent orchestration — with every run a durable replayable record carrying per-step cost and latency.`,
+    tags: ['agentic ai', 'agents', 'langgraph', 'multi-agent', 'orchestration'],
   }),
   buildDocument({
     id: 'cloud',
-    graphId: 'theme-cloud-engineering',
+    graphId: 'skill-cloud',
     source: 'Expertise',
     title: 'Cloud',
-    text: 'Experience with Google Cloud (Cloud Run, Functions), Docker, Kubernetes, KEDA, and CI/CD workflows.',
-    tags: ['cloud', 'gcp', 'docker', 'kubernetes', 'ci/cd'],
+    text: `${cloudExperience.join('. ')}. Orchestra is deployed on Cloudflare Workers; API Reliability Lab on Vercel.`,
+    tags: ['cloud', 'gcp', 'docker', 'cloudflare', 'vercel', 'ci/cd'],
   }),
   buildDocument({
     id: 'skills-summary',
     graphId: 'theme-backend-systems',
     source: 'Skills',
     title: 'Skills summary',
-    text: `Top languages: ${directFacts.topLanguages.join(', ')}. AI: scikit-learn, LLM integration. Backend & cloud tooling listed in portfolio.`,
-    tags: ['skills', 'languages', 'ai', 'backend', 'cloud'],
+    text: `Languages: ${directFacts.topLanguages.join(', ')}. ${(portfolioData.skills.groups || []).map((g) => `${g.label}: ${g.items.join(', ')}`).join('. ')}.`,
+    tags: ['skills', 'languages', 'ai', 'backend', 'cloud', 'tech stack'],
+  }),
+  buildDocument({
+    id: 'publications',
+    graphId: 'publication-acdof',
+    source: 'Publications',
+    title: 'Publications',
+    text: publicationsSummary,
+    tags: ['publication', 'research', 'ieee', 'acdof', 'paper'],
+  }),
+  buildDocument({
+    id: 'problem-solving',
+    graphId: 'theme-problem-solving',
+    source: 'Problem solving',
+    title: 'Problem solving',
+    text: problemSolvingSummary,
+    tags: ['dsa', 'leetcode', 'codechef', 'skillrack', 'problem solving', 'algorithms'],
   }),
   buildDocument({
     id: 'why-hire-me',
-    graphId: 'theme-learning-trajectory',
+    graphId: 'theme-backend-systems',
     source: 'Summary',
     title: 'Why hire me',
     text: whyHireMeSummary,
@@ -284,7 +325,7 @@ const semanticChunks = [
   }),
   buildDocument({
     id: 'achievements',
-    graphId: 'theme-learning-trajectory',
+    graphId: 'theme-problem-solving',
     source: 'Achievements',
     title: 'Achievements',
     text: achievementsSummary,
@@ -302,24 +343,48 @@ const semanticChunks = [
 
 // Detailed documents from portfolio (project-level, experience, writing, FAQs)
 const detailDocuments = [
+  // Each project carries a stable `id` that matches its knowledge-graph node.
   ...portfolioData.projects.map((project) => buildDocument({
-    id: `project-${project.title}`,
-    graphId: project.title.startsWith('API Reliability Lab')
-      ? 'project-api-reliability-lab'
-      : project.title.startsWith('Carbon Aware Serverless Scheduler')
-        ? 'project-carbon-scheduler'
-        : project.title.startsWith('TaskFlow')
-          ? 'project-taskflow'
-          : project.title.startsWith('ACDOF')
-            ? 'project-acdof'
-            : project.title.startsWith('VectorShift Studio')
-              ? 'project-vectorshift-studio'
-              : `project-${project.title}`,
+    id: `project-${project.id}`,
+    graphId: `project-${project.id}`,
     source: 'Projects',
     title: project.title,
-    text: [project.description, `Tech: ${(project.tech || []).join(', ')}`].join(' '),
-    tags: [project.title, ...(project.tech || []), 'project'],
+    text: [
+      project.tagline,
+      project.description,
+      ...(project.highlights || []),
+      `Measured: ${(project.metrics || []).map((m) => `${m.value} ${m.label}`).join(', ')}.`,
+      `Tech: ${(project.tech || []).join(', ')}.`,
+      `Live: ${project.demo}. Source: ${project.github}.`,
+    ].join(' '),
+    tags: [project.title, ...(project.tags || []), ...(project.tech || []), 'project'],
     url: project.github,
+  })),
+  // Architecture detail, retrieved separately so deep questions get depth.
+  ...portfolioData.projects
+    .filter((project) => project.architecture)
+    .map((project) => buildDocument({
+      id: `architecture-${project.id}`,
+      graphId: `project-${project.id}`,
+      source: 'Architecture',
+      title: `${project.title} — architecture`,
+      text: [
+        `Architecture flow: ${project.architecture.architectureFlow}`,
+        `Backend: ${project.architecture.backendFlow}`,
+        `Data: ${project.architecture.databaseInteractions}`,
+        `Deployment: ${project.architecture.deploymentNotes}`,
+      ].join(' '),
+      tags: [project.title, 'architecture', 'design', 'how it works'],
+      url: project.github,
+    })),
+  ...(portfolioData.publications || []).map((pub, i) => buildDocument({
+    id: `publication-${i}`,
+    graphId: 'publication-acdof',
+    source: 'Publications',
+    title: pub.title,
+    text: `${pub.venue}, ${pub.year}. ${pub.description}`,
+    tags: ['publication', 'research', 'ieee', 'acdof'],
+    url: pub.href,
   })),
   ...portfolioData.experience.map((exp) => buildDocument({
     id: `experience-${exp.year}`,
@@ -537,50 +602,52 @@ export const composeGroundedFallback = (query, ragContext) => {
   const topScore = snippets.reduce((maxScore, snippet) => Math.max(maxScore, Number(snippet.score || 0)), 0);
   const intent = classifyQueryIntent(query || '');
 
-  const strongestProject = portfolioData.projects.find((project) => project.title.startsWith('API Reliability Lab')) || portfolioData.projects[0];
-  const backendProject = portfolioData.projects.find((project) => project.title.startsWith('TaskFlow')) || strongestProject;
-  const cloudProject = portfolioData.projects.find((project) => project.title.startsWith('Carbon Aware Serverless Scheduler')) || strongestProject;
-  const researchProject = portfolioData.projects.find((project) => project.title.startsWith('ACDOF')) || strongestProject;
+  const byId = (id) => portfolioData.projects.find((project) => project.id === id);
+  const strongestProject = byId('codeatlas') || portfolioData.projects[0];
+  const backendProject = byId('orchestra') || strongestProject;
+  const cloudProject = byId('orchestra') || strongestProject;
+  const saasProject = byId('api-reliability-lab') || strongestProject;
+  const publication = (portfolioData.publications || [])[0] || null;
 
   const buildRecruiterAnswer = () => {
     if (nq.includes('what role suits') || nq.includes('what position fits') || nq.includes('best role')) {
       return [
         'Bharathi fits best as a Backend Engineer or Cloud/Platform Engineer.',
-        `The strongest evidence is ${backendProject.title} for backend depth, plus ${cloudProject.title} and ${strongestProject.title} for cloud execution and production delivery.`,
-        'She can contribute from day one on FastAPI, PostgreSQL, Redis, Docker, and Google Cloud without a long ramp-up on core backend tooling.',
+        `The strongest evidence is ${backendProject.title} for agent and retrieval depth, ${strongestProject.title} for retrieval engineering at repository scale, and ${saasProject.title} for shipping and securing a production SaaS.`,
+        'She can contribute from day one on FastAPI, Next.js, PostgreSQL/pgvector, Redis, and RAG pipelines without a long ramp-up.',
       ].join(' ');
     }
 
     if (nq.includes('which project best demonstrates backend skill') || nq.includes('best demonstrates backend')) {
       return [
-        `${backendProject.title} is the clearest backend signal because it combines FastAPI, PostgreSQL, Redis, JWT, RBAC, and tenant isolation.`,
-        `${strongestProject.title} is the production-scale companion example because it adds reliability, streaming metrics, and multi-tenant SaaS delivery.`,
+        `${backendProject.title} is the clearest backend signal: FastAPI with JWT auth, three-axis rate limiting, SSE streaming, two-tier Redis + PostgreSQL memory, and durable replayable run records at 0.4-0.9s direct-chat latency.`,
+        `${saasProject.title} is the production-delivery companion: SSRF-safe validation, SHA-256-hashed API keys, tiered rate limiting, and 22 Vitest plus 5 Playwright tests in CI.`,
       ].join(' ');
     }
 
     if (nq.includes('which project best demonstrates cloud skill') || nq.includes('best demonstrates cloud')) {
       return [
-        `${cloudProject.title} is the strongest cloud example because it uses Google Cloud, serverless execution, and carbon-aware scheduling.`,
-        `${researchProject.title} extends that signal with multi-cloud orchestration, control loops, and stability reasoning.`,
+        `${cloudProject.title} is the strongest cloud example, deployed on Cloudflare Workers with a FastAPI backend and PostgreSQL/pgvector, holding 2.3s warm RAG retrieval.`,
+        `${saasProject.title} runs on Vercel with Prisma and Redis, and ${publication ? publication.venue : 'the IEEE ICSSS 2025 publication'} extends the signal into cloud-DevOps orchestration research.`,
       ].join(' ');
     }
 
     if (nq.includes('why hire') || nq.includes('why should') || nq.includes('strong candidate')) {
       return [
-        `Hire Bharathi for backend or cloud-platform work because she has already shipped ${strongestProject.title}, built ${backendProject.title}, and extended her cloud reasoning through ${cloudProject.title} and ${researchProject.title}.`,
-        'She is different from a generic student profile because the portfolio shows a production SaaS platform, an IEEE-indexed research thread, a real government internship, and a clear learning trajectory from ML into systems and cloud engineering.',
+        `Hire Bharathi for backend or AI-systems work because she has already shipped ${strongestProject.title}, ${backendProject.title}, and ${saasProject.title} — all three live, all three measured.`,
+        'What separates the work is the engineering discipline around the AI: a fail-closed Redis quota that bounds spend, automatic fallback when the vector store dies, a recall@k/MRR evaluation harness in CI, and latency that is measured rather than claimed.',
       ].join(' ');
     }
 
     if (nq.includes('different from a generic student profile')) {
       return [
         'Bharathi is not just listing coursework or toy demos.',
-        `Her profile combines ${backendProject.title}, ${cloudProject.title}, ${strongestProject.title}, and internship experience at India Meteorological Department and Cognifyz Technologies, which shows practical systems thinking and growth across multiple layers of engineering.`,
+        `Her profile combines ${strongestProject.title}, ${backendProject.title} and ${saasProject.title} with an IEEE ICSSS 2025 publication, internships at India Meteorological Department and Cognifyz Technologies, and 1,600+ DSA problems solved.`,
       ].join(' ');
     }
 
     if (nq.includes('learning trajectory')) {
-      return 'Bharathi’s trajectory moves from ML internship work to radar and GIS workflows, then to cloud scheduling, production SaaS, research, and GenAI tooling. Each step adds backend depth, cloud reasoning, and stronger system design judgment.';
+      return 'Bharathi’s trajectory moves from ML internship work (Cognifyz, Aug 2024) to geospatial radar engineering (India Meteorological Department, Nov 2024), then into published research (IEEE ICSSS 2025) and on to shipped AI systems — API Reliability Lab, then Orchestra and CodeAtlas. Each step adds backend depth and stronger system-design judgment.';
     }
 
     return '';

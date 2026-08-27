@@ -1,0 +1,214 @@
+.pd {
+  min-height: 100vh;
+  padding-block: calc(var(--space-7) + env(safe-area-inset-top)) var(--space-9);
+}
+
+.pd-inner {
+  max-width: 900px;
+}
+
+.pd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-low);
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--line-hair);
+  transition: color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.pd-back:hover {
+  color: var(--text-hi);
+  border-color: var(--line-bright);
+}
+
+.pd-head {
+  margin-top: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.pd-title {
+  font-size: var(--step-6);
+  font-variation-settings: 'wdth' 116, 'wght' 770;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--text-hi);
+  margin-block: var(--space-3) var(--space-4);
+}
+
+.pd-lede {
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--text-mid);
+  max-width: 52ch;
+  margin: 0;
+}
+
+/* ── metrics ── */
+
+.pd-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.pd-metrics > div {
+  padding: var(--space-5) var(--space-4) var(--space-5) 0;
+  border-right: 1px solid var(--line-hair);
+}
+
+.pd-metrics > div:last-child {
+  border-right: 0;
+}
+
+.pd-metrics dt {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 108, 'wght' 700;
+  font-size: var(--step-3);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--text-hi);
+  font-variant-numeric: tabular-nums;
+}
+
+.pd-metrics dd {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-low);
+  line-height: 1.45;
+}
+
+/* ── body ── */
+
+.pd-body {
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--space-7);
+}
+
+.pd-body .label {
+  margin-bottom: var(--space-4);
+}
+
+.pd-desc {
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--text-mid);
+  max-width: 66ch;
+  margin: 0 0 var(--space-5);
+}
+
+.pd-points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 66ch;
+}
+
+.pd-points li {
+  position: relative;
+  padding-left: var(--space-5);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-mid);
+}
+
+.pd-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 10px;
+  height: 1px;
+  background: var(--line-hard);
+}
+
+.pd-arch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.pd-arch > div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line-hair);
+}
+
+.pd-arch > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.pd-arch dt {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-low);
+  padding-top: 0.2em;
+}
+
+.pd-arch dd {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-mid);
+}
+
+/* ── footer bits ── */
+
+.pd-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line-soft);
+}
+
+.pd-links {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+
+@media (max-width: 640px) {
+  .pd-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pd-metrics > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--line-hair);
+    padding-block: var(--space-4);
+  }
+
+  .pd-metrics > div:last-child {
+    border-bottom: 0;
+  }
+
+  .pd-arch > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .pd-links .btn {
+    flex: 1 1 auto;
+  }
+}

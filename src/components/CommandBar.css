@@ -1,0 +1,339 @@
+/* ═══════════════ COLLAPSED DOCK ═══════════════ */
+
+.cmd-dock {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 60;
+  transition: opacity var(--dur-mid) var(--ease),
+    transform var(--dur-mid) var(--ease);
+}
+
+.cmd-dock[data-hidden='true'] {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.cmd-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0.7rem 0.75rem 0.7rem 1rem;
+  min-height: 44px;
+  background: rgba(8, 8, 10, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line-soft);
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cmd-trigger:hover {
+  border-color: var(--line-bright);
+  color: var(--text-hi);
+}
+
+.cmd-trigger-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-hi);
+  flex-shrink: 0;
+  animation: cmd-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes cmd-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.cmd-key {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  border: 1px solid var(--line-soft);
+  padding: 0.15em 0.5em;
+  color: var(--text-low);
+  line-height: 1.4;
+}
+
+/* ═══════════════ EXPANDED PANEL ═══════════════ */
+
+.cmd-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+}
+
+.cmd-panel {
+  width: min(720px, 100%);
+  max-height: min(78vh, 680px);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-1);
+  border: 1px solid var(--line-hard);
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.cmd-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line-soft);
+  flex-shrink: 0;
+}
+
+.cmd-head-id {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  color: var(--text-hi);
+}
+
+.cmd-head-right {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.cmd-head-hint {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-low);
+}
+
+.cmd-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--text-low);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.cmd-close:hover {
+  color: var(--text-hi);
+  border-color: var(--line-soft);
+}
+
+/* ── message log ── */
+
+.cmd-log {
+  flex: 1;
+  min-height: 120px;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cmd-msg {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.cmd-msg-role {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-top: 0.32em;
+}
+
+.cmd-msg p {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.68;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.cmd-msg--user p {
+  color: var(--text-hi);
+}
+
+.cmd-msg--assistant p {
+  color: var(--text-mid);
+}
+
+.cmd-thinking {
+  display: inline-flex;
+  gap: 5px;
+  padding-top: 0.6em;
+}
+
+.cmd-thinking i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-low);
+  animation: cmd-bounce 1.1s ease-in-out infinite;
+}
+
+.cmd-thinking i:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.cmd-thinking i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes cmd-bounce {
+  0%,
+  70%,
+  100% {
+    opacity: 0.25;
+  }
+  35% {
+    opacity: 1;
+  }
+}
+
+/* ── chips ── */
+
+.cmd-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-3);
+  flex-shrink: 0;
+}
+
+.cmd-chip {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.03em;
+  padding: 0.45em 0.75em;
+  border: 1px solid var(--line-hair);
+  background: none;
+  color: var(--text-low);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.cmd-chip:hover:not(:disabled) {
+  color: var(--text-hi);
+  border-color: var(--line-hard);
+}
+
+.cmd-chip:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ── input ── */
+
+.cmd-form {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-top: 1px solid var(--line-soft);
+  flex-shrink: 0;
+}
+
+.cmd-form input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--text-hi);
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: var(--space-4);
+  outline: none;
+}
+
+.cmd-form input::placeholder {
+  color: var(--text-faint);
+}
+
+.cmd-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  flex-shrink: 0;
+  border: 0;
+  border-left: 1px solid var(--line-soft);
+  background: none;
+  color: var(--text-low);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
+}
+
+.cmd-send:hover:not(:disabled) {
+  color: var(--bg);
+  background: var(--text-hi);
+}
+
+.cmd-send:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+
+@media (max-width: 640px) {
+  .cmd-scrim {
+    padding: 0;
+  }
+
+  .cmd-panel {
+    width: 100%;
+    max-height: 88vh;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .cmd-msg {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .cmd-msg-role {
+    padding-top: 0;
+  }
+
+  .cmd-trigger-text {
+    font-size: var(--step--2);
+  }
+}

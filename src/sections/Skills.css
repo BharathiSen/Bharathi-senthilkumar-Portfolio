@@ -1,0 +1,106 @@
+.sk-matrix {
+  border-top: 1px solid var(--line-soft);
+}
+
+.sk-row {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: baseline;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--line-hair);
+}
+
+/* ── left: mono index + group name ── */
+
+.sk-label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.sk-label-num {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.sk-label-text {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-hi);
+}
+
+/* ── right: the items ── */
+
+.sk-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  align-items: center;
+}
+
+.sk-items li {
+  font-size: var(--step--1);
+  line-height: 1.4;
+  color: var(--text-mid);
+  padding: 0.35em 0.7em;
+  border: 1px solid var(--line-hair);
+  transition: color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.sk-row:hover .sk-items li {
+  border-color: var(--line-soft);
+}
+
+.sk-items li:hover {
+  color: var(--text-hi);
+  border-color: var(--line-bright);
+}
+
+/* ── marquee ── */
+
+.sk-loop {
+  margin-top: var(--space-8);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--line-hair);
+  border-bottom: 1px solid var(--line-hair);
+  color: var(--text-low);
+}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+
+@media (max-width: 860px) {
+  .sk-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .sk-row {
+    padding: var(--space-4) 0;
+  }
+
+  .sk-items {
+    gap: var(--space-2);
+  }
+
+  .sk-items li {
+    font-size: var(--step--2);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .sk-items li:hover {
+    color: var(--text-mid);
+    border-color: var(--line-hair);
+  }
+}
