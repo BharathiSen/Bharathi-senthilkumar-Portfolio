@@ -26,7 +26,7 @@ const Hero = ({ onAskAssistant }) => {
 
   return (
     <section id="hero" className="hero">
-      {/* Fluid field is confined to the hero — it no longer runs behind the
+      {/* Fluid field is confined to the hero - it no longer runs behind the
           whole document, and it no longer eats pointer events page-wide.
           Skipped entirely under reduced motion: it is a continuous WebGL
           simulation, so not rendering it is the only real way to stop it. */}
@@ -108,7 +108,7 @@ const Hero = ({ onAskAssistant }) => {
             {hero.buttons.primary.label}
             <ArrowRight size={16} />
           </a>
-          {/* Opens the PDF in a new tab rather than downloading it — a
+          {/* Opens the PDF in a new tab rather than downloading it - a
               recruiter skims first and saves later. The palette still
               carries an explicit "Download résumé" command. */}
           <a

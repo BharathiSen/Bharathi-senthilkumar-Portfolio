@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════
    TOKENS
-   Monochrome. No accent hue — weight and space carry hierarchy.
+   Monochrome. No accent hue - weight and space carry hierarchy.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
@@ -14,7 +14,7 @@
   --line-hard: rgba(255, 255, 255, 0.24);
   --line-bright: rgba(255, 255, 255, 0.48);
 
-  /* ── text — every step clears WCAG AA (4.5:1) on --bg ──
+  /* ── text - every step clears WCAG AA (4.5:1) on --bg ──
      hi 21:1 · mid 10.4:1 · low 6.8:1 · faint 4.6:1
      The ramp bottoms out at AA because the mono labels that use
      --text-faint are small; nothing here is decorative-only. */
@@ -132,7 +132,7 @@ button {
   color: var(--bg);
 }
 
-/* Off-screen until focused — first tab stop on the page. */
+/* Off-screen until focused - first tab stop on the page. */
 .skip-link {
   position: fixed;
   top: var(--space-3);
@@ -277,7 +277,7 @@ button {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TAGS — mono, hairline, square
+   TAGS - mono, hairline, square
    ═══════════════════════════════════════════════════════════════ */
 
 .tag {

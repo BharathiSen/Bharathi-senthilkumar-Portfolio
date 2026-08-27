@@ -29,7 +29,7 @@ const whyHireMeSummary = 'Bharathi builds AI systems with the engineering discip
 const githubSummary = `GitHub profile: ${portfolioData.socialLinks.github.href}. Recent work includes CodeAtlas (AI code intelligence over whole repositories), Orchestra (agentic AI platform with replayable run records), and API Reliability Lab (API load-testing SaaS with AI risk scoring).`;
 
 const publicationsSummary = (portfolioData.publications || [])
-  .map((p) => `${p.title} — ${p.venue}. ${p.description} (${p.href})`)
+  .map((p) => `${p.title} - ${p.venue}. ${p.description} (${p.href})`)
   .join(' ');
 
 const problemSolvingSummary = portfolioData.problemSolving
@@ -264,7 +264,7 @@ const semanticChunks = [
     graphId: 'skill-agentic',
     source: 'Skills',
     title: 'Agentic AI',
-    text: `${aiExpertise[0]}. Orchestra runs three pipelines — direct chat, tool-augmented via LangGraph, and multi-agent orchestration — with every run a durable replayable record carrying per-step cost and latency.`,
+    text: `${aiExpertise[0]}. Orchestra runs three pipelines - direct chat, tool-augmented via LangGraph, and multi-agent orchestration - with every run a durable replayable record carrying per-step cost and latency.`,
     tags: ['agentic ai', 'agents', 'langgraph', 'multi-agent', 'orchestration'],
   }),
   buildDocument({
@@ -367,7 +367,7 @@ const detailDocuments = [
       id: `architecture-${project.id}`,
       graphId: `project-${project.id}`,
       source: 'Architecture',
-      title: `${project.title} — architecture`,
+      title: `${project.title} - architecture`,
       text: [
         `Architecture flow: ${project.architecture.architectureFlow}`,
         `Backend: ${project.architecture.backendFlow}`,
@@ -634,7 +634,7 @@ export const composeGroundedFallback = (query, ragContext) => {
 
     if (nq.includes('why hire') || nq.includes('why should') || nq.includes('strong candidate')) {
       return [
-        `Hire Bharathi for backend or AI-systems work because she has already shipped ${strongestProject.title}, ${backendProject.title}, and ${saasProject.title} — all three live, all three measured.`,
+        `Hire Bharathi for backend or AI-systems work because she has already shipped ${strongestProject.title}, ${backendProject.title}, and ${saasProject.title} - all three live, all three measured.`,
         'What separates the work is the engineering discipline around the AI: a fail-closed Redis quota that bounds spend, automatic fallback when the vector store dies, a recall@k/MRR evaluation harness in CI, and latency that is measured rather than claimed.',
       ].join(' ');
     }
@@ -647,7 +647,7 @@ export const composeGroundedFallback = (query, ragContext) => {
     }
 
     if (nq.includes('learning trajectory')) {
-      return 'Bharathi’s trajectory moves from ML internship work (Cognifyz, Aug 2024) to geospatial radar engineering (India Meteorological Department, Nov 2024), then into published research (IEEE ICSSS 2025) and on to shipped AI systems — API Reliability Lab, then Orchestra and CodeAtlas. Each step adds backend depth and stronger system-design judgment.';
+      return 'Bharathi’s trajectory moves from ML internship work (Cognifyz, Aug 2024) to geospatial radar engineering (India Meteorological Department, Nov 2024), then into published research (IEEE ICSSS 2025) and on to shipped AI systems - API Reliability Lab, then Orchestra and CodeAtlas. Each step adds backend depth and stronger system-design judgment.';
     }
 
     return '';
@@ -667,7 +667,7 @@ export const composeGroundedFallback = (query, ragContext) => {
     }
 
     if ((nq.includes('best project') || nq.includes('strongest project')) && portfolioData.projects.length) {
-      return `${portfolioData.projects[0].title} — ${portfolioData.projects[0].description}`;
+      return `${portfolioData.projects[0].title} - ${portfolioData.projects[0].description}`;
     }
 
     if (intent === 'education') {

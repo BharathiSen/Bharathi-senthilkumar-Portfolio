@@ -14,6 +14,7 @@ const SECTIONS = [
   ['writing', 'Research'],
   ['experience', 'Experience'],
   ['credentials', 'Credentials'],
+  ['ask', 'Ask'],
   ['contact', 'Contact'],
 ];
 
@@ -28,12 +29,12 @@ const open = (href) => {
 /**
  * BharathiGPT as a command palette.
  *
- * `/` or ⌘K opens it. Typing filters real commands — jump to a section,
- * filter the work, open a project, grab the résumé — and Enter runs the
+ * `/` or ⌘K opens it. Typing filters real commands - jump to a section,
+ * filter the work, open a project, grab the résumé - and Enter runs the
  * highlighted one. Anything the command list does not match falls through
  * to the assistant, so the box is useful before you think of a question.
  */
-const CommandBar = ({ open: isOpen, seed = '', onOpen, onClose }) => {
+const CommandBar = ({ open: isOpen, request, onOpen, onClose }) => {
   const {
     assistantPromptChips,
     input,
@@ -84,7 +85,7 @@ const CommandBar = ({ open: isOpen, seed = '', onOpen, onClose }) => {
         {
           id: `live-${project.id}`,
           kind: 'Open',
-          label: `${project.title} — live`,
+          label: `${project.title} - live`,
           hint: project.tagline,
           keywords: [project.title, 'live', 'demo', ...(project.tech || [])],
           run: () => open(project.demo),
@@ -92,7 +93,7 @@ const CommandBar = ({ open: isOpen, seed = '', onOpen, onClose }) => {
         {
           id: `src-${project.id}`,
           kind: 'Open',
-          label: `${project.title} — source`,
+          label: `${project.title} - source`,
           hint: 'GitHub repository',
           keywords: [project.title, 'source', 'code', 'github', 'repo'],
           run: () => open(project.github),
@@ -214,15 +215,22 @@ const CommandBar = ({ open: isOpen, seed = '', onOpen, onClose }) => {
     if (!isOpen) return undefined;
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    if (seed) setInput(seed);
     inputRef.current?.focus();
     return () => {
       document.body.style.overflow = previous;
     };
-    // `seed` is read once on open by design — later edits belong to the
-    // palette input, not the hero field that started the sentence.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
+
+  // Apply an incoming request: a starter question is sent outright, while
+  // text handed over from an input is only seeded so it can be finished.
+  useEffect(() => {
+    if (!isOpen || !request?.id || !request.text) return;
+    if (request.send) sendMessage(request.text);
+    else setInput(request.text);
+    // Keyed on the request id so the same question can be asked twice and
+    // so an already-open palette still responds.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, request?.id]);
 
   useEffect(() => {
     if (isOpen && mode === 'chat') {
@@ -266,7 +274,7 @@ const CommandBar = ({ open: isOpen, seed = '', onOpen, onClose }) => {
           type="button"
           className="cmd-trigger"
           onClick={onOpen}
-          aria-label="Ask BharathiGPT — opens the command palette"
+          aria-label="Ask BharathiGPT - opens the command palette"
         >
           <span className="cmd-trigger-dot" aria-hidden="true" />
           <span className="cmd-trigger-text">Ask BharathiGPT</span>

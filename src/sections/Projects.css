@@ -214,7 +214,7 @@ h3.pj-title,
 
 /* ── screenshot ──
    Held in greyscale so the page stays monochrome, and released to full
-   colour on hover — the same treatment the portrait gets. */
+   colour on hover - the same treatment the portrait gets. */
 .pj-shot {
   grid-area: shot;
   margin: 0 0 var(--space-2);

@@ -181,7 +181,7 @@ const useBharathiGpt = () => {
 
   const generateResponse = useCallback(async (query) => {
     // NOTE: answerDirectFact is intentionally NOT called here.
-    // All questions — including simple ones like "Which college?" — flow to
+    // All questions - including simple ones like "Which college?" - flow to
     // Gemini so the response is natural and conversational.
 
     const ragContext = await buildRagContext(query);
@@ -198,7 +198,7 @@ const useBharathiGpt = () => {
     }
 
     // Build context from only the freshly-retrieved RAG snippets.
-    // The full portfolio bio is already in the system instruction — no need
+    // The full portfolio bio is already in the system instruction - no need
     // to repeat it here. Keeping only the retrieved snippets lets Gemini
     // focus on the most relevant chunks for this specific query.
     const localContext = ragContext?.contextText?.trim() || '';

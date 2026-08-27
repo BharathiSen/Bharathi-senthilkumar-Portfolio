@@ -178,7 +178,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.nav-ask:hover {
+.nav-ask:hover,
+.nav-ask[data-active='true'] {
   border-color: var(--line-bright);
   background: rgba(255, 255, 255, 0.06);
 }
@@ -202,11 +203,9 @@
   }
 }
 
-.nav-ask--mobile {
-  width: 100%;
-  justify-content: flex-start;
-  margin-top: var(--space-3);
-  padding: var(--space-3);
-  min-height: 44px;
-  font-size: var(--step--1);
+/* In the mobile list the dot stands in for the section number, so it has to
+   sit on the same optical line as the digits it replaces. */
+.nav-mobile .nav-ask-dot {
+  align-self: center;
+  margin-right: 0.15em;
 }

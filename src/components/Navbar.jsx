@@ -8,13 +8,14 @@ const LINKS = [
   { id: 'about', name: 'About', num: '01' },
   { id: 'skills', name: 'Stack', num: '02' },
   { id: 'projects', name: 'Work', num: '03' },
-  { id: 'writing', name: 'Research', num: '04' },
-  { id: 'experience', name: 'Experience', num: '05' },
-  { id: 'credentials', name: 'Credentials', num: '06' },
-  { id: 'contact', name: 'Contact', num: '07' },
+  { id: 'ask', name: 'Ask', num: '04' },
+  { id: 'writing', name: 'Research', num: '05' },
+  { id: 'experience', name: 'Experience', num: '06' },
+  { id: 'credentials', name: 'Credentials', num: '07' },
+  { id: 'contact', name: 'Contact', num: '08' },
 ];
 
-const Navbar = ({ onAsk }) => {
+const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState('hero');
@@ -30,7 +31,7 @@ const Navbar = ({ onAsk }) => {
   //
   // IntersectionObserver was the wrong tool here: `intersectionRatio` is
   // relative to each target's own height, so against a thin detection band a
-  // short section scores ~1.0 while a tall one scores ~0.05 — short sections
+  // short section scores ~1.0 while a tall one scores ~0.05 - short sections
   // always won. Its callback also only carries *changed* entries, so any
   // comparison across sections ran on a partial set.
   //
@@ -50,7 +51,7 @@ const Navbar = ({ onAsk }) => {
         if (el.getBoundingClientRect().top <= line) current = link.id;
       }
 
-      // The last section can be too short to reach the line — at the bottom
+      // The last section can be too short to reach the line - at the bottom
       // of the page it is unambiguously the one being read.
       const atBottom =
         window.innerHeight + window.scrollY >=
@@ -99,30 +100,33 @@ const Navbar = ({ onAsk }) => {
 
         <nav className="nav-desktop" aria-label="Sections">
           <ul>
-            {LINKS.slice(1).map((link) => (
-              <li key={link.id}>
-                <a
-                  href={`#${link.id}`}
-                  className="nav-link"
-                  data-active={active === link.id}
-                  aria-current={active === link.id ? 'true' : undefined}
-                >
-                  <span className="nav-link-num">{link.num}</span>
-                  {link.name}
-                </a>
-              </li>
-            ))}
-            <li>
-              <button
-                type="button"
-                className="nav-ask"
-                onClick={() => onAsk()}
-                aria-label="Ask BharathiGPT"
-              >
-                <span className="nav-ask-dot" aria-hidden="true" />
-                Ask
-              </button>
-            </li>
+            {LINKS.slice(1).map((link) =>
+              link.id === 'ask' ? (
+                <li key={link.id}>
+                  <a
+                    href="#ask"
+                    className="nav-ask"
+                    data-active={active === link.id}
+                    aria-label="Ask BharathiGPT"
+                  >
+                    <span className="nav-ask-dot" aria-hidden="true" />
+                    Ask
+                  </a>
+                </li>
+              ) : (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id}`}
+                    className="nav-link"
+                    data-active={active === link.id}
+                    aria-current={active === link.id ? 'true' : undefined}
+                  >
+                    <span className="nav-link-num">{link.num}</span>
+                    {link.name}
+                  </a>
+                </li>
+              ),
+            )}
           </ul>
         </nav>
 
@@ -153,24 +157,15 @@ const Navbar = ({ onAsk }) => {
                   data-active={active === link.id}
                   onClick={() => setIsOpen(false)}
                 >
-                  <span className="nav-link-num">{link.num}</span>
+                  {link.id === 'ask' ? (
+                    <span className="nav-ask-dot" aria-hidden="true" />
+                  ) : (
+                    <span className="nav-link-num">{link.num}</span>
+                  )}
                   {link.name}
                 </a>
               </li>
             ))}
-            <li>
-              <button
-                type="button"
-                className="nav-ask nav-ask--mobile"
-                onClick={() => {
-                  setIsOpen(false);
-                  onAsk();
-                }}
-              >
-                <span className="nav-ask-dot" aria-hidden="true" />
-                Ask BharathiGPT
-              </button>
-            </li>
           </ul>
         </motion.nav>
       )}

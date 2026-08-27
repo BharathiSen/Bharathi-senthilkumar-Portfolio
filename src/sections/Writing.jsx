@@ -14,12 +14,12 @@ const Writing = () => {
     <section id="writing" className="section">
       <div className="shell">
         <SectionHead
-          index="04 / Research & writing"
+          index="05 / Research & writing"
           title="Published work"
           meta="IEEE ICSSS 2025"
         />
 
-        {/* The publication is the headline — it gets the full width. */}
+        {/* The publication is the headline - it gets the full width. */}
         <motion.a
           className="wr-paper"
           href={publication.href}

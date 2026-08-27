@@ -12,7 +12,7 @@ const Experience = () => {
     <section id="experience" className="section">
       <div className="shell">
         <SectionHead
-          index="05 / Experience"
+          index="06 / Experience"
           title="Where it was tested"
           meta={`${timeline.length} internships`}
         />
@@ -35,7 +35,7 @@ const Experience = () => {
                 <h3 className="xp-role">{item.role}</h3>
                 <p className="xp-org">
                   {item.org}
-                  {item.unit && <span className="xp-unit"> — {item.unit}</span>}
+                  {item.unit && <span className="xp-unit"> - {item.unit}</span>}
                 </p>
 
                 <ul className="xp-points">

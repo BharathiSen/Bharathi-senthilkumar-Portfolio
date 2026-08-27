@@ -10,20 +10,31 @@ import Projects from './sections/Projects';
 import Writing from './sections/Writing';
 import Experience from './sections/Experience';
 import Credentials from './sections/Credentials';
+import Ask from './sections/Ask';
 import Contact from './sections/Contact';
 import ProjectDetail from './sections/ProjectDetail';
 import './index.css';
 
 function App() {
   const [assistantOpen, setAssistantOpen] = useState(false);
-  const [assistantSeed, setAssistantSeed] = useState('');
 
-  // Accepts optional text so the hero ask bar can hand off whatever was
-  // typed before focus moved into the palette.
+  // Carries text into the palette. The incrementing id makes each call
+  // distinct, so an already-open palette still reacts.
+  const [request, setRequest] = useState({ id: 0, text: '', send: false });
+
+  // Hands off whatever was typed before focus moved into the palette.
   const openAssistant = useCallback((seed = '') => {
-    setAssistantSeed(typeof seed === 'string' ? seed : '');
+    const text = typeof seed === 'string' ? seed : '';
+    setRequest((r) => ({ id: r.id + 1, text, send: false }));
     setAssistantOpen(true);
   }, []);
+
+  // A suggested question should arrive answered, not merely typed out.
+  const askAssistant = useCallback((question) => {
+    setRequest((r) => ({ id: r.id + 1, text: question, send: true }));
+    setAssistantOpen(true);
+  }, []);
+
   const closeAssistant = useCallback(() => setAssistantOpen(false), []);
 
   // Deep-link route kept so previously shared ?projectDetail= URLs still resolve.
@@ -35,7 +46,7 @@ function App() {
   }
 
   return (
-    // CSS `prefers-reduced-motion` cannot reach Framer Motion — its animations
+    // CSS `prefers-reduced-motion` cannot reach Framer Motion - its animations
     // are JS-driven, not CSS. MotionConfig is what actually honours the setting.
     <MotionConfig reducedMotion="user">
       <ClickSpark
@@ -49,13 +60,14 @@ function App() {
           Skip to work
         </a>
 
-        <Navbar onAsk={openAssistant} />
+        <Navbar />
 
         <main id="main">
           <Hero onAskAssistant={openAssistant} />
           <About />
           <Skills />
           <Projects />
+          <Ask onOpen={openAssistant} onAsk={askAssistant} />
           <Writing />
           <Experience />
           <Credentials />
@@ -65,7 +77,7 @@ function App() {
 
         <CommandBar
           open={assistantOpen}
-          seed={assistantSeed}
+          request={request}
           onOpen={openAssistant}
           onClose={closeAssistant}
         />

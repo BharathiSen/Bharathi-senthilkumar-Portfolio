@@ -9,7 +9,7 @@ export const portfolioData = {
     name: 'BHARATHI',
     title: 'Backend & AI Systems Engineer',
     summary:
-      'I build retrieval and agent infrastructure that survives production — hybrid search, durable execution records, and APIs with the failure modes designed in rather than discovered later.',
+      'I build retrieval and agent infrastructure that survives production - hybrid search, durable execution records, and APIs with the failure modes designed in rather than discovered later.',
     location: 'Chennai, India',
     availability: 'Open to 2027 roles',
     buttons: {
@@ -37,21 +37,21 @@ export const portfolioData = {
       college: 'Chennai Institute of Technology',
       degree: 'B.E. Electronics and Communication Engineering',
       department: 'Electronics and Communication Engineering',
-      batch: '2023–2027',
+      batch: '2023-2027',
       location: 'Chennai, India',
       currentInterest:
         'Agentic AI systems, retrieval infrastructure, and backend platform engineering',
     },
     image: { src: '/Profpic.jpeg', alt: 'Bharathi S' },
     paragraphs: [
-      'I am a final-year B.E. Electronics and Communication Engineering student at Chennai Institute of Technology (2023–2027), graduating with a CGPA of 8.9.',
-      'My work sits where backend engineering meets applied AI: hybrid retrieval pipelines, agentic execution with replayable run records, and the unglamorous parts that decide whether a system holds — quota ceilings, fallback paths, rate limiting, and evaluation harnesses that run in CI.',
-      'I have shipped three production systems on FastAPI, Next.js, PostgreSQL and Redis, published a review of Cloud–DevOps orchestration at IEEE ICSSS 2025, and solved over 1,600 data structures and algorithms problems along the way.',
+      'I am a final-year B.E. Electronics and Communication Engineering student at Chennai Institute of Technology (2023-2027), graduating with a CGPA of 8.9.',
+      'My work sits where backend engineering meets applied AI: hybrid retrieval pipelines, agentic execution with replayable run records, and the unglamorous parts that decide whether a system holds - quota ceilings, fallback paths, rate limiting, and evaluation harnesses that run in CI.',
+      'I have shipped three production systems on FastAPI, Next.js, PostgreSQL and Redis, published a review of Cloud-DevOps orchestration at IEEE ICSSS 2025, and solved over 1,600 data structures and algorithms problems along the way.',
     ],
   },
 
   skills: {
-    // Skill matrix — mirrors the résumé's own grouping
+    // Skill matrix - mirrors the résumé's own grouping
     groups: [
       {
         id: 'languages',
@@ -155,16 +155,16 @@ export const portfolioData = {
       tagline: 'Agentic AI platform where every run is a replayable record',
       year: '2026',
       description:
-        'An agentic AI platform built around durability: every run is a replayable execution record carrying per-step cost and latency. It spans three pipelines — direct chat, tool-augmented reasoning via LangGraph, and multi-agent orchestration.',
+        'An agentic AI platform built around durability: every run is a replayable execution record carrying per-step cost and latency. It spans three pipelines - direct chat, tool-augmented reasoning via LangGraph, and multi-agent orchestration.',
       highlights: [
         'Every run is a durable, replayable execution record with per-step cost and latency.',
         'Three pipelines: direct chat, tool-augmented (planner → tool → reviewer → answer via LangGraph), and multi-agent orchestration.',
-        'End-to-end RAG pipeline — upload → chunk → embed → pgvector — with a sources UI.',
+        'End-to-end RAG pipeline - upload → chunk → embed → pgvector - with a sources UI.',
         'Two-tier memory: Redis short-term and PostgreSQL long-term, persisting across conversations.',
         'JWT auth, three-axis rate limiting and SSE streaming throughout.',
       ],
       metrics: [
-        { value: '0.4–0.9s', label: 'Direct chat latency' },
+        { value: '0.4-0.9s', label: 'Direct chat latency' },
         { value: '2.3s', label: 'Warm RAG retrieval' },
         { value: '3', label: 'Execution pipelines' },
       ],
@@ -180,7 +180,7 @@ export const portfolioData = {
         databaseInteractions:
           'PostgreSQL with pgvector stores embeddings and long-term memory; Redis carries short-term conversational memory. Retrieved chunks surface in a sources UI so answers stay attributable.',
         deploymentNotes:
-          'Deployed on Cloudflare Workers with a FastAPI backend. Warm RAG retrieval lands at 2.3s; direct chat at 0.4–0.9s.',
+          'Deployed on Cloudflare Workers with a FastAPI backend. Warm RAG retrieval lands at 2.3s; direct chat at 0.4-0.9s.',
       },
     },
     {
@@ -191,9 +191,9 @@ export const portfolioData = {
       tagline: 'Full-stack SaaS that load-tests public APIs and scores their risk',
       year: '2026',
       description:
-        'A production SaaS that load-tests public APIs with 1–20 concurrent requests, streams live progress over SSE, and computes p50/p95 latency and error rate per run — then explains the result.',
+        'A production SaaS that load-tests public APIs with 1-20 concurrent requests, streams live progress over SSE, and computes p50/p95 latency and error rate per run - then explains the result.',
       highlights: [
-        'Load-tests public APIs with 1–20 concurrent requests, streaming live progress over SSE.',
+        'Load-tests public APIs with 1-20 concurrent requests, streaming live progress over SSE.',
         'Computes p50 / p95 latency and error rate per run.',
         'AI-powered reliability insights and risk scores via OpenAI with Zod-validated structured outputs.',
         'Falls back to a heuristic engine when no LLM key is present.',
@@ -210,7 +210,7 @@ export const portfolioData = {
       demo: 'https://arp-cgpt.vercel.app/',
       architecture: {
         architectureFlow:
-          'Target URL → SSRF-safe validation → concurrent request runner (1–20) → live SSE progress → p50/p95 + error-rate aggregation → AI risk score.',
+          'Target URL → SSRF-safe validation → concurrent request runner (1-20) → live SSE progress → p50/p95 + error-rate aggregation → AI risk score.',
         backendFlow:
           'Next.js API routes drive the run loop and stream progress. Reliability insights come from OpenAI with Zod-validated structured outputs, and a heuristic engine takes over when no LLM key is configured.',
         databaseInteractions:
@@ -221,10 +221,25 @@ export const portfolioData = {
     },
   ],
 
+  ask: {
+    index: '04 / Ask',
+    title: 'Still have questions?',
+    intro:
+      'You have just read three systems. BharathiGPT is grounded in the same material - the projects, their architecture, the résumé and the publication. It answers from that, and says so when it does not know.',
+    starters: [
+      'How does the hybrid retrieval in CodeAtlas work?',
+      'What happens when the vector store fails?',
+      'Why is every Orchestra run replayable?',
+      'Which project best demonstrates backend depth?',
+      'What did she build at the Meteorological Department?',
+      'Is she a fit for a backend role?',
+    ],
+  },
+
   publications: [
     {
       title:
-        'A Literature Review on Cloud–DevOps Synergy for Scalable and Reliable Machine Learning Lifecycle Management',
+        'A Literature Review on Cloud-DevOps Synergy for Scalable and Reliable Machine Learning Lifecycle Management',
       venue: 'IEEE ICSSS 2025',
       year: '2025',
       href: 'https://ieeexplore.ieee.org/document/11346190',
@@ -238,7 +253,7 @@ export const portfolioData = {
       title: 'Medium',
       subtitle: 'Engineering notes and build write-ups.',
       description:
-        'Short-form posts on retrieval design, agent execution models, and the decisions behind the systems above — written while building them rather than after the fact.',
+        'Short-form posts on retrieval design, agent execution models, and the decisions behind the systems above - written while building them rather than after the fact.',
       href: 'https://medium.com/@bharathisenthilkumar28',
       cta: 'Read on Medium',
     },
@@ -258,7 +273,7 @@ export const portfolioData = {
       role: 'Software Development Intern',
       org: 'India Meteorological Department',
       unit: 'Doppler Weather Radar',
-      title: 'Software Development Intern — India Meteorological Department (Doppler Weather Radar)',
+      title: 'Software Development Intern - India Meteorological Department (Doppler Weather Radar)',
       description:
         'Built a Python-based terrain-aware radar propagation system for Doppler weather radar site evaluation, processing JAXA DEM/DSM geospatial datasets (GeoTIFF) with GDAL, Rasterio and GeoPandas. Implemented beam-blockage analysis using wradlib and visualised radar coverage and terrain effects in QGIS to assess site suitability for radar installation.',
       highlights: [
@@ -272,7 +287,7 @@ export const portfolioData = {
       role: 'Machine Learning Intern',
       org: 'Cognifyz Technologies',
       unit: '',
-      title: 'Machine Learning Intern — Cognifyz Technologies',
+      title: 'Machine Learning Intern - Cognifyz Technologies',
       description:
         'Built and shipped end-to-end ML pipelines for prediction, clustering and recommendation systems, applying feature engineering and hyperparameter tuning with scikit-learn. Designed data visualisation and model interpretability dashboards to communicate AI/ML outputs to non-technical stakeholders, and applied anomaly detection on structured datasets.',
       highlights: [
@@ -288,7 +303,7 @@ export const portfolioData = {
     location: 'Chennai, India',
     degree: 'B.E. Electronics and Communication Engineering',
     cgpa: '8.9/10',
-    period: '2023 – 2027',
+    period: '2023 - 2027',
   },
 
   certifications: [
@@ -310,7 +325,7 @@ export const portfolioData = {
 
   achievements: [
     'Solved 1,600+ Data Structures & Algorithms problems across LeetCode (331), CodeChef (568) and SkillRack (745).',
-    'Published at IEEE ICSSS 2025 on Cloud–DevOps synergy for ML lifecycle management.',
+    'Published at IEEE ICSSS 2025 on Cloud-DevOps synergy for ML lifecycle management.',
   ],
 
   knowledgeGraph: {
@@ -395,7 +410,7 @@ export const portfolioData = {
       {
         id: 'publication-acdof',
         type: 'publication',
-        label: 'IEEE ICSSS 2025 — ACDOF',
+        label: 'IEEE ICSSS 2025 - ACDOF',
         summary: 'A Literature Review on Cloud-DevOps Synergy for Scalable and Reliable Machine Learning Lifecycle Management. Proposed the Adaptive Cloud-DevOps Orchestration Framework (ACDOF).',
         aliases: ['acdof', 'ieee', 'publication', 'research', 'paper', 'icsss'],
       },

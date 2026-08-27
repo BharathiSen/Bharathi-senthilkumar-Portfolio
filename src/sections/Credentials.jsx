@@ -13,7 +13,7 @@ const Credentials = () => {
     <section id="credentials" className="section">
       <div className="shell">
         <SectionHead
-          index="06 / Credentials"
+          index="07 / Credentials"
           title="Reps and receipts"
           meta={`${certifications.length} certifications`}
         />

@@ -1,4 +1,4 @@
-"""Generate public/og.png — the 1200x630 social card.
+"""Generate public/og.png - the 1200x630 social card.
 
 Run after changing the hero copy or the headline stats:
 

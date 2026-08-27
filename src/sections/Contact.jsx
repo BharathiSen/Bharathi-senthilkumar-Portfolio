@@ -25,7 +25,7 @@ const Contact = () => {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6, ease: EASE }}
         >
-          <span className="sec-index">07 / Contact</span>
+          <span className="sec-index">08 / Contact</span>
 
           <h2 className="ct-headline">
             Let’s build

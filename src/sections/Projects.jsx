@@ -13,7 +13,7 @@ const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [openId, setOpenId] = useState(null);
 
-  // Filters are derived from the tags on the data itself — no title
+  // Filters are derived from the tags on the data itself - no title
   // string-matching, so a project can never land in the wrong bucket.
   const filters = useMemo(() => {
     const seen = [];
