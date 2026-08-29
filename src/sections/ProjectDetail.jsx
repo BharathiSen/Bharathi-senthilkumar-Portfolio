@@ -9,8 +9,9 @@ const findProject = (title) =>
   ) || null;
 
 /**
- * Standalone deep-link view, kept so older shared ?projectDetail= URLs still
- * resolve. The primary path is now the inline drawer in the Projects section.
+ * The full write-up for one project, opened in its own tab from the "View
+ * more" link on each row. The row itself carries the summary, the numbers
+ * and the screenshot; everything longer lives here.
  */
 const ProjectDetail = () => {
   const params = new URLSearchParams(window.location.search);
@@ -49,6 +50,12 @@ const ProjectDetail = () => {
           <h1 className="pd-title">{project.title}</h1>
           <p className="pd-lede">{project.tagline}</p>
         </div>
+
+        {project.shot && (
+          <figure className="pd-shot">
+            <img src={project.shot.src} alt={project.shot.alt} />
+          </figure>
+        )}
 
         <dl className="pd-metrics">
           {project.metrics.map((metric) => (

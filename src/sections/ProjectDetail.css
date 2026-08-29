@@ -50,6 +50,19 @@
   margin: 0;
 }
 
+/* ── screenshot ── */
+
+.pd-shot {
+  margin: var(--space-6) 0 0;
+  border: 1px solid var(--line-soft);
+  padding: var(--space-2);
+}
+
+.pd-shot img {
+  width: 100%;
+  height: auto;
+}
+
 /* ── metrics ── */
 
 .pd-metrics {

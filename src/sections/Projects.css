@@ -43,28 +43,19 @@
 
 .pj-row {
   border-bottom: 1px solid var(--line-soft);
+  padding-bottom: var(--space-7);
 }
 
 /* Named areas rather than auto-placement: the row reflows across three
    breakpoints and auto-placement put the metrics block in the wrong cell. */
 .pj-head {
   display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr) auto 4.5rem 2.5rem;
-  grid-template-areas: 'num main metrics year toggle';
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto 4.5rem;
+  grid-template-areas: 'num main metrics year';
   align-items: start;
   gap: var(--space-5);
   width: 100%;
-  padding: var(--space-6) 0;
-  background: none;
-  border: 0;
-  text-align: left;
-  cursor: pointer;
-  transition: padding var(--dur-mid) var(--ease);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.pj-head:hover {
-  padding-inline: var(--space-4);
+  padding: var(--space-6) 0 var(--space-4);
 }
 
 .pj-num {
@@ -94,7 +85,6 @@ h3.pj-title,
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--text-hi);
-  transition: opacity var(--dur-fast) var(--ease);
 }
 
 .pj-tagline {
@@ -159,65 +149,57 @@ h3.pj-title,
   font-variant-numeric: tabular-nums;
 }
 
-.pj-toggle {
-  grid-area: toggle;
+/* ═══════════════ ROW LINKS ═══════════════ */
+
+.pj-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0 0 var(--space-5) 3.5rem;
+}
+
+.pj-bar-link {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--line-hair);
-  color: var(--text-low);
-  justify-self: end;
-  transition: transform var(--dur-mid) var(--ease),
-    color var(--dur-fast) var(--ease),
-    border-color var(--dur-fast) var(--ease);
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6em 0.95em;
+  min-height: 36px;
+  border: 1px solid var(--line-soft);
+  color: var(--text-mid);
+  transition: color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.pj-head:hover .pj-toggle {
+.pj-bar-link:hover {
   color: var(--text-hi);
   border-color: var(--line-bright);
 }
 
-.pj-row[data-open='true'] .pj-toggle {
-  transform: rotate(45deg);
-  color: var(--text-hi);
-  border-color: var(--line-bright);
+/* Live is the filled one: it is the link a recruiter is looking for. */
+.pj-bar-link--live {
+  background: var(--text-hi);
+  border-color: var(--text-hi);
+  color: var(--bg);
 }
 
-/* ═══════════════ DRAWER ═══════════════ */
-
-.pj-panel {
-  overflow: hidden;
+.pj-bar-link--live:hover {
+  background: var(--text-mid);
+  border-color: var(--text-mid);
+  color: var(--bg);
 }
 
-.pj-panel-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-areas:
-    'shot shot'
-    'what arch';
-  gap: var(--space-7);
-  padding: 0 0 var(--space-7) 3.5rem;
-  border-top: 1px solid var(--line-hair);
-  padding-top: var(--space-6);
-}
+/* ═══════════════ SCREENSHOT ═══════════════ */
 
-.pj-col {
-  min-width: 0;
-  grid-area: what;
-}
-
-.pj-col--arch {
-  grid-area: arch;
-}
-
-/* ── screenshot ──
-   Held in greyscale so the page stays monochrome, and released to full
-   colour on hover - the same treatment the portrait gets. */
+/* Always visible now the drawer is gone. Held in greyscale so the page stays
+   monochrome, released to full colour on hover - the portrait's treatment. */
 .pj-shot {
-  grid-area: shot;
-  margin: 0 0 var(--space-2);
+  margin: 0 0 0 3.5rem;
   border: 1px solid var(--line-soft);
   padding: var(--space-2);
   overflow: hidden;
@@ -237,88 +219,6 @@ h3.pj-title,
 .pj-shot:hover img {
   filter: grayscale(0) contrast(1);
   transform: scale(1.012);
-}
-
-.pj-col .label {
-  margin-bottom: var(--space-3);
-}
-
-.pj-desc {
-  color: var(--text-mid);
-  font-size: var(--step--1);
-  line-height: 1.7;
-  max-width: 58ch;
-  margin: 0 0 var(--space-4);
-}
-
-.pj-points {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin: 0 0 var(--space-5);
-  max-width: 58ch;
-}
-
-.pj-points li {
-  position: relative;
-  padding-left: var(--space-5);
-  font-size: var(--step--1);
-  line-height: 1.65;
-  color: var(--text-mid);
-}
-
-.pj-points li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 10px;
-  height: 1px;
-  background: var(--line-hard);
-}
-
-.pj-links {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-}
-
-/* ── architecture column ── */
-
-.pj-arch {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  margin: 0;
-}
-
-.pj-arch > div {
-  display: grid;
-  grid-template-columns: 6.5rem minmax(0, 1fr);
-  gap: var(--space-4);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--line-hair);
-}
-
-.pj-arch > div:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
-
-.pj-arch dt {
-  font-family: var(--font-mono);
-  font-size: var(--step--2);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-low);
-  padding-top: 0.2em;
-}
-
-.pj-arch dd {
-  margin: 0;
-  font-size: var(--step--1);
-  line-height: 1.65;
-  color: var(--text-mid);
 }
 
 /* ═══════════════ EMPTY STATE ═══════════════ */
@@ -351,10 +251,10 @@ h3.pj-title,
 
 @media (max-width: 1100px) {
   .pj-head {
-    grid-template-columns: 3rem minmax(0, 1fr) 4.5rem 2.5rem;
+    grid-template-columns: 3rem minmax(0, 1fr) 4.5rem;
     grid-template-areas:
-      'num main    year    toggle'
-      '.   metrics metrics metrics';
+      'num main    year'
+      '.   metrics metrics';
     row-gap: var(--space-4);
   }
 
@@ -365,37 +265,15 @@ h3.pj-title,
   }
 }
 
-@media (max-width: 860px) {
-  .pj-panel-inner {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'shot'
-      'what'
-      'arch';
-    gap: var(--space-6);
-    padding-left: 0;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .pj-shot img {
-    filter: grayscale(0) contrast(1);
-  }
-}
-
 @media (max-width: 640px) {
   .pj-head {
-    grid-template-columns: 2.4rem minmax(0, 1fr) 2.4rem;
+    grid-template-columns: 2.4rem minmax(0, 1fr);
     grid-template-areas:
-      'num main    toggle'
-      '.   metrics metrics';
+      'num main'
+      '.   metrics';
     gap: var(--space-3);
     row-gap: var(--space-4);
-    padding-block: var(--space-5);
-  }
-
-  .pj-head:hover {
-    padding-inline: 0;
+    padding-block: var(--space-5) var(--space-4);
   }
 
   .pj-year {
@@ -406,17 +284,20 @@ h3.pj-title,
     gap: var(--space-4);
   }
 
-  .pj-toggle {
-    width: 34px;
-    height: 34px;
+  .pj-bar,
+  .pj-shot {
+    padding-left: 0;
+    margin-left: 0;
   }
 
-  .pj-arch > div {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-2);
-  }
-
-  .pj-links .btn {
+  .pj-bar-link {
     flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .pj-shot img {
+    filter: grayscale(0) contrast(1);
   }
 }
